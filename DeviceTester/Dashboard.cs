@@ -72,9 +72,15 @@ namespace DeviceTester
         Size formSize;
         Point screenPoint;
         Point clientPoint;
+
+ 
+
         Dictionary<uint, Rectangle> boxes;
         const int RHS = 10; // RESIZE_HANDLE_SIZE
+
+
         bool handled;
+
 
         protected override void WndProc(ref Message m)
         {
@@ -132,8 +138,8 @@ namespace DeviceTester
 
         private void button1_Click(object sender, EventArgs e)
         {
-            SidePanel.Height = button1.Height;
-            SidePanel.Top = button1.Top;
+            panelActiveButtonIndicator.Height = button1.Height;
+            panelActiveButtonIndicator.Top = button1.Top;
 
             panelEatin.Visible = false;
             panelHome.Visible = true;
@@ -141,8 +147,8 @@ namespace DeviceTester
 
         private void button2_Click(object sender, EventArgs e)
         {
-            SidePanel.Height = button2.Height;
-            SidePanel.Top = button2.Top;
+            panelActiveButtonIndicator.Height = button2.Height;
+            panelActiveButtonIndicator.Top = button2.Top;
 
             panelHome.Visible = false;
             panelEatin.Visible = true;
@@ -150,17 +156,33 @@ namespace DeviceTester
 
         private void picBoxDashboard_Click(object sender, EventArgs e)
         {
-            if (gradientPanelSideBar.Width == 162)
+            timerDashboard.Start();
+        }
+
+        private bool dashboardIsCollapsed;
+        private void timerDashboard_Tick(object sender, EventArgs e)
+        {
+            if (dashboardIsCollapsed)
             {
-                //gradientPanelSideBar.Visible = false;
-                gradientPanelSideBar.Width = 62;
-                panelSideBar.Width = 72;
+                panelSideBar.Width += 10;
+                if (panelSideBar.Width >= panelSideBar.MaximumSize.Width)
+                {
+                    panelSideBar.Width = panelSideBar.MaximumSize.Width;
+                    dashboardIsCollapsed = false;
+                    timerDashboard.Stop();
+                }
             }
             else
             {
-                gradientPanelSideBar.Width = 162;
-                panelSideBar.Width = 171;
+                panelSideBar.Width -= 10;
+                if (panelSideBar.Width == panelSideBar.MinimumSize.Width)
+                {
+                    panelSideBar.Width = panelSideBar.MinimumSize.Width;
+                    dashboardIsCollapsed = true;
+                    timerDashboard.Stop();
+                }
             }
+    
         }
 
         private void timerChart_Tick(object sender, EventArgs e)
@@ -173,6 +195,38 @@ namespace DeviceTester
             this.chart1.Series["chartLine"].Points.AddXY("MAY", 30);
             this.chart1.Series["chartLine"].Points.AddXY("JUN", 30);
             this.chart1.Series["chartLine"].Points.AddXY("JUL", 10);
+        }
+
+        private bool isCollapsed;
+        private void timerDropdown1_Tick(object sender, EventArgs e)
+        {
+            if (isCollapsed)
+            {
+                button5.Image = Properties.Resources.Collapse_Arrow_20px;
+                panelDropDown1.Height += 10;
+                if (panelDropDown1.Height >= panelDropDown1.MaximumSize.Height)
+                {
+                    timerDropdown1.Stop();
+                    isCollapsed = false;
+                }
+            }
+            else
+            {
+                button5.Image = Properties.Resources.Expand_Arrow_20px;
+                panelDropDown1.Height -= 10;
+                if (panelDropDown1.Height <= panelDropDown1.MinimumSize.Height)
+                {
+                    timerDropdown1.Stop();
+                    isCollapsed = true;
+                }
+            }
+        }
+
+        private void button13_Click(object sender, EventArgs e)
+        {
+            timerDropdown1.Start();
+            panelActiveButtonIndicator.Height = button13.Height;
+            panelActiveButtonIndicator.Top = panelDropDown1.Top;
         }
     }
 }

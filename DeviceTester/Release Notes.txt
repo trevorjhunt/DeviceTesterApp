@@ -1,0 +1,12 @@
+=======================================================================================
+Device Tester App                                                  Release Notes 
+---------------------------------------------------------------------------------------
+(C) 2019 Trevor Hunt, All Rights Reserved
+=======================================================================================
+
+App Version: 1.0.0.0
+    - Added dropdown transition to buttons on the side panel 
+    - Hide the side panel when the 'dashboard' button is clicked
+    - added transition to side panel when collapsing and expanding 
+
+
