@@ -47,11 +47,9 @@
             this.labelEatin = new System.Windows.Forms.Label();
             this.timerChart = new System.Windows.Forms.Timer(this.components);
             this.panelSideBar = new System.Windows.Forms.Panel();
-            this.panelMain = new System.Windows.Forms.Panel();
-            this.timerDropdown1 = new System.Windows.Forms.Timer(this.components);
-            this.timerDashboard = new System.Windows.Forms.Timer(this.components);
             this.gradientPanel1 = new DeviceTester.CustomControls.GradientPanel();
-            this.panelDropDown1 = new System.Windows.Forms.Panel();
+            this.buttonSettings = new System.Windows.Forms.Button();
+            this.panelButton13 = new System.Windows.Forms.Panel();
             this.button4 = new System.Windows.Forms.Button();
             this.button10 = new System.Windows.Forms.Button();
             this.button11 = new System.Windows.Forms.Button();
@@ -71,6 +69,9 @@
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.SidePanel = new System.Windows.Forms.Panel();
+            this.panelMain = new System.Windows.Forms.Panel();
+            this.timerbutton13Menu = new System.Windows.Forms.Timer(this.components);
+            this.timerDashboard = new System.Windows.Forms.Timer(this.components);
             this.panelTop.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picBoxRestore)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picBoxMinimize)).BeginInit();
@@ -81,11 +82,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.panelEatin.SuspendLayout();
             this.panelSideBar.SuspendLayout();
-            this.panelMain.SuspendLayout();
             this.gradientPanel1.SuspendLayout();
-            this.panelDropDown1.SuspendLayout();
+            this.panelButton13.SuspendLayout();
             this.gradientPanelSideBar.SuspendLayout();
             this.panelDropDown.SuspendLayout();
+            this.panelMain.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelTop
@@ -176,7 +177,7 @@
             this.picBoxDashboard.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picBoxDashboard.TabIndex = 0;
             this.picBoxDashboard.TabStop = false;
-            this.picBoxDashboard.Click += new System.EventHandler(this.picBoxDashboard_Click);
+            this.picBoxDashboard.Click += new System.EventHandler(this.picBoxSideBarMenu_Click);
             // 
             // panelHome
             // 
@@ -277,33 +278,12 @@
             this.panelSideBar.Size = new System.Drawing.Size(200, 473);
             this.panelSideBar.TabIndex = 3;
             // 
-            // panelMain
-            // 
-            this.panelMain.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
-            this.panelMain.Controls.Add(this.panelHome);
-            this.panelMain.Controls.Add(this.panelEatin);
-            this.panelMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelMain.Location = new System.Drawing.Point(205, 56);
-            this.panelMain.Name = "panelMain";
-            this.panelMain.Padding = new System.Windows.Forms.Padding(3);
-            this.panelMain.Size = new System.Drawing.Size(752, 473);
-            this.panelMain.TabIndex = 4;
-            // 
-            // timerDropdown1
-            // 
-            this.timerDropdown1.Interval = 10;
-            this.timerDropdown1.Tick += new System.EventHandler(this.timerDropdown1_Tick);
-            // 
-            // timerDashboard
-            // 
-            this.timerDashboard.Interval = 10;
-            this.timerDashboard.Tick += new System.EventHandler(this.timerDashboard_Tick);
-            // 
             // gradientPanel1
             // 
             this.gradientPanel1.ColorBottom = System.Drawing.Color.FromArgb(((int)(((byte)(165)))), ((int)(((byte)(21)))), ((int)(((byte)(80)))));
             this.gradientPanel1.ColorTop = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
-            this.gradientPanel1.Controls.Add(this.panelDropDown1);
+            this.gradientPanel1.Controls.Add(this.buttonSettings);
+            this.gradientPanel1.Controls.Add(this.panelButton13);
             this.gradientPanel1.Controls.Add(this.button15);
             this.gradientPanel1.Controls.Add(this.button16);
             this.gradientPanel1.Controls.Add(this.panelActiveButtonIndicator);
@@ -313,20 +293,37 @@
             this.gradientPanel1.Size = new System.Drawing.Size(192, 467);
             this.gradientPanel1.TabIndex = 0;
             // 
-            // panelDropDown1
+            // buttonSettings
             // 
-            this.panelDropDown1.BackColor = System.Drawing.Color.Transparent;
-            this.panelDropDown1.Controls.Add(this.button4);
-            this.panelDropDown1.Controls.Add(this.button10);
-            this.panelDropDown1.Controls.Add(this.button11);
-            this.panelDropDown1.Controls.Add(this.button12);
-            this.panelDropDown1.Controls.Add(this.button13);
-            this.panelDropDown1.Location = new System.Drawing.Point(15, 77);
-            this.panelDropDown1.MaximumSize = new System.Drawing.Size(177, 155);
-            this.panelDropDown1.MinimumSize = new System.Drawing.Size(177, 31);
-            this.panelDropDown1.Name = "panelDropDown1";
-            this.panelDropDown1.Size = new System.Drawing.Size(177, 31);
-            this.panelDropDown1.TabIndex = 4;
+            this.buttonSettings.BackColor = System.Drawing.Color.Transparent;
+            this.buttonSettings.FlatAppearance.BorderSize = 0;
+            this.buttonSettings.FlatAppearance.MouseOverBackColor = System.Drawing.Color.LimeGreen;
+            this.buttonSettings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonSettings.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonSettings.ForeColor = System.Drawing.Color.White;
+            this.buttonSettings.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonSettings.Location = new System.Drawing.Point(18, 108);
+            this.buttonSettings.Name = "buttonSettings";
+            this.buttonSettings.Size = new System.Drawing.Size(174, 31);
+            this.buttonSettings.TabIndex = 8;
+            this.buttonSettings.Text = "Settings      ";
+            this.buttonSettings.UseVisualStyleBackColor = false;
+            this.buttonSettings.Click += new System.EventHandler(this.buttonSettings_Click);
+            // 
+            // panelButton13
+            // 
+            this.panelButton13.BackColor = System.Drawing.Color.Transparent;
+            this.panelButton13.Controls.Add(this.button4);
+            this.panelButton13.Controls.Add(this.button10);
+            this.panelButton13.Controls.Add(this.button11);
+            this.panelButton13.Controls.Add(this.button12);
+            this.panelButton13.Controls.Add(this.button13);
+            this.panelButton13.Location = new System.Drawing.Point(15, 77);
+            this.panelButton13.MaximumSize = new System.Drawing.Size(177, 155);
+            this.panelButton13.MinimumSize = new System.Drawing.Size(177, 31);
+            this.panelButton13.Name = "panelButton13";
+            this.panelButton13.Size = new System.Drawing.Size(177, 31);
+            this.panelButton13.TabIndex = 4;
             // 
             // button4
             // 
@@ -621,6 +618,28 @@
             this.SidePanel.Size = new System.Drawing.Size(7, 31);
             this.SidePanel.TabIndex = 5;
             // 
+            // panelMain
+            // 
+            this.panelMain.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
+            this.panelMain.Controls.Add(this.panelHome);
+            this.panelMain.Controls.Add(this.panelEatin);
+            this.panelMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelMain.Location = new System.Drawing.Point(205, 56);
+            this.panelMain.Name = "panelMain";
+            this.panelMain.Padding = new System.Windows.Forms.Padding(3);
+            this.panelMain.Size = new System.Drawing.Size(752, 473);
+            this.panelMain.TabIndex = 4;
+            // 
+            // timerbutton13Menu
+            // 
+            this.timerbutton13Menu.Interval = 10;
+            this.timerbutton13Menu.Tick += new System.EventHandler(this.timerButton13Menu_Tick);
+            // 
+            // timerDashboard
+            // 
+            this.timerDashboard.Interval = 10;
+            this.timerDashboard.Tick += new System.EventHandler(this.timerSideBarMenu_Tick);
+            // 
             // Dashboard
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -649,11 +668,11 @@
             this.panelEatin.ResumeLayout(false);
             this.panelEatin.PerformLayout();
             this.panelSideBar.ResumeLayout(false);
-            this.panelMain.ResumeLayout(false);
             this.gradientPanel1.ResumeLayout(false);
-            this.panelDropDown1.ResumeLayout(false);
+            this.panelButton13.ResumeLayout(false);
             this.gradientPanelSideBar.ResumeLayout(false);
             this.panelDropDown.ResumeLayout(false);
+            this.panelMain.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -679,7 +698,7 @@
         private System.Windows.Forms.Panel panelSideBar;
         private System.Windows.Forms.Panel panelMain;
         private CustomControls.GradientPanel gradientPanel1;
-        private System.Windows.Forms.Panel panelDropDown1;
+        private System.Windows.Forms.Panel panelButton13;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button10;
         private System.Windows.Forms.Button button11;
@@ -695,8 +714,9 @@
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Timer timerDropdown1;
+        private System.Windows.Forms.Timer timerbutton13Menu;
         private System.Windows.Forms.Timer timerDashboard;
+        private System.Windows.Forms.Button buttonSettings;
     }
 }
 

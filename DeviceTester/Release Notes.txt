@@ -4,6 +4,10 @@ Device Tester App                                                  Release Notes
 (C) 2019 Trevor Hunt, All Rights Reserved
 =======================================================================================
 
+App Version: 1.0.0.1
+    - Added a settings button
+    - added some comments and tidied code 
+
 App Version: 1.0.0.0
     - Added dropdown transition to buttons on the side panel 
     - Hide the side panel when the 'dashboard' button is clicked
