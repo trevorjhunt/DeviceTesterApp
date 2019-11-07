@@ -4,6 +4,9 @@ Device Tester App                                                  Release Notes
 (C) 2019 Trevor Hunt, All Rights Reserved
 =======================================================================================
 
+App Version: 1.0.0.2
+    - Added serial port settings and log settings to UI layout (not functional yet)
+
 App Version: 1.0.0.1
     - Added a settings button
     - added some comments and tidied code 

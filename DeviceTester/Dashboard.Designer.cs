@@ -41,22 +41,21 @@
             this.labelDashboard = new System.Windows.Forms.Label();
             this.picBoxDashboard = new System.Windows.Forms.PictureBox();
             this.panelHome = new System.Windows.Forms.Panel();
-            this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.labelHome = new System.Windows.Forms.Label();
+            this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.panelEatin = new System.Windows.Forms.Panel();
-            this.labelEatin = new System.Windows.Forms.Label();
+            this.labelTemp = new System.Windows.Forms.Label();
             this.timerChart = new System.Windows.Forms.Timer(this.components);
             this.panelSideBar = new System.Windows.Forms.Panel();
             this.gradientPanel1 = new DeviceTester.CustomControls.GradientPanel();
-            this.buttonSettings = new System.Windows.Forms.Button();
-            this.panelButton13 = new System.Windows.Forms.Panel();
+            this.panelButtonSettings = new System.Windows.Forms.Panel();
             this.button4 = new System.Windows.Forms.Button();
             this.button10 = new System.Windows.Forms.Button();
-            this.button11 = new System.Windows.Forms.Button();
-            this.button12 = new System.Windows.Forms.Button();
-            this.button13 = new System.Windows.Forms.Button();
-            this.button15 = new System.Windows.Forms.Button();
-            this.button16 = new System.Windows.Forms.Button();
+            this.buttonLogSettings = new System.Windows.Forms.Button();
+            this.buttonSerialPortSettings = new System.Windows.Forms.Button();
+            this.buttonSettings = new System.Windows.Forms.Button();
+            this.buttonTemp = new System.Windows.Forms.Button();
+            this.buttonHome = new System.Windows.Forms.Button();
             this.panelActiveButtonIndicator = new System.Windows.Forms.Panel();
             this.gradientPanelSideBar = new DeviceTester.CustomControls.GradientPanel();
             this.panelDropDown = new System.Windows.Forms.Panel();
@@ -70,7 +69,30 @@
             this.button1 = new System.Windows.Forms.Button();
             this.SidePanel = new System.Windows.Forms.Panel();
             this.panelMain = new System.Windows.Forms.Panel();
-            this.timerbutton13Menu = new System.Windows.Forms.Timer(this.components);
+            this.panelSettings = new System.Windows.Forms.Panel();
+            this.groupboxSerialPortOptions = new System.Windows.Forms.GroupBox();
+            this.button11 = new System.Windows.Forms.Button();
+            this.labelFlowControl = new System.Windows.Forms.Label();
+            this.labelBaudrate = new System.Windows.Forms.Label();
+            this.comboboxFlowControl = new System.Windows.Forms.ComboBox();
+            this.labelParity = new System.Windows.Forms.Label();
+            this.labelPort = new System.Windows.Forms.Label();
+            this.comboboxPort = new System.Windows.Forms.ComboBox();
+            this.comboboxBaudrate = new System.Windows.Forms.ComboBox();
+            this.comboboxParity = new System.Windows.Forms.ComboBox();
+            this.comboboxStopbits = new System.Windows.Forms.ComboBox();
+            this.labelStopbits = new System.Windows.Forms.Label();
+            this.comboboxDatabits = new System.Windows.Forms.ComboBox();
+            this.labelDatabits = new System.Windows.Forms.Label();
+            this.labelSettings = new System.Windows.Forms.Label();
+            this.panelLogSettings = new System.Windows.Forms.Panel();
+            this.groupBoxLog = new System.Windows.Forms.GroupBox();
+            this.panelLogOptions = new System.Windows.Forms.Panel();
+            this.radiobuttonLogAppend = new System.Windows.Forms.RadioButton();
+            this.checkboxEnableLog = new System.Windows.Forms.CheckBox();
+            this.radiobuttonLogOverwrite = new System.Windows.Forms.RadioButton();
+            this.label1 = new System.Windows.Forms.Label();
+            this.timerSettingsMenu = new System.Windows.Forms.Timer(this.components);
             this.timerDashboard = new System.Windows.Forms.Timer(this.components);
             this.panelTop.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picBoxRestore)).BeginInit();
@@ -83,10 +105,15 @@
             this.panelEatin.SuspendLayout();
             this.panelSideBar.SuspendLayout();
             this.gradientPanel1.SuspendLayout();
-            this.panelButton13.SuspendLayout();
+            this.panelButtonSettings.SuspendLayout();
             this.gradientPanelSideBar.SuspendLayout();
             this.panelDropDown.SuspendLayout();
             this.panelMain.SuspendLayout();
+            this.panelSettings.SuspendLayout();
+            this.groupboxSerialPortOptions.SuspendLayout();
+            this.panelLogSettings.SuspendLayout();
+            this.groupBoxLog.SuspendLayout();
+            this.panelLogOptions.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelTop
@@ -117,7 +144,7 @@
             this.picBoxRestore.TabIndex = 5;
             this.picBoxRestore.TabStop = false;
             this.picBoxRestore.Visible = false;
-            this.picBoxRestore.Click += new System.EventHandler(this.PicBoxRestore_Click);
+            this.picBoxRestore.Click += new System.EventHandler(this.picboxRestore_Click);
             // 
             // picBoxMinimize
             // 
@@ -129,7 +156,7 @@
             this.picBoxMinimize.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picBoxMinimize.TabIndex = 4;
             this.picBoxMinimize.TabStop = false;
-            this.picBoxMinimize.Click += new System.EventHandler(this.PicBoxMinimize_Click);
+            this.picBoxMinimize.Click += new System.EventHandler(this.picboxMinimize_Click);
             // 
             // picBoxMaximize
             // 
@@ -141,7 +168,7 @@
             this.picBoxMaximize.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picBoxMaximize.TabIndex = 3;
             this.picBoxMaximize.TabStop = false;
-            this.picBoxMaximize.Click += new System.EventHandler(this.PicBoxMaximize_Click);
+            this.picBoxMaximize.Click += new System.EventHandler(this.picboxMaximize_Click);
             // 
             // picBoxExit
             // 
@@ -153,7 +180,7 @@
             this.picBoxExit.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picBoxExit.TabIndex = 2;
             this.picBoxExit.TabStop = false;
-            this.picBoxExit.Click += new System.EventHandler(this.PicBoxExit_Click);
+            this.picBoxExit.Click += new System.EventHandler(this.picboxExit_Click);
             // 
             // labelDashboard
             // 
@@ -182,14 +209,26 @@
             // panelHome
             // 
             this.panelHome.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(41)))), ((int)(((byte)(61)))));
-            this.panelHome.Controls.Add(this.chart1);
             this.panelHome.Controls.Add(this.labelHome);
+            this.panelHome.Controls.Add(this.chart1);
             this.panelHome.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelHome.Location = new System.Drawing.Point(3, 3);
             this.panelHome.Name = "panelHome";
             this.panelHome.Padding = new System.Windows.Forms.Padding(2);
             this.panelHome.Size = new System.Drawing.Size(746, 467);
             this.panelHome.TabIndex = 1;
+            // 
+            // labelHome
+            // 
+            this.labelHome.AutoSize = true;
+            this.labelHome.BackColor = System.Drawing.Color.Transparent;
+            this.labelHome.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelHome.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(243)))), ((int)(((byte)(243)))));
+            this.labelHome.Location = new System.Drawing.Point(17, 12);
+            this.labelHome.Name = "labelHome";
+            this.labelHome.Size = new System.Drawing.Size(49, 18);
+            this.labelHome.TabIndex = 3;
+            this.labelHome.Text = "Home";
             // 
             // chart1
             // 
@@ -225,22 +264,10 @@
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
             // 
-            // labelHome
-            // 
-            this.labelHome.AutoSize = true;
-            this.labelHome.BackColor = System.Drawing.Color.Transparent;
-            this.labelHome.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelHome.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(243)))), ((int)(((byte)(243)))));
-            this.labelHome.Location = new System.Drawing.Point(69, 30);
-            this.labelHome.Name = "labelHome";
-            this.labelHome.Size = new System.Drawing.Size(49, 18);
-            this.labelHome.TabIndex = 3;
-            this.labelHome.Text = "Home";
-            // 
             // panelEatin
             // 
             this.panelEatin.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(41)))), ((int)(((byte)(61)))));
-            this.panelEatin.Controls.Add(this.labelEatin);
+            this.panelEatin.Controls.Add(this.labelTemp);
             this.panelEatin.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelEatin.Location = new System.Drawing.Point(3, 3);
             this.panelEatin.Name = "panelEatin";
@@ -249,17 +276,17 @@
             this.panelEatin.TabIndex = 2;
             this.panelEatin.Visible = false;
             // 
-            // labelEatin
+            // labelTemp
             // 
-            this.labelEatin.AutoSize = true;
-            this.labelEatin.BackColor = System.Drawing.Color.Transparent;
-            this.labelEatin.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelEatin.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(243)))), ((int)(((byte)(243)))));
-            this.labelEatin.Location = new System.Drawing.Point(69, 30);
-            this.labelEatin.Name = "labelEatin";
-            this.labelEatin.Size = new System.Drawing.Size(41, 18);
-            this.labelEatin.TabIndex = 3;
-            this.labelEatin.Text = "Eatin";
+            this.labelTemp.AutoSize = true;
+            this.labelTemp.BackColor = System.Drawing.Color.Transparent;
+            this.labelTemp.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelTemp.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(243)))), ((int)(((byte)(243)))));
+            this.labelTemp.Location = new System.Drawing.Point(17, 12);
+            this.labelTemp.Name = "labelTemp";
+            this.labelTemp.Size = new System.Drawing.Size(46, 18);
+            this.labelTemp.TabIndex = 3;
+            this.labelTemp.Text = "Temp";
             // 
             // timerChart
             // 
@@ -282,10 +309,9 @@
             // 
             this.gradientPanel1.ColorBottom = System.Drawing.Color.FromArgb(((int)(((byte)(165)))), ((int)(((byte)(21)))), ((int)(((byte)(80)))));
             this.gradientPanel1.ColorTop = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
-            this.gradientPanel1.Controls.Add(this.buttonSettings);
-            this.gradientPanel1.Controls.Add(this.panelButton13);
-            this.gradientPanel1.Controls.Add(this.button15);
-            this.gradientPanel1.Controls.Add(this.button16);
+            this.gradientPanel1.Controls.Add(this.panelButtonSettings);
+            this.gradientPanel1.Controls.Add(this.buttonTemp);
+            this.gradientPanel1.Controls.Add(this.buttonHome);
             this.gradientPanel1.Controls.Add(this.panelActiveButtonIndicator);
             this.gradientPanel1.Location = new System.Drawing.Point(5, 3);
             this.gradientPanel1.Name = "gradientPanel1";
@@ -293,37 +319,20 @@
             this.gradientPanel1.Size = new System.Drawing.Size(192, 467);
             this.gradientPanel1.TabIndex = 0;
             // 
-            // buttonSettings
+            // panelButtonSettings
             // 
-            this.buttonSettings.BackColor = System.Drawing.Color.Transparent;
-            this.buttonSettings.FlatAppearance.BorderSize = 0;
-            this.buttonSettings.FlatAppearance.MouseOverBackColor = System.Drawing.Color.LimeGreen;
-            this.buttonSettings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonSettings.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonSettings.ForeColor = System.Drawing.Color.White;
-            this.buttonSettings.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonSettings.Location = new System.Drawing.Point(18, 108);
-            this.buttonSettings.Name = "buttonSettings";
-            this.buttonSettings.Size = new System.Drawing.Size(174, 31);
-            this.buttonSettings.TabIndex = 8;
-            this.buttonSettings.Text = "Settings      ";
-            this.buttonSettings.UseVisualStyleBackColor = false;
-            this.buttonSettings.Click += new System.EventHandler(this.buttonSettings_Click);
-            // 
-            // panelButton13
-            // 
-            this.panelButton13.BackColor = System.Drawing.Color.Transparent;
-            this.panelButton13.Controls.Add(this.button4);
-            this.panelButton13.Controls.Add(this.button10);
-            this.panelButton13.Controls.Add(this.button11);
-            this.panelButton13.Controls.Add(this.button12);
-            this.panelButton13.Controls.Add(this.button13);
-            this.panelButton13.Location = new System.Drawing.Point(15, 77);
-            this.panelButton13.MaximumSize = new System.Drawing.Size(177, 155);
-            this.panelButton13.MinimumSize = new System.Drawing.Size(177, 31);
-            this.panelButton13.Name = "panelButton13";
-            this.panelButton13.Size = new System.Drawing.Size(177, 31);
-            this.panelButton13.TabIndex = 4;
+            this.panelButtonSettings.BackColor = System.Drawing.Color.Transparent;
+            this.panelButtonSettings.Controls.Add(this.button4);
+            this.panelButtonSettings.Controls.Add(this.button10);
+            this.panelButtonSettings.Controls.Add(this.buttonLogSettings);
+            this.panelButtonSettings.Controls.Add(this.buttonSerialPortSettings);
+            this.panelButtonSettings.Controls.Add(this.buttonSettings);
+            this.panelButtonSettings.Location = new System.Drawing.Point(15, 40);
+            this.panelButtonSettings.MaximumSize = new System.Drawing.Size(177, 155);
+            this.panelButtonSettings.MinimumSize = new System.Drawing.Size(177, 31);
+            this.panelButtonSettings.Name = "panelButtonSettings";
+            this.panelButtonSettings.Size = new System.Drawing.Size(177, 31);
+            this.panelButtonSettings.TabIndex = 4;
             // 
             // button4
             // 
@@ -355,89 +364,92 @@
             this.button10.Text = "button8";
             this.button10.UseVisualStyleBackColor = false;
             // 
-            // button11
+            // buttonLogSettings
             // 
-            this.button11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(162)))), ((int)(((byte)(21)))), ((int)(((byte)(79)))));
-            this.button11.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button11.FlatAppearance.BorderSize = 0;
-            this.button11.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button11.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button11.ForeColor = System.Drawing.Color.White;
-            this.button11.Location = new System.Drawing.Point(0, 62);
-            this.button11.Name = "button11";
-            this.button11.Size = new System.Drawing.Size(177, 31);
-            this.button11.TabIndex = 4;
-            this.button11.Text = "button7";
-            this.button11.UseVisualStyleBackColor = false;
+            this.buttonLogSettings.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(162)))), ((int)(((byte)(21)))), ((int)(((byte)(79)))));
+            this.buttonLogSettings.Dock = System.Windows.Forms.DockStyle.Top;
+            this.buttonLogSettings.FlatAppearance.BorderSize = 0;
+            this.buttonLogSettings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonLogSettings.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonLogSettings.ForeColor = System.Drawing.Color.White;
+            this.buttonLogSettings.Location = new System.Drawing.Point(0, 62);
+            this.buttonLogSettings.Name = "buttonLogSettings";
+            this.buttonLogSettings.Size = new System.Drawing.Size(177, 31);
+            this.buttonLogSettings.TabIndex = 4;
+            this.buttonLogSettings.Text = "Log          ";
+            this.buttonLogSettings.UseVisualStyleBackColor = false;
+            this.buttonLogSettings.Click += new System.EventHandler(this.buttonLogSettings_Click);
             // 
-            // button12
+            // buttonSerialPortSettings
             // 
-            this.button12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(162)))), ((int)(((byte)(21)))), ((int)(((byte)(79)))));
-            this.button12.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button12.FlatAppearance.BorderSize = 0;
-            this.button12.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button12.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button12.ForeColor = System.Drawing.Color.White;
-            this.button12.Location = new System.Drawing.Point(0, 31);
-            this.button12.Name = "button12";
-            this.button12.Size = new System.Drawing.Size(177, 31);
-            this.button12.TabIndex = 3;
-            this.button12.Text = "button6";
-            this.button12.UseVisualStyleBackColor = false;
+            this.buttonSerialPortSettings.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(162)))), ((int)(((byte)(21)))), ((int)(((byte)(79)))));
+            this.buttonSerialPortSettings.Dock = System.Windows.Forms.DockStyle.Top;
+            this.buttonSerialPortSettings.FlatAppearance.BorderSize = 0;
+            this.buttonSerialPortSettings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonSerialPortSettings.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonSerialPortSettings.ForeColor = System.Drawing.Color.White;
+            this.buttonSerialPortSettings.Location = new System.Drawing.Point(0, 31);
+            this.buttonSerialPortSettings.Name = "buttonSerialPortSettings";
+            this.buttonSerialPortSettings.Size = new System.Drawing.Size(177, 31);
+            this.buttonSerialPortSettings.TabIndex = 3;
+            this.buttonSerialPortSettings.Text = "Serial Port";
+            this.buttonSerialPortSettings.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.buttonSerialPortSettings.UseVisualStyleBackColor = false;
+            this.buttonSerialPortSettings.Click += new System.EventHandler(this.buttonSerialPortSettings_Click);
             // 
-            // button13
+            // buttonSettings
             // 
-            this.button13.BackColor = System.Drawing.Color.Transparent;
-            this.button13.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button13.FlatAppearance.BorderSize = 0;
-            this.button13.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button13.Font = new System.Drawing.Font("Century Gothic", 11.25F);
-            this.button13.ForeColor = System.Drawing.Color.White;
-            this.button13.Image = global::DeviceTester.Properties.Resources.Expand_Arrow_20px;
-            this.button13.Location = new System.Drawing.Point(0, 0);
-            this.button13.Name = "button13";
-            this.button13.Size = new System.Drawing.Size(177, 31);
-            this.button13.TabIndex = 2;
-            this.button13.Text = "button5";
-            this.button13.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.button13.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
-            this.button13.UseVisualStyleBackColor = false;
-            this.button13.Click += new System.EventHandler(this.button13_Click);
+            this.buttonSettings.BackColor = System.Drawing.Color.Transparent;
+            this.buttonSettings.Dock = System.Windows.Forms.DockStyle.Top;
+            this.buttonSettings.FlatAppearance.BorderSize = 0;
+            this.buttonSettings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonSettings.Font = new System.Drawing.Font("Century Gothic", 11.25F);
+            this.buttonSettings.ForeColor = System.Drawing.Color.White;
+            this.buttonSettings.Image = global::DeviceTester.Properties.Resources.Expand_Arrow_20px;
+            this.buttonSettings.Location = new System.Drawing.Point(0, 0);
+            this.buttonSettings.Name = "buttonSettings";
+            this.buttonSettings.Size = new System.Drawing.Size(177, 31);
+            this.buttonSettings.TabIndex = 2;
+            this.buttonSettings.Text = "Settings";
+            this.buttonSettings.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.buttonSettings.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.buttonSettings.UseVisualStyleBackColor = false;
+            this.buttonSettings.Click += new System.EventHandler(this.buttonSettings_Click);
             // 
-            // button15
+            // buttonTemp
             // 
-            this.button15.BackColor = System.Drawing.Color.Transparent;
-            this.button15.FlatAppearance.BorderSize = 0;
-            this.button15.FlatAppearance.MouseOverBackColor = System.Drawing.Color.LimeGreen;
-            this.button15.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button15.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button15.ForeColor = System.Drawing.Color.White;
-            this.button15.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button15.Location = new System.Drawing.Point(15, 40);
-            this.button15.Name = "button15";
-            this.button15.Size = new System.Drawing.Size(177, 31);
-            this.button15.TabIndex = 7;
-            this.button15.Text = "button4     ";
-            this.button15.UseVisualStyleBackColor = false;
-            this.button15.Click += new System.EventHandler(this.button2_Click);
+            this.buttonTemp.BackColor = System.Drawing.Color.Transparent;
+            this.buttonTemp.FlatAppearance.BorderSize = 0;
+            this.buttonTemp.FlatAppearance.MouseOverBackColor = System.Drawing.Color.LimeGreen;
+            this.buttonTemp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonTemp.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonTemp.ForeColor = System.Drawing.Color.White;
+            this.buttonTemp.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonTemp.Location = new System.Drawing.Point(18, 70);
+            this.buttonTemp.Name = "buttonTemp";
+            this.buttonTemp.Size = new System.Drawing.Size(177, 31);
+            this.buttonTemp.TabIndex = 7;
+            this.buttonTemp.Text = "Button         ";
+            this.buttonTemp.UseVisualStyleBackColor = false;
+            this.buttonTemp.Click += new System.EventHandler(this.buttonTemp_Click);
             // 
-            // button16
+            // buttonHome
             // 
-            this.button16.BackColor = System.Drawing.Color.Transparent;
-            this.button16.FlatAppearance.BorderSize = 0;
-            this.button16.FlatAppearance.MouseOverBackColor = System.Drawing.Color.LimeGreen;
-            this.button16.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button16.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button16.ForeColor = System.Drawing.Color.Transparent;
-            this.button16.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button16.Location = new System.Drawing.Point(15, 3);
-            this.button16.Name = "button16";
-            this.button16.Size = new System.Drawing.Size(177, 31);
-            this.button16.TabIndex = 5;
-            this.button16.Text = "Home        ";
-            this.button16.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
-            this.button16.UseVisualStyleBackColor = false;
-            this.button16.Click += new System.EventHandler(this.button1_Click);
+            this.buttonHome.BackColor = System.Drawing.Color.Transparent;
+            this.buttonHome.FlatAppearance.BorderSize = 0;
+            this.buttonHome.FlatAppearance.MouseOverBackColor = System.Drawing.Color.LimeGreen;
+            this.buttonHome.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonHome.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonHome.ForeColor = System.Drawing.Color.Transparent;
+            this.buttonHome.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonHome.Location = new System.Drawing.Point(15, 3);
+            this.buttonHome.Name = "buttonHome";
+            this.buttonHome.Size = new System.Drawing.Size(177, 31);
+            this.buttonHome.TabIndex = 5;
+            this.buttonHome.Text = "Home        ";
+            this.buttonHome.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.buttonHome.UseVisualStyleBackColor = false;
+            this.buttonHome.Click += new System.EventHandler(this.buttonHome_Click);
             // 
             // panelActiveButtonIndicator
             // 
@@ -589,7 +601,7 @@
             this.button2.Text = "       Eat-In";
             this.button2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.button2.UseVisualStyleBackColor = false;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.button2.Click += new System.EventHandler(this.buttonTemp_Click);
             // 
             // button1
             // 
@@ -608,7 +620,7 @@
             this.button1.Text = "       Home";
             this.button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.button1.UseVisualStyleBackColor = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.button1.Click += new System.EventHandler(this.buttonHome_Click);
             // 
             // SidePanel
             // 
@@ -621,8 +633,10 @@
             // panelMain
             // 
             this.panelMain.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
-            this.panelMain.Controls.Add(this.panelHome);
+            this.panelMain.Controls.Add(this.panelSettings);
+            this.panelMain.Controls.Add(this.panelLogSettings);
             this.panelMain.Controls.Add(this.panelEatin);
+            this.panelMain.Controls.Add(this.panelHome);
             this.panelMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelMain.Location = new System.Drawing.Point(205, 56);
             this.panelMain.Name = "panelMain";
@@ -630,10 +644,270 @@
             this.panelMain.Size = new System.Drawing.Size(752, 473);
             this.panelMain.TabIndex = 4;
             // 
-            // timerbutton13Menu
+            // panelSettings
             // 
-            this.timerbutton13Menu.Interval = 10;
-            this.timerbutton13Menu.Tick += new System.EventHandler(this.timerButton13Menu_Tick);
+            this.panelSettings.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(41)))), ((int)(((byte)(61)))));
+            this.panelSettings.Controls.Add(this.groupboxSerialPortOptions);
+            this.panelSettings.Controls.Add(this.labelSettings);
+            this.panelSettings.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelSettings.Location = new System.Drawing.Point(3, 3);
+            this.panelSettings.Name = "panelSettings";
+            this.panelSettings.Padding = new System.Windows.Forms.Padding(2);
+            this.panelSettings.Size = new System.Drawing.Size(746, 467);
+            this.panelSettings.TabIndex = 4;
+            this.panelSettings.Visible = false;
+            // 
+            // groupboxSerialPortOptions
+            // 
+            this.groupboxSerialPortOptions.Controls.Add(this.button11);
+            this.groupboxSerialPortOptions.Controls.Add(this.labelFlowControl);
+            this.groupboxSerialPortOptions.Controls.Add(this.labelBaudrate);
+            this.groupboxSerialPortOptions.Controls.Add(this.comboboxFlowControl);
+            this.groupboxSerialPortOptions.Controls.Add(this.labelParity);
+            this.groupboxSerialPortOptions.Controls.Add(this.labelPort);
+            this.groupboxSerialPortOptions.Controls.Add(this.comboboxPort);
+            this.groupboxSerialPortOptions.Controls.Add(this.comboboxBaudrate);
+            this.groupboxSerialPortOptions.Controls.Add(this.comboboxParity);
+            this.groupboxSerialPortOptions.Controls.Add(this.comboboxStopbits);
+            this.groupboxSerialPortOptions.Controls.Add(this.labelStopbits);
+            this.groupboxSerialPortOptions.Controls.Add(this.comboboxDatabits);
+            this.groupboxSerialPortOptions.Controls.Add(this.labelDatabits);
+            this.groupboxSerialPortOptions.ForeColor = System.Drawing.Color.White;
+            this.groupboxSerialPortOptions.Location = new System.Drawing.Point(20, 51);
+            this.groupboxSerialPortOptions.Name = "groupboxSerialPortOptions";
+            this.groupboxSerialPortOptions.Size = new System.Drawing.Size(388, 212);
+            this.groupboxSerialPortOptions.TabIndex = 10;
+            this.groupboxSerialPortOptions.TabStop = false;
+            this.groupboxSerialPortOptions.Text = "Serial port options";
+            // 
+            // button11
+            // 
+            this.button11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(107)))), ((int)(((byte)(24)))), ((int)(((byte)(58)))));
+            this.button11.FlatAppearance.BorderSize = 0;
+            this.button11.FlatAppearance.MouseOverBackColor = System.Drawing.Color.LimeGreen;
+            this.button11.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button11.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.button11.ForeColor = System.Drawing.Color.White;
+            this.button11.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button11.Location = new System.Drawing.Point(89, 161);
+            this.button11.Name = "button11";
+            this.button11.Size = new System.Drawing.Size(263, 31);
+            this.button11.TabIndex = 31;
+            this.button11.Text = "Connect    ";
+            this.button11.UseVisualStyleBackColor = false;
+            // 
+            // labelFlowControl
+            // 
+            this.labelFlowControl.AutoSize = true;
+            this.labelFlowControl.Location = new System.Drawing.Point(205, 94);
+            this.labelFlowControl.Name = "labelFlowControl";
+            this.labelFlowControl.Size = new System.Drawing.Size(64, 13);
+            this.labelFlowControl.TabIndex = 13;
+            this.labelFlowControl.Text = "Flow control";
+            // 
+            // labelBaudrate
+            // 
+            this.labelBaudrate.AutoSize = true;
+            this.labelBaudrate.Location = new System.Drawing.Point(26, 66);
+            this.labelBaudrate.Name = "labelBaudrate";
+            this.labelBaudrate.Size = new System.Drawing.Size(50, 13);
+            this.labelBaudrate.TabIndex = 8;
+            this.labelBaudrate.Text = "Baudrate";
+            // 
+            // comboboxFlowControl
+            // 
+            this.comboboxFlowControl.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboboxFlowControl.FormattingEnabled = true;
+            this.comboboxFlowControl.Location = new System.Drawing.Point(278, 91);
+            this.comboboxFlowControl.Name = "comboboxFlowControl";
+            this.comboboxFlowControl.Size = new System.Drawing.Size(74, 21);
+            this.comboboxFlowControl.TabIndex = 12;
+            // 
+            // labelParity
+            // 
+            this.labelParity.AutoSize = true;
+            this.labelParity.Location = new System.Drawing.Point(205, 66);
+            this.labelParity.Name = "labelParity";
+            this.labelParity.Size = new System.Drawing.Size(33, 13);
+            this.labelParity.TabIndex = 11;
+            this.labelParity.Text = "Parity";
+            // 
+            // labelPort
+            // 
+            this.labelPort.AutoSize = true;
+            this.labelPort.Location = new System.Drawing.Point(28, 37);
+            this.labelPort.Name = "labelPort";
+            this.labelPort.Size = new System.Drawing.Size(26, 13);
+            this.labelPort.TabIndex = 7;
+            this.labelPort.Text = "Port";
+            // 
+            // comboboxPort
+            // 
+            this.comboboxPort.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboboxPort.FormattingEnabled = true;
+            this.comboboxPort.Location = new System.Drawing.Point(89, 34);
+            this.comboboxPort.Name = "comboboxPort";
+            this.comboboxPort.Size = new System.Drawing.Size(76, 21);
+            this.comboboxPort.TabIndex = 1;
+            // 
+            // comboboxBaudrate
+            // 
+            this.comboboxBaudrate.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboboxBaudrate.FormattingEnabled = true;
+            this.comboboxBaudrate.Location = new System.Drawing.Point(89, 63);
+            this.comboboxBaudrate.Name = "comboboxBaudrate";
+            this.comboboxBaudrate.Size = new System.Drawing.Size(75, 21);
+            this.comboboxBaudrate.TabIndex = 2;
+            // 
+            // comboboxParity
+            // 
+            this.comboboxParity.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboboxParity.FormattingEnabled = true;
+            this.comboboxParity.Location = new System.Drawing.Point(278, 63);
+            this.comboboxParity.Name = "comboboxParity";
+            this.comboboxParity.Size = new System.Drawing.Size(74, 21);
+            this.comboboxParity.TabIndex = 5;
+            // 
+            // comboboxStopbits
+            // 
+            this.comboboxStopbits.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
+            this.comboboxStopbits.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboboxStopbits.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.comboboxStopbits.FormattingEnabled = true;
+            this.comboboxStopbits.Location = new System.Drawing.Point(278, 34);
+            this.comboboxStopbits.Name = "comboboxStopbits";
+            this.comboboxStopbits.Size = new System.Drawing.Size(74, 21);
+            this.comboboxStopbits.TabIndex = 4;
+            // 
+            // labelStopbits
+            // 
+            this.labelStopbits.AutoSize = true;
+            this.labelStopbits.Location = new System.Drawing.Point(204, 37);
+            this.labelStopbits.Name = "labelStopbits";
+            this.labelStopbits.Size = new System.Drawing.Size(48, 13);
+            this.labelStopbits.TabIndex = 10;
+            this.labelStopbits.Text = "Stop bits";
+            // 
+            // comboboxDatabits
+            // 
+            this.comboboxDatabits.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboboxDatabits.FormattingEnabled = true;
+            this.comboboxDatabits.Location = new System.Drawing.Point(89, 92);
+            this.comboboxDatabits.Name = "comboboxDatabits";
+            this.comboboxDatabits.Size = new System.Drawing.Size(76, 21);
+            this.comboboxDatabits.TabIndex = 3;
+            // 
+            // labelDatabits
+            // 
+            this.labelDatabits.AutoSize = true;
+            this.labelDatabits.Location = new System.Drawing.Point(27, 95);
+            this.labelDatabits.Name = "labelDatabits";
+            this.labelDatabits.Size = new System.Drawing.Size(49, 13);
+            this.labelDatabits.TabIndex = 9;
+            this.labelDatabits.Text = "Data bits";
+            // 
+            // labelSettings
+            // 
+            this.labelSettings.AutoSize = true;
+            this.labelSettings.BackColor = System.Drawing.Color.Transparent;
+            this.labelSettings.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelSettings.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(243)))), ((int)(((byte)(243)))));
+            this.labelSettings.Location = new System.Drawing.Point(17, 12);
+            this.labelSettings.Name = "labelSettings";
+            this.labelSettings.Size = new System.Drawing.Size(61, 18);
+            this.labelSettings.TabIndex = 3;
+            this.labelSettings.Text = "Settings";
+            // 
+            // panelLogSettings
+            // 
+            this.panelLogSettings.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(41)))), ((int)(((byte)(61)))));
+            this.panelLogSettings.Controls.Add(this.groupBoxLog);
+            this.panelLogSettings.Controls.Add(this.label1);
+            this.panelLogSettings.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelLogSettings.Location = new System.Drawing.Point(3, 3);
+            this.panelLogSettings.Name = "panelLogSettings";
+            this.panelLogSettings.Padding = new System.Windows.Forms.Padding(2);
+            this.panelLogSettings.Size = new System.Drawing.Size(746, 467);
+            this.panelLogSettings.TabIndex = 3;
+            this.panelLogSettings.Visible = false;
+            // 
+            // groupBoxLog
+            // 
+            this.groupBoxLog.Controls.Add(this.panelLogOptions);
+            this.groupBoxLog.ForeColor = System.Drawing.Color.White;
+            this.groupBoxLog.Location = new System.Drawing.Point(20, 53);
+            this.groupBoxLog.Name = "groupBoxLog";
+            this.groupBoxLog.Size = new System.Drawing.Size(194, 90);
+            this.groupBoxLog.TabIndex = 29;
+            this.groupBoxLog.TabStop = false;
+            this.groupBoxLog.Text = "Data logger";
+            // 
+            // panelLogOptions
+            // 
+            this.panelLogOptions.Controls.Add(this.radiobuttonLogAppend);
+            this.panelLogOptions.Controls.Add(this.checkboxEnableLog);
+            this.panelLogOptions.Controls.Add(this.radiobuttonLogOverwrite);
+            this.panelLogOptions.Location = new System.Drawing.Point(9, 25);
+            this.panelLogOptions.Name = "panelLogOptions";
+            this.panelLogOptions.Size = new System.Drawing.Size(171, 54);
+            this.panelLogOptions.TabIndex = 28;
+            // 
+            // radiobuttonLogAppend
+            // 
+            this.radiobuttonLogAppend.AutoSize = true;
+            this.radiobuttonLogAppend.Checked = true;
+            this.radiobuttonLogAppend.ForeColor = System.Drawing.Color.White;
+            this.radiobuttonLogAppend.Location = new System.Drawing.Point(28, 26);
+            this.radiobuttonLogAppend.Name = "radiobuttonLogAppend";
+            this.radiobuttonLogAppend.Size = new System.Drawing.Size(62, 17);
+            this.radiobuttonLogAppend.TabIndex = 31;
+            this.radiobuttonLogAppend.TabStop = true;
+            this.radiobuttonLogAppend.Text = "Append";
+            this.radiobuttonLogAppend.UseVisualStyleBackColor = true;
+            // 
+            // checkboxEnableLog
+            // 
+            this.checkboxEnableLog.AutoSize = true;
+            this.checkboxEnableLog.BackColor = System.Drawing.Color.Transparent;
+            this.checkboxEnableLog.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.checkboxEnableLog.Cursor = System.Windows.Forms.Cursors.Default;
+            this.checkboxEnableLog.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.checkboxEnableLog.Location = new System.Drawing.Point(6, 3);
+            this.checkboxEnableLog.MaximumSize = new System.Drawing.Size(400, 19);
+            this.checkboxEnableLog.Name = "checkboxEnableLog";
+            this.checkboxEnableLog.Size = new System.Drawing.Size(117, 17);
+            this.checkboxEnableLog.TabIndex = 15;
+            this.checkboxEnableLog.Text = "Enable Data logger";
+            this.checkboxEnableLog.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.checkboxEnableLog.UseVisualStyleBackColor = false;
+            // 
+            // radiobuttonLogOverwrite
+            // 
+            this.radiobuttonLogOverwrite.AutoSize = true;
+            this.radiobuttonLogOverwrite.ForeColor = System.Drawing.Color.White;
+            this.radiobuttonLogOverwrite.Location = new System.Drawing.Point(98, 26);
+            this.radiobuttonLogOverwrite.Name = "radiobuttonLogOverwrite";
+            this.radiobuttonLogOverwrite.Size = new System.Drawing.Size(70, 17);
+            this.radiobuttonLogOverwrite.TabIndex = 30;
+            this.radiobuttonLogOverwrite.Text = "Overwrite";
+            this.radiobuttonLogOverwrite.UseVisualStyleBackColor = true;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.Transparent;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(243)))), ((int)(((byte)(243)))));
+            this.label1.Location = new System.Drawing.Point(17, 12);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(33, 18);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "Log";
+            // 
+            // timerSettingsMenu
+            // 
+            this.timerSettingsMenu.Interval = 10;
+            this.timerSettingsMenu.Tick += new System.EventHandler(this.timerSettingsDropdownMenu_Tick);
             // 
             // timerDashboard
             // 
@@ -669,10 +943,19 @@
             this.panelEatin.PerformLayout();
             this.panelSideBar.ResumeLayout(false);
             this.gradientPanel1.ResumeLayout(false);
-            this.panelButton13.ResumeLayout(false);
+            this.panelButtonSettings.ResumeLayout(false);
             this.gradientPanelSideBar.ResumeLayout(false);
             this.panelDropDown.ResumeLayout(false);
             this.panelMain.ResumeLayout(false);
+            this.panelSettings.ResumeLayout(false);
+            this.panelSettings.PerformLayout();
+            this.groupboxSerialPortOptions.ResumeLayout(false);
+            this.groupboxSerialPortOptions.PerformLayout();
+            this.panelLogSettings.ResumeLayout(false);
+            this.panelLogSettings.PerformLayout();
+            this.groupBoxLog.ResumeLayout(false);
+            this.panelLogOptions.ResumeLayout(false);
+            this.panelLogOptions.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -692,20 +975,19 @@
         private System.Windows.Forms.Panel panelHome;
         private System.Windows.Forms.Label labelHome;
         private System.Windows.Forms.Panel panelEatin;
-        private System.Windows.Forms.Label labelEatin;
+        private System.Windows.Forms.Label labelTemp;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
         private System.Windows.Forms.Timer timerChart;
         private System.Windows.Forms.Panel panelSideBar;
         private System.Windows.Forms.Panel panelMain;
         private CustomControls.GradientPanel gradientPanel1;
-        private System.Windows.Forms.Panel panelButton13;
+        private System.Windows.Forms.Panel panelButtonSettings;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button10;
-        private System.Windows.Forms.Button button11;
-        private System.Windows.Forms.Button button12;
-        private System.Windows.Forms.Button button13;
-        private System.Windows.Forms.Button button15;
-        private System.Windows.Forms.Button button16;
+        private System.Windows.Forms.Button buttonLogSettings;
+        private System.Windows.Forms.Button buttonSerialPortSettings;
+        private System.Windows.Forms.Button buttonSettings;
+        private System.Windows.Forms.Button buttonHome;
         private System.Windows.Forms.Panel panelActiveButtonIndicator;
         private System.Windows.Forms.Panel panelDropDown;
         private System.Windows.Forms.Button button9;
@@ -714,9 +996,32 @@
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Timer timerbutton13Menu;
+        private System.Windows.Forms.Timer timerSettingsMenu;
         private System.Windows.Forms.Timer timerDashboard;
-        private System.Windows.Forms.Button buttonSettings;
+        private System.Windows.Forms.Panel panelSettings;
+        private System.Windows.Forms.Label labelSettings;
+        private System.Windows.Forms.GroupBox groupboxSerialPortOptions;
+        private System.Windows.Forms.Label labelFlowControl;
+        private System.Windows.Forms.Label labelBaudrate;
+        private System.Windows.Forms.ComboBox comboboxFlowControl;
+        private System.Windows.Forms.Label labelParity;
+        private System.Windows.Forms.Label labelPort;
+        private System.Windows.Forms.ComboBox comboboxPort;
+        private System.Windows.Forms.ComboBox comboboxBaudrate;
+        private System.Windows.Forms.ComboBox comboboxParity;
+        private System.Windows.Forms.ComboBox comboboxStopbits;
+        private System.Windows.Forms.Label labelStopbits;
+        private System.Windows.Forms.ComboBox comboboxDatabits;
+        private System.Windows.Forms.Label labelDatabits;
+        private System.Windows.Forms.Button buttonTemp;
+        private System.Windows.Forms.Panel panelLogSettings;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.GroupBox groupBoxLog;
+        private System.Windows.Forms.Panel panelLogOptions;
+        private System.Windows.Forms.CheckBox checkboxEnableLog;
+        private System.Windows.Forms.RadioButton radiobuttonLogOverwrite;
+        private System.Windows.Forms.RadioButton radiobuttonLogAppend;
+        private System.Windows.Forms.Button button11;
     }
 }
 

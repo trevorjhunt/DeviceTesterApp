@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO.Ports;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -18,7 +19,7 @@ namespace DeviceTester
         [DllImportAttribute("user32.dll")]
         public static extern bool ReleaseCapture();
 
-        private bool panelButton13IsExpanded;
+        private bool settingsMenuIsExpanded;
         private bool panelSideBarIsExpanded;
 
 
@@ -26,17 +27,39 @@ namespace DeviceTester
         public Dashboard()
         {
             InitializeComponent();
-
-            this.FormBorderStyle = FormBorderStyle.None;
-            this.DoubleBuffered = true;
-            this.ResizeRedraw = true;
+            SetDefaults();            
         }
+
+        // 
+        // called to set the initial defaults on start up
+        //
+        private void SetDefaults()
+        {
+            comboboxPort.Items.AddRange(SerialPort.GetPortNames());
+
+            comboboxBaudrate.DataSource = new[] { "115200", "19200", "230400", "57600", "38400", "9600", "4800" };
+            comboboxBaudrate.SelectedIndex = 0;
+
+            comboboxParity.DataSource = new[] { "None", "Odd", "Even", "Mark", "Space" };
+            comboboxParity.SelectedIndex = 0;
+
+            comboboxDatabits.DataSource = new[] { "5", "6", "7", "8" };
+            comboboxDatabits.SelectedIndex = 3;
+
+            comboboxStopbits.DataSource = new[] { "1", "2", "1.5" };
+            comboboxStopbits.SelectedIndex = 0;
+
+            comboboxFlowControl.DataSource = new[] { "None", "RTS", "RTS/X", "Xon/Xoff" };           
+            comboboxFlowControl.SelectedIndex = 0;
+           
+        }
+
 
         //
         // minimize window icon click event
         // minimizes the window
         //
-        private void PicBoxMinimize_Click(object sender, EventArgs e)
+        private void picboxMinimize_Click(object sender, EventArgs e)
         {
             WindowState = FormWindowState.Minimized;
         }
@@ -45,7 +68,7 @@ namespace DeviceTester
         // restore window icon click event
         // restore the window size to default setting
         //
-        private void PicBoxRestore_Click(object sender, EventArgs e)
+        private void picboxRestore_Click(object sender, EventArgs e)
         {
             WindowState = FormWindowState.Normal;
             picBoxRestore.Visible = false;
@@ -56,7 +79,7 @@ namespace DeviceTester
         // maximize window icon click event
         // maximizes the window
         //
-        private void PicBoxMaximize_Click(object sender, EventArgs e)
+        private void picboxMaximize_Click(object sender, EventArgs e)
         {
             WindowState = FormWindowState.Maximized;
             picBoxMaximize.Visible = false;
@@ -67,7 +90,7 @@ namespace DeviceTester
         // exit icon click event
         // exits the program
         //
-        private void PicBoxExit_Click(object sender, EventArgs e)
+        private void picboxExit_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
@@ -141,14 +164,30 @@ namespace DeviceTester
         }
 
         //
+        // Shows only the panel that is active TODO - better explanation TODO - make methods upper case
+        //
+        private void show_panel(ref System.Windows.Forms.Panel panel)
+        {
+            panelEatin.Visible = false;
+            panelHome.Visible = false;
+            panelSettings.Visible = false;
+            panelLogSettings.Visible = false;
+
+            panel.Visible = true;
+        }
+
+
+        //
         // Draws a resize grip icon on the bottom LHS of window
         // 
         protected override void OnPaint(PaintEventArgs e)
         {
+            const int gripSize = 16;
+
             if (this.WindowState != FormWindowState.Maximized)
             {
                 ControlPaint.DrawSizeGrip(e.Graphics, this.BackColor,
-                    this.ClientSize.Width - 16, this.ClientSize.Height - 16, 16, 16);
+                    this.ClientSize.Width - gripSize, this.ClientSize.Height - gripSize, gripSize, gripSize);
             }
 
             base.OnPaint(e);
@@ -157,26 +196,24 @@ namespace DeviceTester
         //
         //
         //
-        private void button1_Click(object sender, EventArgs e)
+        private void buttonHome_Click(object sender, EventArgs e)
         {
-            panelActiveButtonIndicator.Height = button1.Height;
-            panelActiveButtonIndicator.Top = button1.Top;
+            panelActiveButtonIndicator.Height = buttonHome.Height;
+            panelActiveButtonIndicator.Top = buttonHome.Top;
 
-            panelEatin.Visible = false;
-            panelHome.Visible = true;
+            show_panel(ref panelHome);
         }
 
 
         //
         //
         //
-        private void button2_Click(object sender, EventArgs e)
+        private void buttonTemp_Click(object sender, EventArgs e)
         {
-            panelActiveButtonIndicator.Height = button2.Height;
-            panelActiveButtonIndicator.Top = button2.Top;
+            panelActiveButtonIndicator.Height = buttonTemp.Height;
+            panelActiveButtonIndicator.Top = buttonTemp.Top;
 
-            panelHome.Visible = false;
-            panelEatin.Visible = true;
+            show_panel(ref panelEatin);
         }
 
         //
@@ -215,29 +252,29 @@ namespace DeviceTester
     
         }
 
+        // TODO - make all the methods start with a uppercase letter
         //
         //
-        //
-        private void timerButton13Menu_Tick(object sender, EventArgs e)
+        private void timerSettingsDropdownMenu_Tick(object sender, EventArgs e)
         {
-            if (!panelButton13IsExpanded)
+            if (!settingsMenuIsExpanded)
             {
                 button5.Image = Properties.Resources.Collapse_Arrow_20px;
-                panelButton13.Height += 10;
-                if (panelButton13.Height >= panelButton13.MaximumSize.Height)
+                panelButtonSettings.Height += 10;
+                if (panelButtonSettings.Height >= panelButtonSettings.MaximumSize.Height)
                 {
-                    timerbutton13Menu.Stop();
-                    panelButton13IsExpanded = true;
+                    timerSettingsMenu.Stop();
+                    settingsMenuIsExpanded = true;
                 }
             }
             else
             {
                 button5.Image = Properties.Resources.Expand_Arrow_20px;
-                panelButton13.Height -= 10;
-                if (panelButton13.Height <= panelButton13.MinimumSize.Height)
+                panelButtonSettings.Height -= 10;
+                if (panelButtonSettings.Height <= panelButtonSettings.MinimumSize.Height)
                 {
-                    timerbutton13Menu.Stop();
-                    panelButton13IsExpanded = false;
+                    timerSettingsMenu.Stop();
+                    settingsMenuIsExpanded = false;
                 }
             }
         }
@@ -245,18 +282,18 @@ namespace DeviceTester
         //
         //
         //
-        private void button13_Click(object sender, EventArgs e)
+        private void buttonSettings_Click(object sender, EventArgs e)
         {
-            timerbutton13Menu.Start();
-            panelActiveButtonIndicator.Height = button13.Height;
-            panelActiveButtonIndicator.Top = panelButton13.Top;
+            timerSettingsMenu.Start();
+            panelActiveButtonIndicator.Height = buttonSettings.Height;
+            panelActiveButtonIndicator.Top = panelButtonSettings.Top;
 
             // need to reposition buttons based on whether the panel is going to be 
             // expanded or collapsed
-            if (panelButton13IsExpanded)
-                buttonSettings.Top = panelButton13.Top + panelButton13.MinimumSize.Height;
+            if (settingsMenuIsExpanded)
+                buttonTemp.Top = panelButtonSettings.Top + panelButtonSettings.MinimumSize.Height;
             else                
-                buttonSettings.Top = panelButton13.Top + panelButton13.MaximumSize.Height;
+                buttonTemp.Top = panelButtonSettings.Top + panelButtonSettings.MaximumSize.Height;
         }
 
         //
@@ -274,10 +311,18 @@ namespace DeviceTester
             this.chart1.Series["chartLine"].Points.AddXY("JUL", 10);
         }
 
-        private void buttonSettings_Click(object sender, EventArgs e)
+        private void buttonSerialPortSettings_Click(object sender, EventArgs e)
         {
-            panelActiveButtonIndicator.Height = buttonSettings.Height;
-            panelActiveButtonIndicator.Top = buttonSettings.Top;
+            panelActiveButtonIndicator.Height = buttonSerialPortSettings.Height;
+            panelActiveButtonIndicator.Top = panelButtonSettings.Top + buttonSerialPortSettings.Top;
+            show_panel(ref panelSettings);
+        }
+
+        private void buttonLogSettings_Click(object sender, EventArgs e)
+        {
+            panelActiveButtonIndicator.Height = buttonLogSettings.Height;
+            panelActiveButtonIndicator.Top = panelButtonSettings.Top + buttonLogSettings.Top;
+            show_panel(ref panelLogSettings);
         }
     }
 }
