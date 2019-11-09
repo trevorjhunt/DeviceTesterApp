@@ -22,6 +22,9 @@ namespace DeviceTester
         private bool settingsMenuIsExpanded;
         private bool panelSideBarIsExpanded;
 
+        System.IO.StreamWriter out_file;
+        System.IO.StreamReader in_file;
+
 
         // Main entry point
         public Dashboard()
@@ -51,7 +54,6 @@ namespace DeviceTester
 
             comboboxFlowControl.DataSource = new[] { "None", "RTS", "RTS/X", "Xon/Xoff" };           
             comboboxFlowControl.SelectedIndex = 0;
-           
         }
 
 
@@ -311,6 +313,9 @@ namespace DeviceTester
             this.chart1.Series["chartLine"].Points.AddXY("JUL", 10);
         }
 
+        //
+        // handle serial port settings button click
+        //
         private void buttonSerialPortSettings_Click(object sender, EventArgs e)
         {
             panelActiveButtonIndicator.Height = buttonSerialPortSettings.Height;
@@ -318,11 +323,119 @@ namespace DeviceTester
             show_panel(ref panelSettings);
         }
 
+        //
+        // handle 'log' button click
+        //
         private void buttonLogSettings_Click(object sender, EventArgs e)
         {
             panelActiveButtonIndicator.Height = buttonLogSettings.Height;
             panelActiveButtonIndicator.Top = panelButtonSettings.Top + buttonLogSettings.Top;
             show_panel(ref panelLogSettings);
+        }
+
+        // 
+        //  handle 'log' enable/disable checkbox check event
+        //
+
+        private void checkboxEnableLog_CheckedChanged(object sender, EventArgs e)
+        {
+
+            if (checkboxEnableLog.Checked)
+            {
+                if (openFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    checkboxEnableLog.Text = openFileDialog1.FileName;
+                    radiobuttonLogAppend.Enabled = true;
+                    radiobuttonLogOverwrite.Enabled = true;
+                }
+                else
+                {
+                    radiobuttonLogAppend.Enabled = false;
+                    radiobuttonLogOverwrite.Enabled = false;
+                    checkboxEnableLog.Checked = false;
+                }
+            }
+            else
+            {
+                radiobuttonLogOverwrite.Enabled = false;
+                radiobuttonLogAppend.Enabled = false;
+                checkboxEnableLog.Text = "Enable Data logger";
+            }
+        }
+
+        private bool OpenSerialPort()
+        {
+            bool success = false;
+            try   
+            { 
+                serialPortDut.PortName = comboboxPort.Text;
+                serialPortDut.BaudRate = (Int32.Parse(comboboxBaudrate.Text));
+                serialPortDut.StopBits = (StopBits)Enum.Parse(typeof(StopBits), (comboboxStopbits.SelectedIndex + 1).ToString(), true);
+                serialPortDut.Parity = (Parity)Enum.Parse(typeof(Parity), comboboxParity.SelectedIndex.ToString(), true);
+                serialPortDut.DataBits = (Int32.Parse(comboboxDatabits.Text));
+                serialPortDut.Handshake = (Handshake)Enum.Parse(typeof(Handshake), comboboxFlowControl.SelectedIndex.ToString(), true);
+                serialPortDut.Open();
+                success = true;
+            }
+            catch 
+            {
+                // TODO alert("Can't open " + mySerial.PortName + " port, it might be used in another program");
+                success = false;
+            }
+            return success;
+        }
+
+        private void CloseSerialPort()
+        {
+            try
+            {
+                serialPortDut.Close();
+                serialPortDut.DiscardInBuffer();
+                serialPortDut.DiscardOutBuffer();
+            }
+            catch {/*ignore*/ }
+
+            if (checkboxEnableLog.Checked)
+            {
+                try { out_file.Dispose(); }
+                catch {/*ignore*/ }
+            }
+
+            try { in_file.Dispose(); }
+            catch {/*ignore*/ }
+        }
+
+        private void buttonSerialPortConnect_Click(object sender, EventArgs e)
+        {
+            // open serial port connetion if not already open
+            if (!serialPortDut.IsOpen)
+            {
+                if (OpenSerialPort())
+                {
+                    if (checkboxEnableLog.Checked)
+                    {
+                        try
+                        {
+                            out_file = new System.IO.StreamWriter(checkboxEnableLog.Text, radiobuttonLogAppend.Checked);
+                        }
+                        catch
+                        {
+                            // TODO alert("Can't open " + datalogger_checkbox.Text + " file, it might be used in another program");
+                            return;
+                        }
+                    }
+
+                    groupboxSerialPortOptions.Enabled = false;
+                    panelLogOptions.Enabled = false;
+                    buttonSerialPortConnect.Text = "Disconnect";
+                    return;
+                }
+            }
+
+            CloseSerialPort();
+            groupboxSerialPortOptions.Enabled = true;
+            panelLogOptions.Enabled = true;
+            buttonSerialPortConnect.Text = "Connect";
         }
     }
 }
