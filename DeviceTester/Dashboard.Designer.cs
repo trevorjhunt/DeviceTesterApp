@@ -70,11 +70,13 @@
             this.labelStopbits = new System.Windows.Forms.Label();
             this.comboboxDatabits = new System.Windows.Forms.ComboBox();
             this.labelDatabits = new System.Windows.Forms.Label();
-            this.labelSettings = new System.Windows.Forms.Label();
             this.timerSettingsMenu = new System.Windows.Forms.Timer(this.components);
             this.timerDashboard = new System.Windows.Forms.Timer(this.components);
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.serialPortDut = new System.IO.Ports.SerialPort(this.components);
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.textboxRecievedData = new System.Windows.Forms.TextBox();
+            this.groupboxRecievedData = new System.Windows.Forms.GroupBox();
             this.gradientPanel1 = new DeviceTester.CustomControls.GradientPanel();
             this.panelButtonSettings = new System.Windows.Forms.Panel();
             this.button4 = new System.Windows.Forms.Button();
@@ -112,6 +114,7 @@
             this.panelLogOptions.SuspendLayout();
             this.panelSettings.SuspendLayout();
             this.groupboxSerialPortOptions.SuspendLayout();
+            this.groupboxRecievedData.SuspendLayout();
             this.gradientPanel1.SuspendLayout();
             this.panelButtonSettings.SuspendLayout();
             this.gradientPanelSideBar.SuspendLayout();
@@ -262,7 +265,7 @@
             series1.Legend = "Legend1";
             series1.Name = "chartLine";
             this.chart1.Series.Add(series1);
-            this.chart1.Size = new System.Drawing.Size(554, 324);
+            this.chart1.Size = new System.Drawing.Size(471, 235);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
             // 
@@ -415,9 +418,9 @@
             // panelSettings
             // 
             this.panelSettings.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(41)))), ((int)(((byte)(61)))));
+            this.panelSettings.Controls.Add(this.groupboxRecievedData);
             this.panelSettings.Controls.Add(this.buttonSerialPortConnect);
             this.panelSettings.Controls.Add(this.groupboxSerialPortOptions);
-            this.panelSettings.Controls.Add(this.labelSettings);
             this.panelSettings.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelSettings.Location = new System.Drawing.Point(3, 3);
             this.panelSettings.Name = "panelSettings";
@@ -442,7 +445,7 @@
             this.groupboxSerialPortOptions.Controls.Add(this.comboboxDatabits);
             this.groupboxSerialPortOptions.Controls.Add(this.labelDatabits);
             this.groupboxSerialPortOptions.ForeColor = System.Drawing.Color.White;
-            this.groupboxSerialPortOptions.Location = new System.Drawing.Point(20, 51);
+            this.groupboxSerialPortOptions.Location = new System.Drawing.Point(11, 12);
             this.groupboxSerialPortOptions.Name = "groupboxSerialPortOptions";
             this.groupboxSerialPortOptions.Size = new System.Drawing.Size(388, 144);
             this.groupboxSerialPortOptions.TabIndex = 10;
@@ -458,9 +461,9 @@
             this.buttonSerialPortConnect.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.buttonSerialPortConnect.ForeColor = System.Drawing.Color.White;
             this.buttonSerialPortConnect.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonSerialPortConnect.Location = new System.Drawing.Point(109, 212);
+            this.buttonSerialPortConnect.Location = new System.Drawing.Point(289, 162);
             this.buttonSerialPortConnect.Name = "buttonSerialPortConnect";
-            this.buttonSerialPortConnect.Size = new System.Drawing.Size(263, 31);
+            this.buttonSerialPortConnect.Size = new System.Drawing.Size(110, 31);
             this.buttonSerialPortConnect.TabIndex = 31;
             this.buttonSerialPortConnect.Text = "Connect";
             this.buttonSerialPortConnect.UseVisualStyleBackColor = false;
@@ -576,18 +579,6 @@
             this.labelDatabits.TabIndex = 9;
             this.labelDatabits.Text = "Data bits";
             // 
-            // labelSettings
-            // 
-            this.labelSettings.AutoSize = true;
-            this.labelSettings.BackColor = System.Drawing.Color.Transparent;
-            this.labelSettings.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelSettings.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(243)))), ((int)(((byte)(243)))));
-            this.labelSettings.Location = new System.Drawing.Point(17, 12);
-            this.labelSettings.Name = "labelSettings";
-            this.labelSettings.Size = new System.Drawing.Size(61, 18);
-            this.labelSettings.TabIndex = 3;
-            this.labelSettings.Text = "Settings";
-            // 
             // timerSettingsMenu
             // 
             this.timerSettingsMenu.Interval = 10;
@@ -608,6 +599,31 @@
             // serialPortDut
             // 
             this.serialPortDut.BaudRate = 115200;
+            // 
+            // backgroundWorker1
+            // 
+            this.backgroundWorker1.WorkerSupportsCancellation = true;
+            // 
+            // textboxRecievedData
+            // 
+            this.textboxRecievedData.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(216)))), ((int)(((byte)(216)))));
+            this.textboxRecievedData.Location = new System.Drawing.Point(15, 24);
+            this.textboxRecievedData.Multiline = true;
+            this.textboxRecievedData.Name = "textboxRecievedData";
+            this.textboxRecievedData.Size = new System.Drawing.Size(657, 184);
+            this.textboxRecievedData.TabIndex = 32;
+            // 
+            // groupboxRecievedData
+            // 
+            this.groupboxRecievedData.BackColor = System.Drawing.Color.Transparent;
+            this.groupboxRecievedData.Controls.Add(this.textboxRecievedData);
+            this.groupboxRecievedData.ForeColor = System.Drawing.Color.White;
+            this.groupboxRecievedData.Location = new System.Drawing.Point(11, 211);
+            this.groupboxRecievedData.Name = "groupboxRecievedData";
+            this.groupboxRecievedData.Size = new System.Drawing.Size(698, 228);
+            this.groupboxRecievedData.TabIndex = 33;
+            this.groupboxRecievedData.TabStop = false;
+            this.groupboxRecievedData.Text = "Recieved Data";
             // 
             // gradientPanel1
             // 
@@ -969,9 +985,10 @@
             this.panelLogOptions.ResumeLayout(false);
             this.panelLogOptions.PerformLayout();
             this.panelSettings.ResumeLayout(false);
-            this.panelSettings.PerformLayout();
             this.groupboxSerialPortOptions.ResumeLayout(false);
             this.groupboxSerialPortOptions.PerformLayout();
+            this.groupboxRecievedData.ResumeLayout(false);
+            this.groupboxRecievedData.PerformLayout();
             this.gradientPanel1.ResumeLayout(false);
             this.panelButtonSettings.ResumeLayout(false);
             this.gradientPanelSideBar.ResumeLayout(false);
@@ -1019,7 +1036,6 @@
         private System.Windows.Forms.Timer timerSettingsMenu;
         private System.Windows.Forms.Timer timerDashboard;
         private System.Windows.Forms.Panel panelSettings;
-        private System.Windows.Forms.Label labelSettings;
         private System.Windows.Forms.GroupBox groupboxSerialPortOptions;
         private System.Windows.Forms.Label labelFlowControl;
         private System.Windows.Forms.Label labelBaudrate;
@@ -1044,6 +1060,9 @@
         private System.Windows.Forms.Button buttonSerialPortConnect;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.IO.Ports.SerialPort serialPortDut;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.Windows.Forms.GroupBox groupboxRecievedData;
+        private System.Windows.Forms.TextBox textboxRecievedData;
     }
 }
 

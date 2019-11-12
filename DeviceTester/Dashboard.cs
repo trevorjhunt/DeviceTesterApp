@@ -22,6 +22,7 @@ namespace DeviceTester
         private bool settingsMenuIsExpanded;
         private bool panelSideBarIsExpanded;
 
+        public string data { get; set; } // TODO - make private
         System.IO.StreamWriter out_file;
         System.IO.StreamReader in_file;
 
@@ -54,6 +55,9 @@ namespace DeviceTester
 
             comboboxFlowControl.DataSource = new[] { "None", "RTS", "RTS/X", "Xon/Xoff" };           
             comboboxFlowControl.SelectedIndex = 0;
+
+            serialPortDut.DataReceived += recieve_data_event;
+            backgroundWorker1.DoWork += new DoWorkEventHandler(update_RecievedDataTextBox);
         }
 
 
@@ -360,6 +364,58 @@ namespace DeviceTester
                 radiobuttonLogOverwrite.Enabled = false;
                 radiobuttonLogAppend.Enabled = false;
                 checkboxEnableLog.Text = "Enable Data logger";
+            }
+        }
+
+        /* Append text to rx_textarea*/
+        private void update_RecievedDataTextBox(object sender, DoWorkEventArgs e)
+        {
+            this.BeginInvoke((Action)(() =>
+            {
+                if (textboxRecievedData.Lines.Count() > 5000)
+                    textboxRecievedData.ResetText();
+                textboxRecievedData.AppendText(data.Replace("\\n", Environment.NewLine));
+            }));
+        }
+
+        private void recieve_data_event(object sender, System.IO.Ports.SerialDataReceivedEventArgs e)
+        {
+            if (!serialPortDut.IsOpen)
+                return;
+
+            try
+            {
+                int dataLength = serialPortDut.BytesToRead;
+                byte[] dataRecevied = new byte[dataLength];
+                int nbytes = serialPortDut.Read(dataRecevied, 0, dataLength);
+
+                if (nbytes == 0)
+                    return;
+
+                if (checkboxEnableLog.Checked)
+                {
+                    try
+                    {
+                        out_file.Write(data.Replace("\\n", Environment.NewLine));
+                    }
+                    catch
+                    {
+                        // TODO alert("Can't write to " + datalogger_checkbox.Text + " file it might be not exist or it is openend in another program");
+                        return;
+                    }
+                }
+
+                this.BeginInvoke((Action)(() =>
+                {
+                    data = System.Text.Encoding.Default.GetString(dataRecevied);
+
+                    if (!backgroundWorker1.IsBusy)
+                        backgroundWorker1.RunWorkerAsync();
+                }));
+            }
+            catch 
+            {
+                // TODO alert("Can't read form  " + mySerial.PortName + " port it might be opennd in another program");
             }
         }
 
