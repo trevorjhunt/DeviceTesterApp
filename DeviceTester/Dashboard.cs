@@ -174,10 +174,10 @@ namespace DeviceTester
         //
         private void show_panel(ref System.Windows.Forms.Panel panel)
         {
-            panelEatin.Visible = false;
-            panelHome.Visible = false;
-            panelSettings.Visible = false;
-            panelLogSettings.Visible = false;
+            panelTerminal.Visible = false;
+            panelFactory.Visible = false;
+            panelSerialPort.Visible = false;
+            panelLog.Visible = false;
 
             panel.Visible = true;
         }
@@ -204,22 +204,22 @@ namespace DeviceTester
         //
         private void buttonHome_Click(object sender, EventArgs e)
         {
-            panelActiveButtonIndicator.Height = buttonHome.Height;
-            panelActiveButtonIndicator.Top = buttonHome.Top;
+            panelActiveButtonIndicator.Height = buttonFactory.Height;
+            panelActiveButtonIndicator.Top = buttonFactory.Top;
 
-            show_panel(ref panelHome);
+            show_panel(ref panelFactory);
         }
 
 
         //
         //
         //
-        private void buttonTemp_Click(object sender, EventArgs e)
+        private void buttonTerminal_Click(object sender, EventArgs e)
         {
-            panelActiveButtonIndicator.Height = buttonTemp.Height;
-            panelActiveButtonIndicator.Top = buttonTemp.Top;
+            panelActiveButtonIndicator.Height = buttonTerminal.Height;
+            panelActiveButtonIndicator.Top = buttonTerminal.Top;
 
-            show_panel(ref panelEatin);
+            show_panel(ref panelTerminal);
         }
 
         //
@@ -294,28 +294,14 @@ namespace DeviceTester
             panelActiveButtonIndicator.Height = buttonSettings.Height;
             panelActiveButtonIndicator.Top = panelButtonSettings.Top;
 
-            // need to reposition buttons based on whether the panel is going to be 
-            // expanded or collapsed
-            if (settingsMenuIsExpanded)
-                buttonTemp.Top = panelButtonSettings.Top + panelButtonSettings.MinimumSize.Height;
-            else                
-                buttonTemp.Top = panelButtonSettings.Top + panelButtonSettings.MaximumSize.Height;
+            //// need to reposition buttons based on whether the panel is going to be 
+            //// expanded or collapsed
+            //if (settingsMenuIsExpanded)
+            //    buttonTerminal.Top = panelButtonSettings.Top + panelButtonSettings.MinimumSize.Height;
+            //else                
+            //    buttonTerminal.Top = panelButtonSettings.Top + panelButtonSettings.MaximumSize.Height;
         }
 
-        //
-        //
-        //
-        private void timerChart_Tick(object sender, EventArgs e)
-        {
-            timerChart.Stop();
-            this.chart1.Series["chartLine"].Points.AddXY("JAN", 10);
-            this.chart1.Series["chartLine"].Points.AddXY("FEB", 20);
-            this.chart1.Series["chartLine"].Points.AddXY("MAR", 30);
-            this.chart1.Series["chartLine"].Points.AddXY("APR", 50);
-            this.chart1.Series["chartLine"].Points.AddXY("MAY", 30);
-            this.chart1.Series["chartLine"].Points.AddXY("JUN", 30);
-            this.chart1.Series["chartLine"].Points.AddXY("JUL", 10);
-        }
 
         //
         // handle serial port settings button click
@@ -324,7 +310,7 @@ namespace DeviceTester
         {
             panelActiveButtonIndicator.Height = buttonSerialPortSettings.Height;
             panelActiveButtonIndicator.Top = panelButtonSettings.Top + buttonSerialPortSettings.Top;
-            show_panel(ref panelSettings);
+            show_panel(ref panelSerialPort);
         }
 
         //
@@ -334,7 +320,7 @@ namespace DeviceTester
         {
             panelActiveButtonIndicator.Height = buttonLogSettings.Height;
             panelActiveButtonIndicator.Top = panelButtonSettings.Top + buttonLogSettings.Top;
-            show_panel(ref panelLogSettings);
+            show_panel(ref panelLog);
         }
 
         // 
@@ -492,6 +478,31 @@ namespace DeviceTester
             groupboxSerialPortOptions.Enabled = true;
             panelLogOptions.Enabled = true;
             buttonSerialPortConnect.Text = "Connect";
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonFactoryConnect_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBoxFactoryConnectedPort_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

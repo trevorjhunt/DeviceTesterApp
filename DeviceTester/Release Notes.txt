@@ -4,6 +4,11 @@ Device Tester App                                                  Release Notes
 (C) 2019 Trevor Hunt, All Rights Reserved
 =======================================================================================
 
+App Version: 1.0.0.4
+    - modified the GUI layout 
+	- added new buttons and textfields
+	- removed graph 
+
 App Version: 1.0.0.3
     - Added serial port open/clode methods
 
