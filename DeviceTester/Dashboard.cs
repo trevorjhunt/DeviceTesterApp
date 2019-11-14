@@ -79,6 +79,8 @@ namespace DeviceTester
             WindowState = FormWindowState.Normal;
             picBoxRestore.Visible = false;
             picBoxMaximize.Visible = true;
+            Dashboard.ActiveForm.Width = Dashboard.ActiveForm.MaximumSize.Width;
+            Dashboard.ActiveForm.Height = Dashboard.ActiveForm.MaximumSize.Height;
         }
 
         //
@@ -182,23 +184,6 @@ namespace DeviceTester
             panel.Visible = true;
         }
 
-
-        //
-        // Draws a resize grip icon on the bottom LHS of window
-        // 
-        protected override void OnPaint(PaintEventArgs e)
-        {
-            const int gripSize = 16;
-
-            if (this.WindowState != FormWindowState.Maximized)
-            {
-                ControlPaint.DrawSizeGrip(e.Graphics, this.BackColor,
-                    this.ClientSize.Width - gripSize, this.ClientSize.Height - gripSize, gripSize, gripSize);
-            }
-
-            base.OnPaint(e);
-        }
-
         //
         //
         //
@@ -238,6 +223,7 @@ namespace DeviceTester
             if (!panelSideBarIsExpanded)
             {
                 panelSideBar.Width += 10;
+                Dashboard.ActiveForm.Width += 10;
                 if (panelSideBar.Width >= panelSideBar.MaximumSize.Width)
                 {
                     panelSideBar.Width = panelSideBar.MaximumSize.Width;
@@ -248,6 +234,7 @@ namespace DeviceTester
             else
             {
                 panelSideBar.Width -= 10;
+                Dashboard.ActiveForm.Width -= 10;
                 if (panelSideBar.Width == panelSideBar.MinimumSize.Width)
                 {
                     panelSideBar.Width = panelSideBar.MinimumSize.Width;
@@ -265,7 +252,7 @@ namespace DeviceTester
         {
             if (!settingsMenuIsExpanded)
             {
-                button5.Image = Properties.Resources.Collapse_Arrow_20px;
+                buttonSettings.Image = Properties.Resources.Collapse_Arrow_20px;
                 panelButtonSettings.Height += 10;
                 if (panelButtonSettings.Height >= panelButtonSettings.MaximumSize.Height)
                 {
@@ -275,7 +262,7 @@ namespace DeviceTester
             }
             else
             {
-                button5.Image = Properties.Resources.Expand_Arrow_20px;
+                buttonSettings.Image = Properties.Resources.Expand_Arrow_20px;
                 panelButtonSettings.Height -= 10;
                 if (panelButtonSettings.Height <= panelButtonSettings.MinimumSize.Height)
                 {
@@ -293,13 +280,6 @@ namespace DeviceTester
             timerSettingsMenu.Start();
             panelActiveButtonIndicator.Height = buttonSettings.Height;
             panelActiveButtonIndicator.Top = panelButtonSettings.Top;
-
-            //// need to reposition buttons based on whether the panel is going to be 
-            //// expanded or collapsed
-            //if (settingsMenuIsExpanded)
-            //    buttonTerminal.Top = panelButtonSettings.Top + panelButtonSettings.MinimumSize.Height;
-            //else                
-            //    buttonTerminal.Top = panelButtonSettings.Top + panelButtonSettings.MaximumSize.Height;
         }
 
 
@@ -478,31 +458,6 @@ namespace DeviceTester
             groupboxSerialPortOptions.Enabled = true;
             panelLogOptions.Enabled = true;
             buttonSerialPortConnect.Text = "Connect";
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button4_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label1_Click_1(object sender, EventArgs e)
-        {
-
-        }
-
-        private void buttonFactoryConnect_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBoxFactoryConnectedPort_TextChanged(object sender, EventArgs e)
-        {
-
         }
     }
 }
