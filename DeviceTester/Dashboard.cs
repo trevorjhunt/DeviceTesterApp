@@ -20,7 +20,7 @@ namespace DeviceTester
         public static extern bool ReleaseCapture();
 
         private bool settingsMenuIsExpanded;
-        private bool panelSideBarIsExpanded;
+        private bool panelSideBarIsExpanded = true;
 
         public string data { get; set; } // TODO - make private
         System.IO.StreamWriter out_file;
@@ -180,6 +180,7 @@ namespace DeviceTester
             panelFactory.Visible = false;
             panelSerialPort.Visible = false;
             panelLog.Visible = false;
+            panelTerminalOptions.Visible = false;
 
             panel.Visible = true;
         }
@@ -212,7 +213,10 @@ namespace DeviceTester
         //
         private void picBoxSideBarMenu_Click(object sender, EventArgs e)
         {
-            timerDashboard.Start();
+            if (panelSideBarIsExpanded)
+                this.MinimumSize = new Size(496, 480);
+   
+            timerDashboard.Start();            
         }
 
         //
@@ -223,23 +227,26 @@ namespace DeviceTester
             if (!panelSideBarIsExpanded)
             {
                 panelSideBar.Width += 10;
-                Dashboard.ActiveForm.Width += 10;
+                panelMain.Width -= 10;
+                this.Size = new Size(this.Size.Width + 10, this.Size.Height);
+
                 if (panelSideBar.Width >= panelSideBar.MaximumSize.Width)
                 {
                     panelSideBar.Width = panelSideBar.MaximumSize.Width;
                     panelSideBarIsExpanded = true;
                     timerDashboard.Stop();
+                    this.MinimumSize = new Size(650, 480);
                 }
             }
             else
             {
+                this.Size = new Size(this.Size.Width - 10, this.Size.Height);
                 panelSideBar.Width -= 10;
-                Dashboard.ActiveForm.Width -= 10;
                 if (panelSideBar.Width == panelSideBar.MinimumSize.Width)
                 {
                     panelSideBar.Width = panelSideBar.MinimumSize.Width;
                     panelSideBarIsExpanded = false;
-                    timerDashboard.Stop();
+                    timerDashboard.Stop();                    
                 }
             }
     
@@ -331,6 +338,18 @@ namespace DeviceTester
                 radiobuttonLogAppend.Enabled = false;
                 checkboxEnableLog.Text = "Enable Data logger";
             }
+        }
+
+
+        // 
+        //  handle 'terminal options' click
+        //
+
+        private void buttonTerminalOptions_Click(object sender, EventArgs e)
+        {
+            panelActiveButtonIndicator.Height = buttonTerminalOptions.Height;
+            panelActiveButtonIndicator.Top = panelButtonSettings.Top + buttonTerminalOptions.Top;
+            show_panel(ref panelTerminalOptions);
         }
 
         /* Append text to rx_textarea*/
@@ -447,7 +466,7 @@ namespace DeviceTester
                         }
                     }
 
-                    groupboxSerialPortOptions.Enabled = false;
+                    //groupboxSerialPortOptions.Enabled = false;
                     panelLogOptions.Enabled = false;
                     buttonSerialPortConnect.Text = "Disconnect";
                     return;
@@ -455,7 +474,7 @@ namespace DeviceTester
             }
 
             CloseSerialPort();
-            groupboxSerialPortOptions.Enabled = true;
+            //groupboxSerialPortOptions.Enabled = true;
             panelLogOptions.Enabled = true;
             buttonSerialPortConnect.Text = "Connect";
         }
