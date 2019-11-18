@@ -4,6 +4,9 @@ Device Tester App                                                  Release Notes
 (C) 2019 Trevor Hunt, All Rights Reserved
 =======================================================================================
 
+App Version: 1.0.0.7
+    - modified the GUI layout 
+
 App Version: 1.0.0.6
     - modified the GUI layout 
 

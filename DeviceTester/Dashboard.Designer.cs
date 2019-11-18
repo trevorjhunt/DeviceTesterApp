@@ -106,6 +106,9 @@
             this.comboboxStopbits = new System.Windows.Forms.ComboBox();
             this.comboboxDatabits = new System.Windows.Forms.ComboBox();
             this.panelSideBar = new System.Windows.Forms.Panel();
+            this.labelPort = new System.Windows.Forms.Label();
+            this.buttonTerminalConnect = new System.Windows.Forms.Button();
+            this.comboBoxTerminalPort = new System.Windows.Forms.ComboBox();
             this.gradientPanel1 = new DeviceTester.CustomControls.GradientPanel();
             this.panelButtonSettings = new System.Windows.Forms.Panel();
             this.buttonTerminalOptions = new System.Windows.Forms.Button();
@@ -139,11 +142,9 @@
             // panelTop
             // 
             this.panelTop.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
-            this.panelTop.Controls.Add(this.buttonSerialPortConnect);
             this.panelTop.Controls.Add(this.picBoxRestore);
             this.panelTop.Controls.Add(this.picBoxMinimize);
             this.panelTop.Controls.Add(this.picBoxMaximize);
-            this.panelTop.Controls.Add(this.comboboxPort);
             this.panelTop.Controls.Add(this.picBoxExit);
             this.panelTop.Controls.Add(this.labelDashboard);
             this.panelTop.Controls.Add(this.picBoxDashboard);
@@ -164,9 +165,9 @@
             this.buttonSerialPortConnect.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.buttonSerialPortConnect.ForeColor = System.Drawing.Color.White;
             this.buttonSerialPortConnect.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonSerialPortConnect.Location = new System.Drawing.Point(64, 17);
+            this.buttonSerialPortConnect.Location = new System.Drawing.Point(191, 250);
             this.buttonSerialPortConnect.Name = "buttonSerialPortConnect";
-            this.buttonSerialPortConnect.Size = new System.Drawing.Size(60, 21);
+            this.buttonSerialPortConnect.Size = new System.Drawing.Size(129, 21);
             this.buttonSerialPortConnect.TabIndex = 51;
             this.buttonSerialPortConnect.Text = "Connect";
             this.buttonSerialPortConnect.UseVisualStyleBackColor = false;
@@ -213,9 +214,9 @@
             // 
             this.comboboxPort.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboboxPort.FormattingEnabled = true;
-            this.comboboxPort.Location = new System.Drawing.Point(129, 17);
+            this.comboboxPort.Location = new System.Drawing.Point(191, 70);
             this.comboboxPort.Name = "comboboxPort";
-            this.comboboxPort.Size = new System.Drawing.Size(60, 21);
+            this.comboboxPort.Size = new System.Drawing.Size(129, 21);
             this.comboboxPort.TabIndex = 36;
             // 
             // picBoxExit
@@ -506,6 +507,8 @@
             this.panelTerminalItems.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelTerminalItems.Controls.Add(this.buttonTerminalConnect);
+            this.panelTerminalItems.Controls.Add(this.comboBoxTerminalPort);
             this.panelTerminalItems.Controls.Add(this.buttonTerminalTransmitClear);
             this.panelTerminalItems.Controls.Add(this.radioButtonTerminalHexDisplay);
             this.panelTerminalItems.Controls.Add(this.radioButtonTerminalFile);
@@ -661,7 +664,7 @@
             // 
             this.labelTerminalReceive.AutoSize = true;
             this.labelTerminalReceive.ForeColor = System.Drawing.Color.White;
-            this.labelTerminalReceive.Location = new System.Drawing.Point(6, 6);
+            this.labelTerminalReceive.Location = new System.Drawing.Point(7, 23);
             this.labelTerminalReceive.Name = "labelTerminalReceive";
             this.labelTerminalReceive.Size = new System.Drawing.Size(47, 13);
             this.labelTerminalReceive.TabIndex = 68;
@@ -711,11 +714,11 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textboxRecievedData.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(216)))), ((int)(((byte)(216)))));
-            this.textboxRecievedData.Location = new System.Drawing.Point(7, 22);
+            this.textboxRecievedData.Location = new System.Drawing.Point(7, 38);
             this.textboxRecievedData.Multiline = true;
             this.textboxRecievedData.Name = "textboxRecievedData";
             this.textboxRecievedData.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textboxRecievedData.Size = new System.Drawing.Size(459, 173);
+            this.textboxRecievedData.Size = new System.Drawing.Size(459, 157);
             this.textboxRecievedData.TabIndex = 63;
             // 
             // panelLog
@@ -852,11 +855,11 @@
             // panelMain
             // 
             this.panelMain.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
+            this.panelMain.Controls.Add(this.panelSerialPort);
             this.panelMain.Controls.Add(this.panelFactory);
             this.panelMain.Controls.Add(this.panelTerminal);
             this.panelMain.Controls.Add(this.panelLog);
             this.panelMain.Controls.Add(this.panelTerminalOptions);
-            this.panelMain.Controls.Add(this.panelSerialPort);
             this.panelMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelMain.Location = new System.Drawing.Point(152, 53);
             this.panelMain.Margin = new System.Windows.Forms.Padding(0);
@@ -892,10 +895,13 @@
             // 
             this.panelSerialPort.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.panelSerialPort.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(41)))), ((int)(((byte)(61)))));
+            this.panelSerialPort.Controls.Add(this.labelPort);
+            this.panelSerialPort.Controls.Add(this.buttonSerialPortConnect);
             this.panelSerialPort.Controls.Add(this.labelBaudrate);
             this.panelSerialPort.Controls.Add(this.labelDatabits);
             this.panelSerialPort.Controls.Add(this.labelFlowControl);
             this.panelSerialPort.Controls.Add(this.label8);
+            this.panelSerialPort.Controls.Add(this.comboboxPort);
             this.panelSerialPort.Controls.Add(this.labelParity);
             this.panelSerialPort.Controls.Add(this.comboboxFlowControl);
             this.panelSerialPort.Controls.Add(this.labelStopbits);
@@ -915,7 +921,7 @@
             // 
             this.labelBaudrate.AutoSize = true;
             this.labelBaudrate.ForeColor = System.Drawing.Color.White;
-            this.labelBaudrate.Location = new System.Drawing.Point(58, 58);
+            this.labelBaudrate.Location = new System.Drawing.Point(134, 101);
             this.labelBaudrate.Name = "labelBaudrate";
             this.labelBaudrate.Size = new System.Drawing.Size(50, 13);
             this.labelBaudrate.TabIndex = 8;
@@ -925,7 +931,7 @@
             // 
             this.labelDatabits.AutoSize = true;
             this.labelDatabits.ForeColor = System.Drawing.Color.White;
-            this.labelDatabits.Location = new System.Drawing.Point(59, 84);
+            this.labelDatabits.Location = new System.Drawing.Point(135, 127);
             this.labelDatabits.Name = "labelDatabits";
             this.labelDatabits.Size = new System.Drawing.Size(49, 13);
             this.labelDatabits.TabIndex = 9;
@@ -935,7 +941,7 @@
             // 
             this.labelFlowControl.AutoSize = true;
             this.labelFlowControl.ForeColor = System.Drawing.Color.White;
-            this.labelFlowControl.Location = new System.Drawing.Point(43, 170);
+            this.labelFlowControl.Location = new System.Drawing.Point(119, 213);
             this.labelFlowControl.Name = "labelFlowControl";
             this.labelFlowControl.Size = new System.Drawing.Size(64, 13);
             this.labelFlowControl.TabIndex = 13;
@@ -956,7 +962,7 @@
             // 
             this.labelParity.AutoSize = true;
             this.labelParity.ForeColor = System.Drawing.Color.White;
-            this.labelParity.Location = new System.Drawing.Point(74, 143);
+            this.labelParity.Location = new System.Drawing.Point(150, 186);
             this.labelParity.Name = "labelParity";
             this.labelParity.Size = new System.Drawing.Size(33, 13);
             this.labelParity.TabIndex = 11;
@@ -966,7 +972,7 @@
             // 
             this.comboboxFlowControl.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboboxFlowControl.FormattingEnabled = true;
-            this.comboboxFlowControl.Location = new System.Drawing.Point(115, 168);
+            this.comboboxFlowControl.Location = new System.Drawing.Point(191, 211);
             this.comboboxFlowControl.Name = "comboboxFlowControl";
             this.comboboxFlowControl.Size = new System.Drawing.Size(130, 21);
             this.comboboxFlowControl.TabIndex = 12;
@@ -975,7 +981,7 @@
             // 
             this.labelStopbits.AutoSize = true;
             this.labelStopbits.ForeColor = System.Drawing.Color.White;
-            this.labelStopbits.Location = new System.Drawing.Point(59, 114);
+            this.labelStopbits.Location = new System.Drawing.Point(135, 157);
             this.labelStopbits.Name = "labelStopbits";
             this.labelStopbits.Size = new System.Drawing.Size(48, 13);
             this.labelStopbits.TabIndex = 10;
@@ -985,7 +991,7 @@
             // 
             this.comboboxBaudrate.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboboxBaudrate.FormattingEnabled = true;
-            this.comboboxBaudrate.Location = new System.Drawing.Point(116, 56);
+            this.comboboxBaudrate.Location = new System.Drawing.Point(192, 99);
             this.comboboxBaudrate.Name = "comboboxBaudrate";
             this.comboboxBaudrate.Size = new System.Drawing.Size(130, 21);
             this.comboboxBaudrate.TabIndex = 2;
@@ -994,7 +1000,7 @@
             // 
             this.comboboxParity.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboboxParity.FormattingEnabled = true;
-            this.comboboxParity.Location = new System.Drawing.Point(115, 140);
+            this.comboboxParity.Location = new System.Drawing.Point(191, 183);
             this.comboboxParity.Name = "comboboxParity";
             this.comboboxParity.Size = new System.Drawing.Size(130, 21);
             this.comboboxParity.TabIndex = 5;
@@ -1005,7 +1011,7 @@
             this.comboboxStopbits.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboboxStopbits.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.comboboxStopbits.FormattingEnabled = true;
-            this.comboboxStopbits.Location = new System.Drawing.Point(115, 112);
+            this.comboboxStopbits.Location = new System.Drawing.Point(191, 155);
             this.comboboxStopbits.Name = "comboboxStopbits";
             this.comboboxStopbits.Size = new System.Drawing.Size(130, 21);
             this.comboboxStopbits.TabIndex = 4;
@@ -1014,7 +1020,7 @@
             // 
             this.comboboxDatabits.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboboxDatabits.FormattingEnabled = true;
-            this.comboboxDatabits.Location = new System.Drawing.Point(116, 84);
+            this.comboboxDatabits.Location = new System.Drawing.Point(192, 127);
             this.comboboxDatabits.Name = "comboboxDatabits";
             this.comboboxDatabits.Size = new System.Drawing.Size(130, 21);
             this.comboboxDatabits.TabIndex = 3;
@@ -1030,6 +1036,44 @@
             this.panelSideBar.Name = "panelSideBar";
             this.panelSideBar.Size = new System.Drawing.Size(150, 425);
             this.panelSideBar.TabIndex = 3;
+            // 
+            // labelPort
+            // 
+            this.labelPort.AutoSize = true;
+            this.labelPort.ForeColor = System.Drawing.Color.White;
+            this.labelPort.Location = new System.Drawing.Point(158, 74);
+            this.labelPort.Name = "labelPort";
+            this.labelPort.Size = new System.Drawing.Size(26, 13);
+            this.labelPort.TabIndex = 62;
+            this.labelPort.Text = "Port";
+            // 
+            // buttonTerminalConnect
+            // 
+            this.buttonTerminalConnect.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonTerminalConnect.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(107)))), ((int)(((byte)(24)))), ((int)(((byte)(58)))));
+            this.buttonTerminalConnect.FlatAppearance.BorderSize = 0;
+            this.buttonTerminalConnect.FlatAppearance.MouseOverBackColor = System.Drawing.Color.LimeGreen;
+            this.buttonTerminalConnect.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonTerminalConnect.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.buttonTerminalConnect.ForeColor = System.Drawing.Color.White;
+            this.buttonTerminalConnect.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonTerminalConnect.Location = new System.Drawing.Point(350, 11);
+            this.buttonTerminalConnect.Name = "buttonTerminalConnect";
+            this.buttonTerminalConnect.Size = new System.Drawing.Size(55, 21);
+            this.buttonTerminalConnect.TabIndex = 80;
+            this.buttonTerminalConnect.Text = "Connect";
+            this.buttonTerminalConnect.UseVisualStyleBackColor = false;
+            this.buttonTerminalConnect.UseWaitCursor = true;
+            // 
+            // comboBoxTerminalPort
+            // 
+            this.comboBoxTerminalPort.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboBoxTerminalPort.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxTerminalPort.FormattingEnabled = true;
+            this.comboBoxTerminalPort.Location = new System.Drawing.Point(407, 11);
+            this.comboBoxTerminalPort.Name = "comboBoxTerminalPort";
+            this.comboBoxTerminalPort.Size = new System.Drawing.Size(59, 21);
+            this.comboBoxTerminalPort.TabIndex = 79;
             // 
             // gradientPanel1
             // 
@@ -1306,6 +1350,9 @@
         private System.Windows.Forms.Panel panelTerminalOptions;
         private System.Windows.Forms.Label labelTerminalOptions;
         private System.Windows.Forms.Button buttonTerminalTransmitClear;
+        private System.Windows.Forms.Button buttonTerminalConnect;
+        private System.Windows.Forms.ComboBox comboBoxTerminalPort;
+        private System.Windows.Forms.Label labelPort;
     }
 }
 
