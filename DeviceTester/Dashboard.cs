@@ -478,5 +478,15 @@ namespace DeviceTester
             panelLogOptions.Enabled = true;
             buttonSerialPortConnect.Text = "Connect";
         }
+
+        private void panelTop_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void buttonTerminalTransmitSend_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
