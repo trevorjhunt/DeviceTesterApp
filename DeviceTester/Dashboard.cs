@@ -21,6 +21,7 @@ namespace DeviceTester
 
         private bool settingsMenuIsExpanded;
         private bool panelSideBarIsExpanded = true;
+        private int terminalSendCommandCounter = 0;
 
         public string data { get; set; } // TODO - make private
         System.IO.StreamWriter out_file;
@@ -57,7 +58,8 @@ namespace DeviceTester
             comboboxFlowControl.SelectedIndex = 0;
 
             serialPortDut.DataReceived += recieve_data_event;
-            backgroundWorker1.DoWork += new DoWorkEventHandler(update_RecievedDataTextBox);
+            backgroundWorker1.DoWork += new DoWorkEventHandler(TerminalUpdateReceiveDataTextbox);
+            timerTerminalCommandDelay.Tick += new EventHandler(TerminalSendData);
         }
 
 
@@ -227,7 +229,7 @@ namespace DeviceTester
             if (!panelSideBarIsExpanded)
             {
                 panelSideBar.Width += 10;
-                panelMain.Width -= 10;
+                panelPages.Width -= 10;
                 this.Size = new Size(this.Size.Width + 10, this.Size.Height);
 
                 if (panelSideBar.Width >= panelSideBar.MaximumSize.Width)
@@ -353,7 +355,7 @@ namespace DeviceTester
         }
 
         /* Append text to rx_textarea*/
-        private void update_RecievedDataTextBox(object sender, DoWorkEventArgs e)
+        private void TerminalUpdateReceiveDataTextbox(object sender, DoWorkEventArgs e)
         {
             this.BeginInvoke((Action)(() =>
             {
@@ -404,6 +406,11 @@ namespace DeviceTester
             }
         }
 
+        private void buttonTerminalReceiveClear_Click(object sender, EventArgs e)
+        {
+            textboxRecievedData.Clear();
+        }
+
         private bool OpenSerialPort()
         {
             bool success = false;
@@ -434,16 +441,28 @@ namespace DeviceTester
                 serialPortDut.DiscardInBuffer();
                 serialPortDut.DiscardOutBuffer();
             }
-            catch {/*ignore*/ }
+            catch
+            {
+            }
 
             if (checkboxEnableLog.Checked)
             {
-                try { out_file.Dispose(); }
-                catch {/*ignore*/ }
+                try
+                {
+                    out_file.Dispose();
+                }
+                catch
+                {
+                }
             }
 
-            try { in_file.Dispose(); }
-            catch {/*ignore*/ }
+            try
+            {
+                in_file.Dispose();
+            }
+            catch
+            {
+            }
         }
 
         private void buttonSerialPortConnect_Click(object sender, EventArgs e)
@@ -469,6 +488,7 @@ namespace DeviceTester
                     //groupboxSerialPortOptions.Enabled = false;
                     panelLogOptions.Enabled = false;
                     buttonSerialPortConnect.Text = "Disconnect";
+                    toolStripStatusLabelConnection.Text = "Connected port: " + serialPortDut.PortName + " @ " + serialPortDut.BaudRate + " bps";
                     return;
                 }
             }
@@ -477,16 +497,93 @@ namespace DeviceTester
             //groupboxSerialPortOptions.Enabled = true;
             panelLogOptions.Enabled = true;
             buttonSerialPortConnect.Text = "Connect";
+            toolStripStatusLabelConnection.Text = "Not Connected";
         }
 
-        private void panelTop_Paint(object sender, PaintEventArgs e)
-        {
 
+        private void TerminalSendData(object sender, EventArgs e)
+        {
+            string tx_data = "";
+
+            if (radioButtonTerminalCommands.Checked)
+            {
+                tx_data = textBoxTransmitData.Text.Replace("\n", Environment.NewLine);
+                if (terminalSendCommandCounter > 0)
+                {
+                    if (serialPortDut.IsOpen)
+                        serialPortDut.Write(tx_data.Replace("\\n", Environment.NewLine));
+                    --terminalSendCommandCounter;
+                }
+
+                if (terminalSendCommandCounter == 0)
+                {
+                    buttonTerminalSend.Text = "Send";
+                    timerTerminalCommandDelay.Stop();
+                    terminalSendCommandCounter = 0;
+                }
+                return;
+            }
         }
 
-        private void buttonTerminalTransmitSend_Click(object sender, EventArgs e)
-        {
 
+        private void buttonTerminalSend_Click(object sender, EventArgs e)
+        {
+            // send 'commmand' option checked
+            if (radioButtonTerminalCommands.Checked)
+            {
+                if (buttonTerminalSend.Text == "Send")
+                {
+                    terminalSendCommandCounter = 1;
+                    TerminalSendData(null,null); // TODO ???
+                    if (numericUpDownTerminalRepeats.Value > 0)
+                    {
+                        terminalSendCommandCounter = (int)numericUpDownTerminalRepeats.Value;
+                        timerTerminalCommandDelay.Interval = (int)numericUpDownTerminalDelay.Value;
+                        timerTerminalCommandDelay.Start();
+                        buttonTerminalSend.Text = "Stop";
+                    }
+                }
+                else
+                {
+                    buttonTerminalSend.Text = "Send";
+                    timerTerminalCommandDelay.Stop();
+                }
+                return;
+            }
+
+            // send 'keys' option checked?
+            if (radioButtonTerminalKeys.Checked)
+            {
+                return;
+            }
+
+            // send file option checked
+            if (radioButtonTerminalFile.Checked)
+            {
+                // TODO - file handling
+                return;
+            }
+        }
+
+        private void radioButtonTerminalKeys_CheckedChanged(object sender, EventArgs e)
+        {
+            textBoxTransmitData.Clear();
+            numericUpDownTerminalDelay.Enabled = !radioButtonTerminalKeys.Checked;
+            numericUpDownTerminalRepeats.Enabled = !radioButtonTerminalKeys.Checked;
+        }
+
+        private void radioButtonTerminalCommands_CheckedChanged(object sender, EventArgs e)
+        {
+            textBoxTransmitData.Clear();
+            numericUpDownTerminalDelay.Enabled = radioButtonTerminalCommands.Checked;
+            numericUpDownTerminalRepeats.Enabled = radioButtonTerminalCommands.Checked;
+        }
+
+        private void radioButtonTerminalFile_CheckedChanged(object sender, EventArgs e)
+        {
+            textBoxTransmitData.Clear();
+            numericUpDownTerminalDelay.Enabled = !radioButtonTerminalFile.Checked;
+            numericUpDownTerminalRepeats.Enabled = !radioButtonTerminalFile.Checked;
         }
     }
 }
