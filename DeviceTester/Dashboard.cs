@@ -23,7 +23,9 @@ namespace DeviceTester
         private bool panelSideBarIsExpanded = true;
         private int terminalSendCommandCounter = 0;
 
-        public string data { get; set; } // TODO - make private
+        public string ReceivedData      { get; set; } // TODO - make private
+        public string ReceivedDataInHex { get; set; } // TODO - make private
+
         System.IO.StreamWriter out_file;
         System.IO.StreamReader in_file;
 
@@ -361,52 +363,46 @@ namespace DeviceTester
             {
                 if (textboxRecievedData.Lines.Count() > 5000)
                     textboxRecievedData.ResetText();
-                textboxRecievedData.AppendText(data.Replace("\\n", Environment.NewLine));
+
+                if (radioButtonTerminalHex.Checked)
+                    textboxRecievedData.AppendText(ReceivedDataInHex);
+                else
+                    textboxRecievedData.AppendText(ReceivedData.Replace("\\n", Environment.NewLine));
             }));
         }
 
         private void recieve_data_event(object sender, System.IO.Ports.SerialDataReceivedEventArgs e)
         {
-            if (!serialPortDut.IsOpen)
+            int dataLength = serialPortDut.BytesToRead;
+            byte[] rxBytes = new byte[dataLength];
+            int numBytes = serialPortDut.Read(rxBytes, 0, dataLength);
+
+            if ((!serialPortDut.IsOpen) || (numBytes == 0))
                 return;
 
-            try
+            this.BeginInvoke((Action)(() =>
             {
-                int dataLength = serialPortDut.BytesToRead;
-                byte[] dataRecevied = new byte[dataLength];
-                int nbytes = serialPortDut.Read(dataRecevied, 0, dataLength);
+                ReceivedData = System.Text.Encoding.Default.GetString(rxBytes);
+                if (radioButtonTerminalHex.Checked)
+                    ReceivedDataInHex = BitConverter.ToString(rxBytes);
 
-                if (nbytes == 0)
-                    return;
+                if (!backgroundWorker1.IsBusy)
+                    backgroundWorker1.RunWorkerAsync();
+            }));
+            
+        }
 
-                if (checkboxEnableLog.Checked)
-                {
-                    try
-                    {
-                        out_file.Write(data.Replace("\\n", Environment.NewLine));
-                    }
-                    catch
-                    {
-                        // TODO alert("Can't write to " + datalogger_checkbox.Text + " file it might be not exist or it is openend in another program");
-                        return;
-                    }
-                }
-
-                this.BeginInvoke((Action)(() =>
-                {
-                    data = System.Text.Encoding.Default.GetString(dataRecevied);
-
-                    if (!backgroundWorker1.IsBusy)
-                        backgroundWorker1.RunWorkerAsync();
-                }));
-            }
-            catch 
-            {
-                // TODO alert("Can't read form  " + mySerial.PortName + " port it might be opennd in another program");
-            }
+        private void radioButtonTerminaAscii_CheckedChanged(object sender, EventArgs e)
+        {
+            textboxRecievedData.Clear();
         }
 
         private void buttonTerminalReceiveClear_Click(object sender, EventArgs e)
+        {
+            textboxRecievedData.Clear();
+        }
+
+        private void radioButtonTerminalHex_CheckedChanged(object sender, EventArgs e)
         {
             textboxRecievedData.Clear();
         }
@@ -485,7 +481,8 @@ namespace DeviceTester
                         }
                     }
 
-                    //groupboxSerialPortOptions.Enabled = false;
+                    panelFactorySettingsItems.Enabled = true;
+                    panelTerminalItems.Enabled = true;
                     panelLogOptions.Enabled = false;
                     buttonSerialPortConnect.Text = "Disconnect";
                     toolStripStatusLabelConnection.Text = "Connected port: " + serialPortDut.PortName + " @ " + serialPortDut.BaudRate + " bps";
@@ -494,12 +491,23 @@ namespace DeviceTester
             }
 
             CloseSerialPort();
-            //groupboxSerialPortOptions.Enabled = true;
             panelLogOptions.Enabled = true;
             buttonSerialPortConnect.Text = "Connect";
-            toolStripStatusLabelConnection.Text = "Not Connected";
+            toolStripStatusLabelConnection.Text = "Not connected: please connect to a port";
+            panelTerminalItems.Enabled = false;
+            panelFactorySettingsItems.Enabled = false;
         }
 
+        /* write data when keydown*/
+        private void TextboxTransmitData_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (radioButtonTerminalKeys.Checked && serialPortDut.IsOpen)
+            {
+                serialPortDut.Write(e.KeyChar.ToString());
+                //tx_terminal.AppendText("[TX]> " + e.KeyChar.ToString() + "\n");
+                //tx_textarea.Clear();                
+            }
+        }
 
         private void TerminalSendData(object sender, EventArgs e)
         {
@@ -510,14 +518,14 @@ namespace DeviceTester
                 tx_data = textBoxTransmitData.Text.Replace("\n", Environment.NewLine);
                 if (terminalSendCommandCounter > 0)
                 {
+                    --terminalSendCommandCounter;
                     if (serialPortDut.IsOpen)
                         serialPortDut.Write(tx_data.Replace("\\n", Environment.NewLine));
-                    --terminalSendCommandCounter;
                 }
 
                 if (terminalSendCommandCounter == 0)
                 {
-                    buttonTerminalSend.Text = "Send";
+                    buttonTerminalTransmitSend.Text = "Send";
                     timerTerminalCommandDelay.Stop();
                     terminalSendCommandCounter = 0;
                 }
@@ -531,21 +539,16 @@ namespace DeviceTester
             // send 'commmand' option checked
             if (radioButtonTerminalCommands.Checked)
             {
-                if (buttonTerminalSend.Text == "Send")
-                {
-                    terminalSendCommandCounter = 1;
-                    TerminalSendData(null,null); // TODO ???
-                    if (numericUpDownTerminalRepeats.Value > 0)
-                    {
-                        terminalSendCommandCounter = (int)numericUpDownTerminalRepeats.Value;
-                        timerTerminalCommandDelay.Interval = (int)numericUpDownTerminalDelay.Value;
-                        timerTerminalCommandDelay.Start();
-                        buttonTerminalSend.Text = "Stop";
-                    }
+                if (buttonTerminalTransmitSend.Text == "Send")
+                {   
+                    terminalSendCommandCounter = (int)numericUpDownTerminalRepeats.Value;
+                    timerTerminalCommandDelay.Interval = (int)numericUpDownTerminalDelay.Value;
+                    timerTerminalCommandDelay.Start();
+                    buttonTerminalTransmitSend.Text = "Stop";   
                 }
                 else
                 {
-                    buttonTerminalSend.Text = "Send";
+                    buttonTerminalTransmitSend.Text = "Send";
                     timerTerminalCommandDelay.Stop();
                 }
                 return;
@@ -565,11 +568,18 @@ namespace DeviceTester
             }
         }
 
+        private void buttonTerminalTransmitClear_Click(object sender, EventArgs e)
+        {
+            textBoxTransmitData.Clear();
+        }
+
         private void radioButtonTerminalKeys_CheckedChanged(object sender, EventArgs e)
         {
             textBoxTransmitData.Clear();
             numericUpDownTerminalDelay.Enabled = !radioButtonTerminalKeys.Checked;
             numericUpDownTerminalRepeats.Enabled = !radioButtonTerminalKeys.Checked;
+            buttonTerminalTransmitSend.Text = "Send";
+            timerTerminalCommandDelay.Stop();
         }
 
         private void radioButtonTerminalCommands_CheckedChanged(object sender, EventArgs e)
@@ -577,6 +587,8 @@ namespace DeviceTester
             textBoxTransmitData.Clear();
             numericUpDownTerminalDelay.Enabled = radioButtonTerminalCommands.Checked;
             numericUpDownTerminalRepeats.Enabled = radioButtonTerminalCommands.Checked;
+            buttonTerminalTransmitSend.Text = "Send";
+            timerTerminalCommandDelay.Stop();
         }
 
         private void radioButtonTerminalFile_CheckedChanged(object sender, EventArgs e)
@@ -584,6 +596,27 @@ namespace DeviceTester
             textBoxTransmitData.Clear();
             numericUpDownTerminalDelay.Enabled = !radioButtonTerminalFile.Checked;
             numericUpDownTerminalRepeats.Enabled = !radioButtonTerminalFile.Checked;
+            buttonTerminalTransmitSend.Text = "Send";
+            timerTerminalCommandDelay.Stop();
+        }
+
+        private void buttonFactoryConnect_Click(object sender, EventArgs e)
+        {
+            if (buttonFactoryConnect.Text == "Connect")
+            {
+                textBoxFactoryStatus.Text = "Connecting...\r\nPlease reset reboot device";
+            }
+
+            if (buttonFactoryConnect.Text == "Connected")
+            {
+                buttonFactoryConnect.Text = "Connect";
+                textBoxFactoryStatus.Clear();
+            }
+        }
+
+        private void labelTerminalTransmit_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

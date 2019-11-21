@@ -4,6 +4,10 @@ Device Tester App                                                  Release Notes
 (C) 2019 Trevor Hunt, All Rights Reserved
 =======================================================================================
 
+App Version: 1.0.0.9
+    - added functionality to the 'terminal' page
+	- small gui changes 
+
 App Version: 1.0.0.8
     - added port status to the status strip
 	- implemented the terminal send 'command'
