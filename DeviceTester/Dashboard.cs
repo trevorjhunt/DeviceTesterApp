@@ -365,9 +365,21 @@ namespace DeviceTester
                     textboxRecievedData.ResetText();
 
                 if (radioButtonTerminalHex.Checked)
+                {
                     textboxRecievedData.AppendText(ReceivedDataInHex);
+                }
                 else
-                    textboxRecievedData.AppendText(ReceivedData.Replace("\\n", Environment.NewLine));
+                {
+                    string displayString;
+                    displayString = ReceivedData.Replace("\\n", Environment.NewLine);
+                    if (displayString == "\b \b")
+                    {
+                        if (textboxRecievedData.Text.Length > 0)
+                            textboxRecievedData.Text = textboxRecievedData.Text.Remove(textboxRecievedData.Text.Length - 1);
+                    }
+                    else
+                        textboxRecievedData.AppendText(displayString);
+                }
             }));
         }
 
@@ -503,9 +515,16 @@ namespace DeviceTester
         {
             if (radioButtonTerminalKeys.Checked && serialPortDut.IsOpen)
             {
+                serialPortDut.Write(e.KeyChar.ToString());              
+            }
+        }
+
+        private void TextboxReceiveData_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (serialPortDut.IsOpen)
+            {
                 serialPortDut.Write(e.KeyChar.ToString());
-                //tx_terminal.AppendText("[TX]> " + e.KeyChar.ToString() + "\n");
-                //tx_textarea.Clear();                
+                e.Handled = true;
             }
         }
 
@@ -520,7 +539,7 @@ namespace DeviceTester
                 {
                     --terminalSendCommandCounter;
                     if (serialPortDut.IsOpen)
-                        serialPortDut.Write(tx_data.Replace("\\n", Environment.NewLine));
+                        serialPortDut.Write(tx_data);
                 }
 
                 if (terminalSendCommandCounter == 0)

@@ -41,6 +41,24 @@
             this.comboboxPort = new System.Windows.Forms.ComboBox();
             this.panelFactory = new System.Windows.Forms.Panel();
             this.labelFactorySettings = new System.Windows.Forms.Label();
+            this.panelFactorySettingsItems = new System.Windows.Forms.Panel();
+            this.labelFactoryStatus = new System.Windows.Forms.Label();
+            this.textBoxFactoryStatus = new System.Windows.Forms.TextBox();
+            this.buttonFactoryConnect = new System.Windows.Forms.Button();
+            this.buttonFactoryWrite = new System.Windows.Forms.Button();
+            this.buttonFactoryRead = new System.Windows.Forms.Button();
+            this.labelSerialNumber = new System.Windows.Forms.Label();
+            this.labelTempOffset = new System.Windows.Forms.Label();
+            this.textBoxSerialNumber = new System.Windows.Forms.TextBox();
+            this.textBoxTempOffset = new System.Windows.Forms.TextBox();
+            this.labelProduct = new System.Windows.Forms.Label();
+            this.labelFrequency = new System.Windows.Forms.Label();
+            this.comboBoxFrequency = new System.Windows.Forms.ComboBox();
+            this.comboBoxProduct = new System.Windows.Forms.ComboBox();
+            this.comboBoxVariant = new System.Windows.Forms.ComboBox();
+            this.labelVariant = new System.Windows.Forms.Label();
+            this.comboBoxCountry = new System.Windows.Forms.ComboBox();
+            this.labelCountry = new System.Windows.Forms.Label();
             this.panelTerminal = new System.Windows.Forms.Panel();
             this.labelTerminal = new System.Windows.Forms.Label();
             this.panelTerminalItems = new System.Windows.Forms.Panel();
@@ -51,6 +69,7 @@
             this.radioButtonTerminalHex = new System.Windows.Forms.RadioButton();
             this.labelTerminalReceive = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.buttonTerminalTransmitClear = new System.Windows.Forms.Button();
             this.textBoxTransmitData = new System.Windows.Forms.TextBox();
             this.radioButtonTerminalCommands = new System.Windows.Forms.RadioButton();
             this.labelTerminalTransmit = new System.Windows.Forms.Label();
@@ -96,25 +115,6 @@
             this.toolStripStatusLabelConnection = new System.Windows.Forms.ToolStripStatusLabel();
             this.panelMain = new System.Windows.Forms.Panel();
             this.timerTerminalCommandDelay = new System.Windows.Forms.Timer(this.components);
-            this.buttonTerminalTransmitClear = new System.Windows.Forms.Button();
-            this.panelFactorySettingsItems = new System.Windows.Forms.Panel();
-            this.labelFactoryStatus = new System.Windows.Forms.Label();
-            this.textBoxFactoryStatus = new System.Windows.Forms.TextBox();
-            this.buttonFactoryConnect = new System.Windows.Forms.Button();
-            this.buttonFactoryWrite = new System.Windows.Forms.Button();
-            this.buttonFactoryRead = new System.Windows.Forms.Button();
-            this.labelSerialNumber = new System.Windows.Forms.Label();
-            this.labelTempOffset = new System.Windows.Forms.Label();
-            this.textBoxSerialNumber = new System.Windows.Forms.TextBox();
-            this.textBoxTempOffset = new System.Windows.Forms.TextBox();
-            this.labelProduct = new System.Windows.Forms.Label();
-            this.labelFrequency = new System.Windows.Forms.Label();
-            this.comboBoxFrequency = new System.Windows.Forms.ComboBox();
-            this.comboBoxProduct = new System.Windows.Forms.ComboBox();
-            this.comboBoxVariant = new System.Windows.Forms.ComboBox();
-            this.labelVariant = new System.Windows.Forms.Label();
-            this.comboBoxCountry = new System.Windows.Forms.ComboBox();
-            this.labelCountry = new System.Windows.Forms.Label();
             this.gradientPanel1 = new DeviceTester.CustomControls.GradientPanel();
             this.panelButtonSettings = new System.Windows.Forms.Panel();
             this.buttonTerminalOptions = new System.Windows.Forms.Button();
@@ -131,6 +131,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.picBoxExit)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picBoxDashboard)).BeginInit();
             this.panelFactory.SuspendLayout();
+            this.panelFactorySettingsItems.SuspendLayout();
             this.panelTerminal.SuspendLayout();
             this.panelTerminalItems.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -145,7 +146,6 @@
             this.panelSideBar.SuspendLayout();
             this.statusStripConnection.SuspendLayout();
             this.panelMain.SuspendLayout();
-            this.panelFactorySettingsItems.SuspendLayout();
             this.gradientPanel1.SuspendLayout();
             this.panelButtonSettings.SuspendLayout();
             this.SuspendLayout();
@@ -290,6 +290,226 @@
             this.labelFactorySettings.TabIndex = 15;
             this.labelFactorySettings.Text = "Factory settings";
             // 
+            // panelFactorySettingsItems
+            // 
+            this.panelFactorySettingsItems.BackColor = System.Drawing.Color.Transparent;
+            this.panelFactorySettingsItems.Controls.Add(this.labelFactoryStatus);
+            this.panelFactorySettingsItems.Controls.Add(this.textBoxFactoryStatus);
+            this.panelFactorySettingsItems.Controls.Add(this.buttonFactoryConnect);
+            this.panelFactorySettingsItems.Controls.Add(this.buttonFactoryWrite);
+            this.panelFactorySettingsItems.Controls.Add(this.buttonFactoryRead);
+            this.panelFactorySettingsItems.Controls.Add(this.labelSerialNumber);
+            this.panelFactorySettingsItems.Controls.Add(this.labelTempOffset);
+            this.panelFactorySettingsItems.Controls.Add(this.textBoxSerialNumber);
+            this.panelFactorySettingsItems.Controls.Add(this.textBoxTempOffset);
+            this.panelFactorySettingsItems.Controls.Add(this.labelProduct);
+            this.panelFactorySettingsItems.Controls.Add(this.labelFrequency);
+            this.panelFactorySettingsItems.Controls.Add(this.comboBoxFrequency);
+            this.panelFactorySettingsItems.Controls.Add(this.comboBoxProduct);
+            this.panelFactorySettingsItems.Controls.Add(this.comboBoxVariant);
+            this.panelFactorySettingsItems.Controls.Add(this.labelVariant);
+            this.panelFactorySettingsItems.Controls.Add(this.comboBoxCountry);
+            this.panelFactorySettingsItems.Controls.Add(this.labelCountry);
+            this.panelFactorySettingsItems.Enabled = false;
+            this.panelFactorySettingsItems.Location = new System.Drawing.Point(42, 44);
+            this.panelFactorySettingsItems.Name = "panelFactorySettingsItems";
+            this.panelFactorySettingsItems.Size = new System.Drawing.Size(423, 341);
+            this.panelFactorySettingsItems.TabIndex = 66;
+            // 
+            // labelFactoryStatus
+            // 
+            this.labelFactoryStatus.AutoSize = true;
+            this.labelFactoryStatus.BackColor = System.Drawing.Color.Transparent;
+            this.labelFactoryStatus.ForeColor = System.Drawing.Color.White;
+            this.labelFactoryStatus.Location = new System.Drawing.Point(107, 194);
+            this.labelFactoryStatus.Name = "labelFactoryStatus";
+            this.labelFactoryStatus.Size = new System.Drawing.Size(37, 13);
+            this.labelFactoryStatus.TabIndex = 82;
+            this.labelFactoryStatus.Text = "Status";
+            // 
+            // textBoxFactoryStatus
+            // 
+            this.textBoxFactoryStatus.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(216)))), ((int)(((byte)(216)))));
+            this.textBoxFactoryStatus.Location = new System.Drawing.Point(111, 211);
+            this.textBoxFactoryStatus.Multiline = true;
+            this.textBoxFactoryStatus.Name = "textBoxFactoryStatus";
+            this.textBoxFactoryStatus.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.textBoxFactoryStatus.Size = new System.Drawing.Size(265, 88);
+            this.textBoxFactoryStatus.TabIndex = 81;
+            // 
+            // buttonFactoryConnect
+            // 
+            this.buttonFactoryConnect.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(107)))), ((int)(((byte)(24)))), ((int)(((byte)(58)))));
+            this.buttonFactoryConnect.FlatAppearance.BorderSize = 0;
+            this.buttonFactoryConnect.FlatAppearance.MouseOverBackColor = System.Drawing.Color.LimeGreen;
+            this.buttonFactoryConnect.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonFactoryConnect.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.buttonFactoryConnect.ForeColor = System.Drawing.Color.White;
+            this.buttonFactoryConnect.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonFactoryConnect.Location = new System.Drawing.Point(295, 26);
+            this.buttonFactoryConnect.Name = "buttonFactoryConnect";
+            this.buttonFactoryConnect.Size = new System.Drawing.Size(76, 27);
+            this.buttonFactoryConnect.TabIndex = 80;
+            this.buttonFactoryConnect.Text = "Connect";
+            this.buttonFactoryConnect.UseVisualStyleBackColor = false;
+            this.buttonFactoryConnect.Click += new System.EventHandler(this.buttonFactoryConnect_Click);
+            // 
+            // buttonFactoryWrite
+            // 
+            this.buttonFactoryWrite.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(107)))), ((int)(((byte)(24)))), ((int)(((byte)(58)))));
+            this.buttonFactoryWrite.FlatAppearance.BorderSize = 0;
+            this.buttonFactoryWrite.FlatAppearance.MouseOverBackColor = System.Drawing.Color.LimeGreen;
+            this.buttonFactoryWrite.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonFactoryWrite.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.buttonFactoryWrite.ForeColor = System.Drawing.Color.White;
+            this.buttonFactoryWrite.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonFactoryWrite.Location = new System.Drawing.Point(295, 98);
+            this.buttonFactoryWrite.Name = "buttonFactoryWrite";
+            this.buttonFactoryWrite.Size = new System.Drawing.Size(76, 27);
+            this.buttonFactoryWrite.TabIndex = 79;
+            this.buttonFactoryWrite.Text = "Write";
+            this.buttonFactoryWrite.UseVisualStyleBackColor = false;
+            // 
+            // buttonFactoryRead
+            // 
+            this.buttonFactoryRead.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(107)))), ((int)(((byte)(24)))), ((int)(((byte)(58)))));
+            this.buttonFactoryRead.FlatAppearance.BorderSize = 0;
+            this.buttonFactoryRead.FlatAppearance.MouseOverBackColor = System.Drawing.Color.LimeGreen;
+            this.buttonFactoryRead.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonFactoryRead.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.buttonFactoryRead.ForeColor = System.Drawing.Color.White;
+            this.buttonFactoryRead.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonFactoryRead.Location = new System.Drawing.Point(295, 62);
+            this.buttonFactoryRead.Name = "buttonFactoryRead";
+            this.buttonFactoryRead.Size = new System.Drawing.Size(76, 27);
+            this.buttonFactoryRead.TabIndex = 78;
+            this.buttonFactoryRead.Text = "Read";
+            this.buttonFactoryRead.UseVisualStyleBackColor = false;
+            // 
+            // labelSerialNumber
+            // 
+            this.labelSerialNumber.AutoSize = true;
+            this.labelSerialNumber.BackColor = System.Drawing.Color.Transparent;
+            this.labelSerialNumber.ForeColor = System.Drawing.Color.White;
+            this.labelSerialNumber.Location = new System.Drawing.Point(25, 27);
+            this.labelSerialNumber.Name = "labelSerialNumber";
+            this.labelSerialNumber.Size = new System.Drawing.Size(73, 13);
+            this.labelSerialNumber.TabIndex = 77;
+            this.labelSerialNumber.Text = "Serial Number";
+            // 
+            // labelTempOffset
+            // 
+            this.labelTempOffset.AutoSize = true;
+            this.labelTempOffset.BackColor = System.Drawing.Color.Transparent;
+            this.labelTempOffset.ForeColor = System.Drawing.Color.White;
+            this.labelTempOffset.Location = new System.Drawing.Point(33, 157);
+            this.labelTempOffset.Name = "labelTempOffset";
+            this.labelTempOffset.Size = new System.Drawing.Size(65, 13);
+            this.labelTempOffset.TabIndex = 76;
+            this.labelTempOffset.Text = "Temp Offset";
+            // 
+            // textBoxSerialNumber
+            // 
+            this.textBoxSerialNumber.Location = new System.Drawing.Point(111, 26);
+            this.textBoxSerialNumber.Name = "textBoxSerialNumber";
+            this.textBoxSerialNumber.Size = new System.Drawing.Size(115, 20);
+            this.textBoxSerialNumber.TabIndex = 75;
+            // 
+            // textBoxTempOffset
+            // 
+            this.textBoxTempOffset.Location = new System.Drawing.Point(111, 160);
+            this.textBoxTempOffset.Name = "textBoxTempOffset";
+            this.textBoxTempOffset.Size = new System.Drawing.Size(115, 20);
+            this.textBoxTempOffset.TabIndex = 74;
+            // 
+            // labelProduct
+            // 
+            this.labelProduct.AutoSize = true;
+            this.labelProduct.BackColor = System.Drawing.Color.Transparent;
+            this.labelProduct.ForeColor = System.Drawing.Color.White;
+            this.labelProduct.Location = new System.Drawing.Point(54, 53);
+            this.labelProduct.Name = "labelProduct";
+            this.labelProduct.Size = new System.Drawing.Size(44, 13);
+            this.labelProduct.TabIndex = 71;
+            this.labelProduct.Text = "Product";
+            // 
+            // labelFrequency
+            // 
+            this.labelFrequency.AutoSize = true;
+            this.labelFrequency.BackColor = System.Drawing.Color.Transparent;
+            this.labelFrequency.ForeColor = System.Drawing.Color.White;
+            this.labelFrequency.Location = new System.Drawing.Point(41, 131);
+            this.labelFrequency.Name = "labelFrequency";
+            this.labelFrequency.Size = new System.Drawing.Size(57, 13);
+            this.labelFrequency.TabIndex = 70;
+            this.labelFrequency.Text = "Frequency";
+            // 
+            // comboBoxFrequency
+            // 
+            this.comboBoxFrequency.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxFrequency.FormattingEnabled = true;
+            this.comboBoxFrequency.Location = new System.Drawing.Point(111, 133);
+            this.comboBoxFrequency.Name = "comboBoxFrequency";
+            this.comboBoxFrequency.Size = new System.Drawing.Size(115, 21);
+            this.comboBoxFrequency.TabIndex = 66;
+            // 
+            // comboBoxProduct
+            // 
+            this.comboBoxProduct.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxProduct.FormattingEnabled = true;
+            this.comboBoxProduct.Items.AddRange(new object[] {
+            "RF-Output",
+            "RF-MicroContact"});
+            this.comboBoxProduct.Location = new System.Drawing.Point(112, 52);
+            this.comboBoxProduct.Name = "comboBoxProduct";
+            this.comboBoxProduct.Size = new System.Drawing.Size(115, 21);
+            this.comboBoxProduct.TabIndex = 67;
+            // 
+            // comboBoxVariant
+            // 
+            this.comboBoxVariant.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
+            this.comboBoxVariant.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxVariant.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.comboBoxVariant.FormattingEnabled = true;
+            this.comboBoxVariant.Location = new System.Drawing.Point(111, 106);
+            this.comboBoxVariant.Name = "comboBoxVariant";
+            this.comboBoxVariant.Size = new System.Drawing.Size(115, 21);
+            this.comboBoxVariant.TabIndex = 69;
+            // 
+            // labelVariant
+            // 
+            this.labelVariant.AutoSize = true;
+            this.labelVariant.BackColor = System.Drawing.Color.Transparent;
+            this.labelVariant.ForeColor = System.Drawing.Color.White;
+            this.labelVariant.Location = new System.Drawing.Point(58, 105);
+            this.labelVariant.Name = "labelVariant";
+            this.labelVariant.Size = new System.Drawing.Size(40, 13);
+            this.labelVariant.TabIndex = 73;
+            this.labelVariant.Text = "Variant";
+            // 
+            // comboBoxCountry
+            // 
+            this.comboBoxCountry.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxCountry.FormattingEnabled = true;
+            this.comboBoxCountry.Items.AddRange(new object[] {
+            "Ireland",
+            "UnitedKingdom"});
+            this.comboBoxCountry.Location = new System.Drawing.Point(111, 79);
+            this.comboBoxCountry.Name = "comboBoxCountry";
+            this.comboBoxCountry.Size = new System.Drawing.Size(115, 21);
+            this.comboBoxCountry.TabIndex = 68;
+            // 
+            // labelCountry
+            // 
+            this.labelCountry.AutoSize = true;
+            this.labelCountry.BackColor = System.Drawing.Color.Transparent;
+            this.labelCountry.ForeColor = System.Drawing.Color.White;
+            this.labelCountry.Location = new System.Drawing.Point(55, 79);
+            this.labelCountry.Name = "labelCountry";
+            this.labelCountry.Size = new System.Drawing.Size(43, 13);
+            this.labelCountry.TabIndex = 72;
+            this.labelCountry.Text = "Country";
+            // 
             // panelTerminal
             // 
             this.panelTerminal.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(41)))), ((int)(((byte)(61)))));
@@ -373,7 +593,7 @@
             this.textboxRecievedData.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.textboxRecievedData.Size = new System.Drawing.Size(470, 239);
             this.textboxRecievedData.TabIndex = 63;
-            this.textboxRecievedData.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextboxTransmitData_KeyPress);
+            this.textboxRecievedData.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextboxReceiveData_KeyPress);
             // 
             // buttonTerminalReceiveClear
             // 
@@ -438,6 +658,24 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(481, 91);
             this.panel1.TabIndex = 78;
+            // 
+            // buttonTerminalTransmitClear
+            // 
+            this.buttonTerminalTransmitClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.buttonTerminalTransmitClear.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(107)))), ((int)(((byte)(24)))), ((int)(((byte)(58)))));
+            this.buttonTerminalTransmitClear.FlatAppearance.BorderSize = 0;
+            this.buttonTerminalTransmitClear.FlatAppearance.MouseOverBackColor = System.Drawing.Color.LimeGreen;
+            this.buttonTerminalTransmitClear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonTerminalTransmitClear.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.buttonTerminalTransmitClear.ForeColor = System.Drawing.Color.White;
+            this.buttonTerminalTransmitClear.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonTerminalTransmitClear.Location = new System.Drawing.Point(422, 46);
+            this.buttonTerminalTransmitClear.Name = "buttonTerminalTransmitClear";
+            this.buttonTerminalTransmitClear.Size = new System.Drawing.Size(47, 23);
+            this.buttonTerminalTransmitClear.TabIndex = 77;
+            this.buttonTerminalTransmitClear.Text = "Clear";
+            this.buttonTerminalTransmitClear.UseVisualStyleBackColor = false;
+            this.buttonTerminalTransmitClear.Click += new System.EventHandler(this.buttonTerminalTransmitClear_Click);
             // 
             // textBoxTransmitData
             // 
@@ -958,244 +1196,6 @@
             // 
             this.timerTerminalCommandDelay.Interval = 1;
             // 
-            // buttonTerminalTransmitClear
-            // 
-            this.buttonTerminalTransmitClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonTerminalTransmitClear.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(107)))), ((int)(((byte)(24)))), ((int)(((byte)(58)))));
-            this.buttonTerminalTransmitClear.FlatAppearance.BorderSize = 0;
-            this.buttonTerminalTransmitClear.FlatAppearance.MouseOverBackColor = System.Drawing.Color.LimeGreen;
-            this.buttonTerminalTransmitClear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonTerminalTransmitClear.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.buttonTerminalTransmitClear.ForeColor = System.Drawing.Color.White;
-            this.buttonTerminalTransmitClear.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonTerminalTransmitClear.Location = new System.Drawing.Point(422, 46);
-            this.buttonTerminalTransmitClear.Name = "buttonTerminalTransmitClear";
-            this.buttonTerminalTransmitClear.Size = new System.Drawing.Size(47, 23);
-            this.buttonTerminalTransmitClear.TabIndex = 77;
-            this.buttonTerminalTransmitClear.Text = "Clear";
-            this.buttonTerminalTransmitClear.UseVisualStyleBackColor = false;
-            this.buttonTerminalTransmitClear.Click += new System.EventHandler(this.buttonTerminalTransmitClear_Click);
-            // 
-            // panelFactorySettingsItems
-            // 
-            this.panelFactorySettingsItems.BackColor = System.Drawing.Color.Transparent;
-            this.panelFactorySettingsItems.Controls.Add(this.labelFactoryStatus);
-            this.panelFactorySettingsItems.Controls.Add(this.textBoxFactoryStatus);
-            this.panelFactorySettingsItems.Controls.Add(this.buttonFactoryConnect);
-            this.panelFactorySettingsItems.Controls.Add(this.buttonFactoryWrite);
-            this.panelFactorySettingsItems.Controls.Add(this.buttonFactoryRead);
-            this.panelFactorySettingsItems.Controls.Add(this.labelSerialNumber);
-            this.panelFactorySettingsItems.Controls.Add(this.labelTempOffset);
-            this.panelFactorySettingsItems.Controls.Add(this.textBoxSerialNumber);
-            this.panelFactorySettingsItems.Controls.Add(this.textBoxTempOffset);
-            this.panelFactorySettingsItems.Controls.Add(this.labelProduct);
-            this.panelFactorySettingsItems.Controls.Add(this.labelFrequency);
-            this.panelFactorySettingsItems.Controls.Add(this.comboBoxFrequency);
-            this.panelFactorySettingsItems.Controls.Add(this.comboBoxProduct);
-            this.panelFactorySettingsItems.Controls.Add(this.comboBoxVariant);
-            this.panelFactorySettingsItems.Controls.Add(this.labelVariant);
-            this.panelFactorySettingsItems.Controls.Add(this.comboBoxCountry);
-            this.panelFactorySettingsItems.Controls.Add(this.labelCountry);
-            this.panelFactorySettingsItems.Enabled = false;
-            this.panelFactorySettingsItems.Location = new System.Drawing.Point(42, 44);
-            this.panelFactorySettingsItems.Name = "panelFactorySettingsItems";
-            this.panelFactorySettingsItems.Size = new System.Drawing.Size(423, 341);
-            this.panelFactorySettingsItems.TabIndex = 66;
-            // 
-            // labelFactoryStatus
-            // 
-            this.labelFactoryStatus.AutoSize = true;
-            this.labelFactoryStatus.BackColor = System.Drawing.Color.Transparent;
-            this.labelFactoryStatus.ForeColor = System.Drawing.Color.White;
-            this.labelFactoryStatus.Location = new System.Drawing.Point(107, 194);
-            this.labelFactoryStatus.Name = "labelFactoryStatus";
-            this.labelFactoryStatus.Size = new System.Drawing.Size(37, 13);
-            this.labelFactoryStatus.TabIndex = 82;
-            this.labelFactoryStatus.Text = "Status";
-            // 
-            // textBoxFactoryStatus
-            // 
-            this.textBoxFactoryStatus.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(216)))), ((int)(((byte)(216)))));
-            this.textBoxFactoryStatus.Location = new System.Drawing.Point(111, 211);
-            this.textBoxFactoryStatus.Multiline = true;
-            this.textBoxFactoryStatus.Name = "textBoxFactoryStatus";
-            this.textBoxFactoryStatus.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBoxFactoryStatus.Size = new System.Drawing.Size(265, 88);
-            this.textBoxFactoryStatus.TabIndex = 81;
-            // 
-            // buttonFactoryConnect
-            // 
-            this.buttonFactoryConnect.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(107)))), ((int)(((byte)(24)))), ((int)(((byte)(58)))));
-            this.buttonFactoryConnect.FlatAppearance.BorderSize = 0;
-            this.buttonFactoryConnect.FlatAppearance.MouseOverBackColor = System.Drawing.Color.LimeGreen;
-            this.buttonFactoryConnect.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonFactoryConnect.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.buttonFactoryConnect.ForeColor = System.Drawing.Color.White;
-            this.buttonFactoryConnect.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonFactoryConnect.Location = new System.Drawing.Point(295, 26);
-            this.buttonFactoryConnect.Name = "buttonFactoryConnect";
-            this.buttonFactoryConnect.Size = new System.Drawing.Size(76, 27);
-            this.buttonFactoryConnect.TabIndex = 80;
-            this.buttonFactoryConnect.Text = "Connect";
-            this.buttonFactoryConnect.UseVisualStyleBackColor = false;
-            this.buttonFactoryConnect.Click += new System.EventHandler(this.buttonFactoryConnect_Click);
-            // 
-            // buttonFactoryWrite
-            // 
-            this.buttonFactoryWrite.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(107)))), ((int)(((byte)(24)))), ((int)(((byte)(58)))));
-            this.buttonFactoryWrite.FlatAppearance.BorderSize = 0;
-            this.buttonFactoryWrite.FlatAppearance.MouseOverBackColor = System.Drawing.Color.LimeGreen;
-            this.buttonFactoryWrite.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonFactoryWrite.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.buttonFactoryWrite.ForeColor = System.Drawing.Color.White;
-            this.buttonFactoryWrite.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonFactoryWrite.Location = new System.Drawing.Point(295, 98);
-            this.buttonFactoryWrite.Name = "buttonFactoryWrite";
-            this.buttonFactoryWrite.Size = new System.Drawing.Size(76, 27);
-            this.buttonFactoryWrite.TabIndex = 79;
-            this.buttonFactoryWrite.Text = "Write";
-            this.buttonFactoryWrite.UseVisualStyleBackColor = false;
-            // 
-            // buttonFactoryRead
-            // 
-            this.buttonFactoryRead.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(107)))), ((int)(((byte)(24)))), ((int)(((byte)(58)))));
-            this.buttonFactoryRead.FlatAppearance.BorderSize = 0;
-            this.buttonFactoryRead.FlatAppearance.MouseOverBackColor = System.Drawing.Color.LimeGreen;
-            this.buttonFactoryRead.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonFactoryRead.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.buttonFactoryRead.ForeColor = System.Drawing.Color.White;
-            this.buttonFactoryRead.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonFactoryRead.Location = new System.Drawing.Point(295, 62);
-            this.buttonFactoryRead.Name = "buttonFactoryRead";
-            this.buttonFactoryRead.Size = new System.Drawing.Size(76, 27);
-            this.buttonFactoryRead.TabIndex = 78;
-            this.buttonFactoryRead.Text = "Read";
-            this.buttonFactoryRead.UseVisualStyleBackColor = false;
-            // 
-            // labelSerialNumber
-            // 
-            this.labelSerialNumber.AutoSize = true;
-            this.labelSerialNumber.BackColor = System.Drawing.Color.Transparent;
-            this.labelSerialNumber.ForeColor = System.Drawing.Color.White;
-            this.labelSerialNumber.Location = new System.Drawing.Point(25, 27);
-            this.labelSerialNumber.Name = "labelSerialNumber";
-            this.labelSerialNumber.Size = new System.Drawing.Size(73, 13);
-            this.labelSerialNumber.TabIndex = 77;
-            this.labelSerialNumber.Text = "Serial Number";
-            // 
-            // labelTempOffset
-            // 
-            this.labelTempOffset.AutoSize = true;
-            this.labelTempOffset.BackColor = System.Drawing.Color.Transparent;
-            this.labelTempOffset.ForeColor = System.Drawing.Color.White;
-            this.labelTempOffset.Location = new System.Drawing.Point(33, 157);
-            this.labelTempOffset.Name = "labelTempOffset";
-            this.labelTempOffset.Size = new System.Drawing.Size(65, 13);
-            this.labelTempOffset.TabIndex = 76;
-            this.labelTempOffset.Text = "Temp Offset";
-            // 
-            // textBoxSerialNumber
-            // 
-            this.textBoxSerialNumber.Location = new System.Drawing.Point(111, 26);
-            this.textBoxSerialNumber.Name = "textBoxSerialNumber";
-            this.textBoxSerialNumber.Size = new System.Drawing.Size(115, 20);
-            this.textBoxSerialNumber.TabIndex = 75;
-            // 
-            // textBoxTempOffset
-            // 
-            this.textBoxTempOffset.Location = new System.Drawing.Point(111, 160);
-            this.textBoxTempOffset.Name = "textBoxTempOffset";
-            this.textBoxTempOffset.Size = new System.Drawing.Size(115, 20);
-            this.textBoxTempOffset.TabIndex = 74;
-            // 
-            // labelProduct
-            // 
-            this.labelProduct.AutoSize = true;
-            this.labelProduct.BackColor = System.Drawing.Color.Transparent;
-            this.labelProduct.ForeColor = System.Drawing.Color.White;
-            this.labelProduct.Location = new System.Drawing.Point(54, 53);
-            this.labelProduct.Name = "labelProduct";
-            this.labelProduct.Size = new System.Drawing.Size(44, 13);
-            this.labelProduct.TabIndex = 71;
-            this.labelProduct.Text = "Product";
-            // 
-            // labelFrequency
-            // 
-            this.labelFrequency.AutoSize = true;
-            this.labelFrequency.BackColor = System.Drawing.Color.Transparent;
-            this.labelFrequency.ForeColor = System.Drawing.Color.White;
-            this.labelFrequency.Location = new System.Drawing.Point(41, 131);
-            this.labelFrequency.Name = "labelFrequency";
-            this.labelFrequency.Size = new System.Drawing.Size(57, 13);
-            this.labelFrequency.TabIndex = 70;
-            this.labelFrequency.Text = "Frequency";
-            // 
-            // comboBoxFrequency
-            // 
-            this.comboBoxFrequency.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxFrequency.FormattingEnabled = true;
-            this.comboBoxFrequency.Location = new System.Drawing.Point(111, 133);
-            this.comboBoxFrequency.Name = "comboBoxFrequency";
-            this.comboBoxFrequency.Size = new System.Drawing.Size(115, 21);
-            this.comboBoxFrequency.TabIndex = 66;
-            // 
-            // comboBoxProduct
-            // 
-            this.comboBoxProduct.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxProduct.FormattingEnabled = true;
-            this.comboBoxProduct.Items.AddRange(new object[] {
-            "RF-Output",
-            "RF-MicroContact"});
-            this.comboBoxProduct.Location = new System.Drawing.Point(112, 52);
-            this.comboBoxProduct.Name = "comboBoxProduct";
-            this.comboBoxProduct.Size = new System.Drawing.Size(115, 21);
-            this.comboBoxProduct.TabIndex = 67;
-            // 
-            // comboBoxVariant
-            // 
-            this.comboBoxVariant.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
-            this.comboBoxVariant.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxVariant.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.comboBoxVariant.FormattingEnabled = true;
-            this.comboBoxVariant.Location = new System.Drawing.Point(111, 106);
-            this.comboBoxVariant.Name = "comboBoxVariant";
-            this.comboBoxVariant.Size = new System.Drawing.Size(115, 21);
-            this.comboBoxVariant.TabIndex = 69;
-            // 
-            // labelVariant
-            // 
-            this.labelVariant.AutoSize = true;
-            this.labelVariant.BackColor = System.Drawing.Color.Transparent;
-            this.labelVariant.ForeColor = System.Drawing.Color.White;
-            this.labelVariant.Location = new System.Drawing.Point(58, 105);
-            this.labelVariant.Name = "labelVariant";
-            this.labelVariant.Size = new System.Drawing.Size(40, 13);
-            this.labelVariant.TabIndex = 73;
-            this.labelVariant.Text = "Variant";
-            // 
-            // comboBoxCountry
-            // 
-            this.comboBoxCountry.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxCountry.FormattingEnabled = true;
-            this.comboBoxCountry.Items.AddRange(new object[] {
-            "Ireland",
-            "UnitedKingdom"});
-            this.comboBoxCountry.Location = new System.Drawing.Point(111, 79);
-            this.comboBoxCountry.Name = "comboBoxCountry";
-            this.comboBoxCountry.Size = new System.Drawing.Size(115, 21);
-            this.comboBoxCountry.TabIndex = 68;
-            // 
-            // labelCountry
-            // 
-            this.labelCountry.AutoSize = true;
-            this.labelCountry.BackColor = System.Drawing.Color.Transparent;
-            this.labelCountry.ForeColor = System.Drawing.Color.White;
-            this.labelCountry.Location = new System.Drawing.Point(55, 79);
-            this.labelCountry.Name = "labelCountry";
-            this.labelCountry.Size = new System.Drawing.Size(43, 13);
-            this.labelCountry.TabIndex = 72;
-            this.labelCountry.Text = "Country";
-            // 
             // gradientPanel1
             // 
             this.gradientPanel1.ColorBottom = System.Drawing.Color.FromArgb(((int)(((byte)(165)))), ((int)(((byte)(21)))), ((int)(((byte)(80)))));
@@ -1363,6 +1363,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.picBoxDashboard)).EndInit();
             this.panelFactory.ResumeLayout(false);
             this.panelFactory.PerformLayout();
+            this.panelFactorySettingsItems.ResumeLayout(false);
+            this.panelFactorySettingsItems.PerformLayout();
             this.panelTerminal.ResumeLayout(false);
             this.panelTerminal.PerformLayout();
             this.panelTerminalItems.ResumeLayout(false);
@@ -1386,8 +1388,6 @@
             this.statusStripConnection.PerformLayout();
             this.panelMain.ResumeLayout(false);
             this.panelMain.PerformLayout();
-            this.panelFactorySettingsItems.ResumeLayout(false);
-            this.panelFactorySettingsItems.PerformLayout();
             this.gradientPanel1.ResumeLayout(false);
             this.panelButtonSettings.ResumeLayout(false);
             this.ResumeLayout(false);
