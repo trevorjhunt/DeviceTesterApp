@@ -59,9 +59,13 @@ namespace DeviceTester
             comboboxFlowControl.DataSource = new[] { "None", "RTS", "RTS/X", "Xon/Xoff" };           
             comboboxFlowControl.SelectedIndex = 0;
 
-            serialPortDut.DataReceived += recieve_data_event;
-            backgroundWorker1.DoWork += new DoWorkEventHandler(TerminalUpdateReceiveDataTextbox);
+            this.serialPortDut.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(this.serialPortDut_DataReceived);
+            //backgroundWorker1.DoWork += new DoWorkEventHandler(TerminalUpdateReceiveDataTextbox);
+
             timerTerminalCommandDelay.Tick += new EventHandler(TerminalSendData);
+
+            textboxRecievedData.Clear();
+            textBoxTransmitData.Clear();
         }
 
 
@@ -357,51 +361,26 @@ namespace DeviceTester
         }
 
         /* Append text to rx_textarea*/
-        private void TerminalUpdateReceiveDataTextbox(object sender, DoWorkEventArgs e)
+        private void TerminalUpdateReceiveDataTextbox(string strText)
         {
-            this.BeginInvoke((Action)(() =>
+            if (radioButtonTerminalHex.Checked)
             {
-                if (textboxRecievedData.Lines.Count() > 5000)
-                    textboxRecievedData.ResetText();
-
-                if (radioButtonTerminalHex.Checked)
-                {
-                    textboxRecievedData.AppendText(ReceivedDataInHex);
-                }
-                else
-                {
-                    string displayString;
-                    displayString = ReceivedData.Replace("\\n", Environment.NewLine);
-                    if (displayString == "\b \b")
-                    {
-                        if (textboxRecievedData.Text.Length > 0)
-                            textboxRecievedData.Text = textboxRecievedData.Text.Remove(textboxRecievedData.Text.Length - 1);
-                    }
-                    else
-                        textboxRecievedData.AppendText(displayString);
-                }
-            }));
+                byte[] asciiBytes = Encoding.ASCII.GetBytes(strText);
+                string asciiStr = BitConverter.ToString(asciiBytes);
+                textboxRecievedData.Text += asciiStr;
+            }                
+            else
+                textboxRecievedData.Text += strText;           
         }
 
-        private void recieve_data_event(object sender, System.IO.Ports.SerialDataReceivedEventArgs e)
+        private void serialPortDut_DataReceived(object sender, System.IO.Ports.SerialDataReceivedEventArgs e)
         {
-            int dataLength = serialPortDut.BytesToRead;
-            byte[] rxBytes = new byte[dataLength];
-            int numBytes = serialPortDut.Read(rxBytes, 0, dataLength);
-
-            if ((!serialPortDut.IsOpen) || (numBytes == 0))
-                return;
-
-            this.BeginInvoke((Action)(() =>
+            string strErg = serialPortDut.ReadExisting();
+            this.BeginInvoke(new EventHandler(delegate
             {
-                ReceivedData = System.Text.Encoding.Default.GetString(rxBytes);
-                if (radioButtonTerminalHex.Checked)
-                    ReceivedDataInHex = BitConverter.ToString(rxBytes);
-
-                if (!backgroundWorker1.IsBusy)
-                    backgroundWorker1.RunWorkerAsync();
+                TerminalUpdateReceiveDataTextbox(strErg);
             }));
-            
+            Application.DoEvents();
         }
 
         private void radioButtonTerminaAscii_CheckedChanged(object sender, EventArgs e)
@@ -493,6 +472,9 @@ namespace DeviceTester
                         }
                     }
 
+
+                    textboxRecievedData.Clear();
+                    textBoxTransmitData.Clear();
                     panelFactorySettingsItems.Enabled = true;
                     panelTerminalItems.Enabled = true;
                     panelLogOptions.Enabled = false;
@@ -534,7 +516,7 @@ namespace DeviceTester
 
             if (radioButtonTerminalCommands.Checked)
             {
-                tx_data = textBoxTransmitData.Text.Replace("\n", Environment.NewLine);
+                tx_data = textBoxTransmitData.Text.Replace("\\n", "\r\n");
                 if (terminalSendCommandCounter > 0)
                 {
                     --terminalSendCommandCounter;
@@ -552,7 +534,8 @@ namespace DeviceTester
             }
         }
 
-
+        // TODO - terminal BS not handled
+        // TODO - Transmit 'send' should not be enabled when 'commands' not
         private void buttonTerminalSend_Click(object sender, EventArgs e)
         {
             // send 'commmand' option checked
@@ -634,6 +617,11 @@ namespace DeviceTester
         }
 
         private void labelTerminalTransmit_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBoxTransmitData_TextChanged(object sender, EventArgs e)
         {
 
         }

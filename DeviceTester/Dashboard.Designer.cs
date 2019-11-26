@@ -536,9 +536,6 @@
             // 
             // panelTerminalItems
             // 
-            this.panelTerminalItems.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.panelTerminalItems.Controls.Add(this.panel2);
             this.panelTerminalItems.Controls.Add(this.panel1);
             this.panelTerminalItems.Enabled = false;
@@ -585,7 +582,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textboxRecievedData.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(218)))), ((int)(((byte)(218)))), ((int)(((byte)(218)))));
-            this.textboxRecievedData.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textboxRecievedData.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textboxRecievedData.ForeColor = System.Drawing.Color.Black;
             this.textboxRecievedData.Location = new System.Drawing.Point(8, 19);
             this.textboxRecievedData.Multiline = true;
@@ -687,6 +684,7 @@
             this.textBoxTransmitData.Name = "textBoxTransmitData";
             this.textBoxTransmitData.Size = new System.Drawing.Size(390, 23);
             this.textBoxTransmitData.TabIndex = 65;
+            this.textBoxTransmitData.TextChanged += new System.EventHandler(this.textBoxTransmitData_TextChanged);
             this.textBoxTransmitData.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextboxTransmitData_KeyPress);
             // 
             // radioButtonTerminalCommands
@@ -962,6 +960,8 @@
             // serialPortDut
             // 
             this.serialPortDut.BaudRate = 115200;
+            this.serialPortDut.DtrEnable = true;
+            this.serialPortDut.RtsEnable = true;
             // 
             // backgroundWorker1
             // 
