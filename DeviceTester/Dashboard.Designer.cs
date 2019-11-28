@@ -60,15 +60,13 @@
             this.comboBoxCountry = new System.Windows.Forms.ComboBox();
             this.labelCountry = new System.Windows.Forms.Label();
             this.panelTerminal = new System.Windows.Forms.Panel();
-            this.labelTerminal = new System.Windows.Forms.Label();
-            this.panelTerminalItems = new System.Windows.Forms.Panel();
-            this.panel2 = new System.Windows.Forms.Panel();
+            this.panelTerminalReceive = new System.Windows.Forms.Panel();
             this.radioButtonTerminaAscii = new System.Windows.Forms.RadioButton();
             this.textboxRecievedData = new System.Windows.Forms.TextBox();
             this.buttonTerminalReceiveClear = new System.Windows.Forms.Button();
             this.radioButtonTerminalHex = new System.Windows.Forms.RadioButton();
             this.labelTerminalReceive = new System.Windows.Forms.Label();
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.panelTerminalTransmit = new System.Windows.Forms.Panel();
             this.buttonTerminalTransmitClear = new System.Windows.Forms.Button();
             this.textBoxTransmitData = new System.Windows.Forms.TextBox();
             this.radioButtonTerminalCommands = new System.Windows.Forms.RadioButton();
@@ -80,6 +78,8 @@
             this.labelTerminalRepeat = new System.Windows.Forms.Label();
             this.labelTerminalDelay = new System.Windows.Forms.Label();
             this.numericUpDownTerminalDelay = new System.Windows.Forms.NumericUpDown();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.labelTerminal = new System.Windows.Forms.Label();
             this.timerChart = new System.Windows.Forms.Timer(this.components);
             this.panelLog = new System.Windows.Forms.Panel();
             this.panelLogOptions = new System.Windows.Forms.Panel();
@@ -111,10 +111,6 @@
             this.comboboxStopbits = new System.Windows.Forms.ComboBox();
             this.comboboxDatabits = new System.Windows.Forms.ComboBox();
             this.panelSideBar = new System.Windows.Forms.Panel();
-            this.statusStripConnection = new System.Windows.Forms.StatusStrip();
-            this.toolStripStatusLabelConnection = new System.Windows.Forms.ToolStripStatusLabel();
-            this.panelMain = new System.Windows.Forms.Panel();
-            this.timerTerminalCommandDelay = new System.Windows.Forms.Timer(this.components);
             this.gradientPanel1 = new DeviceTester.CustomControls.GradientPanel();
             this.panelButtonSettings = new System.Windows.Forms.Panel();
             this.buttonTerminalOptions = new System.Windows.Forms.Button();
@@ -124,6 +120,10 @@
             this.buttonTerminal = new System.Windows.Forms.Button();
             this.buttonFactory = new System.Windows.Forms.Button();
             this.panelActiveButtonIndicator = new System.Windows.Forms.Panel();
+            this.statusStripConnection = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabelConnection = new System.Windows.Forms.ToolStripStatusLabel();
+            this.panelMain = new System.Windows.Forms.Panel();
+            this.timerTerminalCommandDelay = new System.Windows.Forms.Timer(this.components);
             this.panelTop.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picBoxRestore)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picBoxMinimize)).BeginInit();
@@ -133,21 +133,21 @@
             this.panelFactory.SuspendLayout();
             this.panelFactorySettingsItems.SuspendLayout();
             this.panelTerminal.SuspendLayout();
-            this.panelTerminalItems.SuspendLayout();
-            this.panel2.SuspendLayout();
-            this.panel1.SuspendLayout();
+            this.panelTerminalReceive.SuspendLayout();
+            this.panelTerminalTransmit.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTerminalRepeats)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTerminalDelay)).BeginInit();
+            this.panel1.SuspendLayout();
             this.panelLog.SuspendLayout();
             this.panelLogOptions.SuspendLayout();
             this.panelPages.SuspendLayout();
             this.panelTerminalOptions.SuspendLayout();
             this.panelSerialPort.SuspendLayout();
             this.panelSideBar.SuspendLayout();
-            this.statusStripConnection.SuspendLayout();
-            this.panelMain.SuspendLayout();
             this.gradientPanel1.SuspendLayout();
             this.panelButtonSettings.SuspendLayout();
+            this.statusStripConnection.SuspendLayout();
+            this.panelMain.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelTop
@@ -513,8 +513,9 @@
             // panelTerminal
             // 
             this.panelTerminal.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(41)))), ((int)(((byte)(61)))));
-            this.panelTerminal.Controls.Add(this.labelTerminal);
-            this.panelTerminal.Controls.Add(this.panelTerminalItems);
+            this.panelTerminal.Controls.Add(this.panelTerminalReceive);
+            this.panelTerminal.Controls.Add(this.panelTerminalTransmit);
+            this.panelTerminal.Controls.Add(this.panel1);
             this.panelTerminal.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelTerminal.Location = new System.Drawing.Point(0, 0);
             this.panelTerminal.Margin = new System.Windows.Forms.Padding(0);
@@ -523,42 +524,20 @@
             this.panelTerminal.TabIndex = 2;
             this.panelTerminal.Visible = false;
             // 
-            // labelTerminal
+            // panelTerminalReceive
             // 
-            this.labelTerminal.AutoSize = true;
-            this.labelTerminal.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelTerminal.ForeColor = System.Drawing.Color.White;
-            this.labelTerminal.Location = new System.Drawing.Point(8, 13);
-            this.labelTerminal.Name = "labelTerminal";
-            this.labelTerminal.Size = new System.Drawing.Size(67, 20);
-            this.labelTerminal.TabIndex = 60;
-            this.labelTerminal.Text = "Terminal";
-            // 
-            // panelTerminalItems
-            // 
-            this.panelTerminalItems.Controls.Add(this.panel2);
-            this.panelTerminalItems.Controls.Add(this.panel1);
-            this.panelTerminalItems.Enabled = false;
-            this.panelTerminalItems.Location = new System.Drawing.Point(3, 36);
-            this.panelTerminalItems.MaximumSize = new System.Drawing.Size(1000, 800);
-            this.panelTerminalItems.Name = "panelTerminalItems";
-            this.panelTerminalItems.Size = new System.Drawing.Size(490, 383);
-            this.panelTerminalItems.TabIndex = 65;
-            // 
-            // panel2
-            // 
-            this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel2.Controls.Add(this.radioButtonTerminaAscii);
-            this.panel2.Controls.Add(this.textboxRecievedData);
-            this.panel2.Controls.Add(this.buttonTerminalReceiveClear);
-            this.panel2.Controls.Add(this.radioButtonTerminalHex);
-            this.panel2.Controls.Add(this.labelTerminalReceive);
-            this.panel2.Location = new System.Drawing.Point(3, 3);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(481, 291);
-            this.panel2.TabIndex = 79;
+            this.panelTerminalReceive.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(41)))), ((int)(((byte)(61)))));
+            this.panelTerminalReceive.Controls.Add(this.radioButtonTerminaAscii);
+            this.panelTerminalReceive.Controls.Add(this.textboxRecievedData);
+            this.panelTerminalReceive.Controls.Add(this.buttonTerminalReceiveClear);
+            this.panelTerminalReceive.Controls.Add(this.radioButtonTerminalHex);
+            this.panelTerminalReceive.Controls.Add(this.labelTerminalReceive);
+            this.panelTerminalReceive.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelTerminalReceive.Enabled = false;
+            this.panelTerminalReceive.Location = new System.Drawing.Point(0, 38);
+            this.panelTerminalReceive.Name = "panelTerminalReceive";
+            this.panelTerminalReceive.Size = new System.Drawing.Size(496, 293);
+            this.panelTerminalReceive.TabIndex = 85;
             // 
             // radioButtonTerminaAscii
             // 
@@ -567,14 +546,13 @@
             this.radioButtonTerminaAscii.BackColor = System.Drawing.Color.Transparent;
             this.radioButtonTerminaAscii.Checked = true;
             this.radioButtonTerminaAscii.ForeColor = System.Drawing.Color.White;
-            this.radioButtonTerminaAscii.Location = new System.Drawing.Point(53, 265);
+            this.radioButtonTerminaAscii.Location = new System.Drawing.Point(53, 270);
             this.radioButtonTerminaAscii.Name = "radioButtonTerminaAscii";
             this.radioButtonTerminaAscii.Size = new System.Drawing.Size(47, 17);
             this.radioButtonTerminaAscii.TabIndex = 78;
             this.radioButtonTerminaAscii.TabStop = true;
             this.radioButtonTerminaAscii.Text = "Ascii";
             this.radioButtonTerminaAscii.UseVisualStyleBackColor = false;
-            this.radioButtonTerminaAscii.CheckedChanged += new System.EventHandler(this.radioButtonTerminaAscii_CheckedChanged);
             // 
             // textboxRecievedData
             // 
@@ -584,11 +562,11 @@
             this.textboxRecievedData.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(218)))), ((int)(((byte)(218)))), ((int)(((byte)(218)))));
             this.textboxRecievedData.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textboxRecievedData.ForeColor = System.Drawing.Color.Black;
-            this.textboxRecievedData.Location = new System.Drawing.Point(8, 19);
+            this.textboxRecievedData.Location = new System.Drawing.Point(8, 23);
             this.textboxRecievedData.Multiline = true;
             this.textboxRecievedData.Name = "textboxRecievedData";
             this.textboxRecievedData.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textboxRecievedData.Size = new System.Drawing.Size(470, 239);
+            this.textboxRecievedData.Size = new System.Drawing.Size(480, 235);
             this.textboxRecievedData.TabIndex = 63;
             this.textboxRecievedData.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextboxReceiveData_KeyPress);
             // 
@@ -602,7 +580,7 @@
             this.buttonTerminalReceiveClear.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.buttonTerminalReceiveClear.ForeColor = System.Drawing.Color.White;
             this.buttonTerminalReceiveClear.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonTerminalReceiveClear.Location = new System.Drawing.Point(422, 264);
+            this.buttonTerminalReceiveClear.Location = new System.Drawing.Point(441, 264);
             this.buttonTerminalReceiveClear.Name = "buttonTerminalReceiveClear";
             this.buttonTerminalReceiveClear.Size = new System.Drawing.Size(47, 23);
             this.buttonTerminalReceiveClear.TabIndex = 64;
@@ -616,45 +594,43 @@
             this.radioButtonTerminalHex.AutoSize = true;
             this.radioButtonTerminalHex.BackColor = System.Drawing.Color.Transparent;
             this.radioButtonTerminalHex.ForeColor = System.Drawing.Color.White;
-            this.radioButtonTerminalHex.Location = new System.Drawing.Point(10, 265);
+            this.radioButtonTerminalHex.Location = new System.Drawing.Point(12, 270);
             this.radioButtonTerminalHex.Name = "radioButtonTerminalHex";
             this.radioButtonTerminalHex.Size = new System.Drawing.Size(44, 17);
             this.radioButtonTerminalHex.TabIndex = 77;
             this.radioButtonTerminalHex.Text = "Hex";
             this.radioButtonTerminalHex.UseVisualStyleBackColor = false;
-            this.radioButtonTerminalHex.CheckedChanged += new System.EventHandler(this.radioButtonTerminalHex_CheckedChanged);
             // 
             // labelTerminalReceive
             // 
             this.labelTerminalReceive.AutoSize = true;
             this.labelTerminalReceive.BackColor = System.Drawing.Color.Transparent;
             this.labelTerminalReceive.ForeColor = System.Drawing.Color.White;
-            this.labelTerminalReceive.Location = new System.Drawing.Point(5, 3);
+            this.labelTerminalReceive.Location = new System.Drawing.Point(8, 7);
             this.labelTerminalReceive.Name = "labelTerminalReceive";
             this.labelTerminalReceive.Size = new System.Drawing.Size(47, 13);
             this.labelTerminalReceive.TabIndex = 68;
             this.labelTerminalReceive.Text = "Receive";
             // 
-            // panel1
+            // panelTerminalTransmit
             // 
-            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel1.Controls.Add(this.buttonTerminalTransmitClear);
-            this.panel1.Controls.Add(this.textBoxTransmitData);
-            this.panel1.Controls.Add(this.radioButtonTerminalCommands);
-            this.panel1.Controls.Add(this.labelTerminalTransmit);
-            this.panel1.Controls.Add(this.radioButtonTerminalKeys);
-            this.panel1.Controls.Add(this.buttonTerminalTransmitSend);
-            this.panel1.Controls.Add(this.radioButtonTerminalFile);
-            this.panel1.Controls.Add(this.numericUpDownTerminalRepeats);
-            this.panel1.Controls.Add(this.labelTerminalRepeat);
-            this.panel1.Controls.Add(this.labelTerminalDelay);
-            this.panel1.Controls.Add(this.numericUpDownTerminalDelay);
-            this.panel1.Location = new System.Drawing.Point(3, 292);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(481, 91);
-            this.panel1.TabIndex = 78;
+            this.panelTerminalTransmit.Controls.Add(this.buttonTerminalTransmitClear);
+            this.panelTerminalTransmit.Controls.Add(this.textBoxTransmitData);
+            this.panelTerminalTransmit.Controls.Add(this.radioButtonTerminalCommands);
+            this.panelTerminalTransmit.Controls.Add(this.labelTerminalTransmit);
+            this.panelTerminalTransmit.Controls.Add(this.radioButtonTerminalKeys);
+            this.panelTerminalTransmit.Controls.Add(this.buttonTerminalTransmitSend);
+            this.panelTerminalTransmit.Controls.Add(this.radioButtonTerminalFile);
+            this.panelTerminalTransmit.Controls.Add(this.numericUpDownTerminalRepeats);
+            this.panelTerminalTransmit.Controls.Add(this.labelTerminalRepeat);
+            this.panelTerminalTransmit.Controls.Add(this.labelTerminalDelay);
+            this.panelTerminalTransmit.Controls.Add(this.numericUpDownTerminalDelay);
+            this.panelTerminalTransmit.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panelTerminalTransmit.Enabled = false;
+            this.panelTerminalTransmit.Location = new System.Drawing.Point(0, 331);
+            this.panelTerminalTransmit.Name = "panelTerminalTransmit";
+            this.panelTerminalTransmit.Size = new System.Drawing.Size(496, 91);
+            this.panelTerminalTransmit.TabIndex = 84;
             // 
             // buttonTerminalTransmitClear
             // 
@@ -666,7 +642,7 @@
             this.buttonTerminalTransmitClear.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.buttonTerminalTransmitClear.ForeColor = System.Drawing.Color.White;
             this.buttonTerminalTransmitClear.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonTerminalTransmitClear.Location = new System.Drawing.Point(422, 46);
+            this.buttonTerminalTransmitClear.Location = new System.Drawing.Point(441, 48);
             this.buttonTerminalTransmitClear.Name = "buttonTerminalTransmitClear";
             this.buttonTerminalTransmitClear.Size = new System.Drawing.Size(47, 23);
             this.buttonTerminalTransmitClear.TabIndex = 77;
@@ -682,9 +658,8 @@
             this.textBoxTransmitData.ForeColor = System.Drawing.Color.Black;
             this.textBoxTransmitData.Location = new System.Drawing.Point(8, 21);
             this.textBoxTransmitData.Name = "textBoxTransmitData";
-            this.textBoxTransmitData.Size = new System.Drawing.Size(390, 23);
+            this.textBoxTransmitData.Size = new System.Drawing.Size(427, 23);
             this.textBoxTransmitData.TabIndex = 65;
-            this.textBoxTransmitData.TextChanged += new System.EventHandler(this.textBoxTransmitData_TextChanged);
             this.textBoxTransmitData.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextboxTransmitData_KeyPress);
             // 
             // radioButtonTerminalCommands
@@ -712,7 +687,6 @@
             this.labelTerminalTransmit.Size = new System.Drawing.Size(47, 13);
             this.labelTerminalTransmit.TabIndex = 67;
             this.labelTerminalTransmit.Text = "Transmit";
-            this.labelTerminalTransmit.Click += new System.EventHandler(this.labelTerminalTransmit_Click);
             // 
             // radioButtonTerminalKeys
             // 
@@ -740,13 +714,13 @@
             this.buttonTerminalTransmitSend.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.buttonTerminalTransmitSend.ForeColor = System.Drawing.Color.White;
             this.buttonTerminalTransmitSend.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonTerminalTransmitSend.Location = new System.Drawing.Point(422, 20);
+            this.buttonTerminalTransmitSend.Location = new System.Drawing.Point(441, 20);
             this.buttonTerminalTransmitSend.Name = "buttonTerminalTransmitSend";
             this.buttonTerminalTransmitSend.Size = new System.Drawing.Size(47, 23);
             this.buttonTerminalTransmitSend.TabIndex = 69;
             this.buttonTerminalTransmitSend.Text = "Send";
             this.buttonTerminalTransmitSend.UseVisualStyleBackColor = false;
-            this.buttonTerminalTransmitSend.Click += new System.EventHandler(this.buttonTerminalSend_Click);
+            this.buttonTerminalTransmitSend.Click += new System.EventHandler(this.buttonTerminalTransmitSend_Click);
             // 
             // radioButtonTerminalFile
             // 
@@ -833,6 +807,26 @@
             0,
             0,
             0});
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.labelTerminal);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(496, 38);
+            this.panel1.TabIndex = 66;
+            // 
+            // labelTerminal
+            // 
+            this.labelTerminal.AutoSize = true;
+            this.labelTerminal.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelTerminal.ForeColor = System.Drawing.Color.White;
+            this.labelTerminal.Location = new System.Drawing.Point(8, 8);
+            this.labelTerminal.Name = "labelTerminal";
+            this.labelTerminal.Size = new System.Drawing.Size(67, 20);
+            this.labelTerminal.TabIndex = 61;
+            this.labelTerminal.Text = "Terminal";
             // 
             // panelLog
             // 
@@ -1162,40 +1156,6 @@
             this.panelSideBar.Size = new System.Drawing.Size(150, 441);
             this.panelSideBar.TabIndex = 3;
             // 
-            // statusStripConnection
-            // 
-            this.statusStripConnection.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(41)))), ((int)(((byte)(61)))));
-            this.statusStripConnection.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabelConnection});
-            this.statusStripConnection.Location = new System.Drawing.Point(0, 419);
-            this.statusStripConnection.Name = "statusStripConnection";
-            this.statusStripConnection.Size = new System.Drawing.Size(496, 22);
-            this.statusStripConnection.TabIndex = 5;
-            this.statusStripConnection.Text = "statusStrip1";
-            // 
-            // toolStripStatusLabelConnection
-            // 
-            this.toolStripStatusLabelConnection.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.toolStripStatusLabelConnection.ForeColor = System.Drawing.Color.White;
-            this.toolStripStatusLabelConnection.Margin = new System.Windows.Forms.Padding(10, 3, 0, 2);
-            this.toolStripStatusLabelConnection.Name = "toolStripStatusLabelConnection";
-            this.toolStripStatusLabelConnection.Size = new System.Drawing.Size(199, 17);
-            this.toolStripStatusLabelConnection.Text = "Not connected: please connect to a port";
-            // 
-            // panelMain
-            // 
-            this.panelMain.Controls.Add(this.panelPages);
-            this.panelMain.Controls.Add(this.statusStripConnection);
-            this.panelMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelMain.Location = new System.Drawing.Point(152, 37);
-            this.panelMain.Name = "panelMain";
-            this.panelMain.Size = new System.Drawing.Size(496, 441);
-            this.panelMain.TabIndex = 6;
-            // 
-            // timerTerminalCommandDelay
-            // 
-            this.timerTerminalCommandDelay.Interval = 1;
-            // 
             // gradientPanel1
             // 
             this.gradientPanel1.ColorBottom = System.Drawing.Color.FromArgb(((int)(((byte)(165)))), ((int)(((byte)(21)))), ((int)(((byte)(80)))));
@@ -1338,6 +1298,40 @@
             this.panelActiveButtonIndicator.Size = new System.Drawing.Size(7, 31);
             this.panelActiveButtonIndicator.TabIndex = 5;
             // 
+            // statusStripConnection
+            // 
+            this.statusStripConnection.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(41)))), ((int)(((byte)(61)))));
+            this.statusStripConnection.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabelConnection});
+            this.statusStripConnection.Location = new System.Drawing.Point(0, 419);
+            this.statusStripConnection.Name = "statusStripConnection";
+            this.statusStripConnection.Size = new System.Drawing.Size(496, 22);
+            this.statusStripConnection.TabIndex = 5;
+            this.statusStripConnection.Text = "statusStrip1";
+            // 
+            // toolStripStatusLabelConnection
+            // 
+            this.toolStripStatusLabelConnection.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.toolStripStatusLabelConnection.ForeColor = System.Drawing.Color.White;
+            this.toolStripStatusLabelConnection.Margin = new System.Windows.Forms.Padding(10, 3, 0, 2);
+            this.toolStripStatusLabelConnection.Name = "toolStripStatusLabelConnection";
+            this.toolStripStatusLabelConnection.Size = new System.Drawing.Size(199, 17);
+            this.toolStripStatusLabelConnection.Text = "Not connected: please connect to a port";
+            // 
+            // panelMain
+            // 
+            this.panelMain.Controls.Add(this.panelPages);
+            this.panelMain.Controls.Add(this.statusStripConnection);
+            this.panelMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelMain.Location = new System.Drawing.Point(152, 37);
+            this.panelMain.Name = "panelMain";
+            this.panelMain.Size = new System.Drawing.Size(496, 441);
+            this.panelMain.TabIndex = 6;
+            // 
+            // timerTerminalCommandDelay
+            // 
+            this.timerTerminalCommandDelay.Interval = 1;
+            // 
             // Dashboard
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -1366,14 +1360,14 @@
             this.panelFactorySettingsItems.ResumeLayout(false);
             this.panelFactorySettingsItems.PerformLayout();
             this.panelTerminal.ResumeLayout(false);
-            this.panelTerminal.PerformLayout();
-            this.panelTerminalItems.ResumeLayout(false);
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
+            this.panelTerminalReceive.ResumeLayout(false);
+            this.panelTerminalReceive.PerformLayout();
+            this.panelTerminalTransmit.ResumeLayout(false);
+            this.panelTerminalTransmit.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTerminalRepeats)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTerminalDelay)).EndInit();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.panelLog.ResumeLayout(false);
             this.panelLog.PerformLayout();
             this.panelLogOptions.ResumeLayout(false);
@@ -1384,12 +1378,12 @@
             this.panelSerialPort.ResumeLayout(false);
             this.panelSerialPort.PerformLayout();
             this.panelSideBar.ResumeLayout(false);
+            this.gradientPanel1.ResumeLayout(false);
+            this.panelButtonSettings.ResumeLayout(false);
             this.statusStripConnection.ResumeLayout(false);
             this.statusStripConnection.PerformLayout();
             this.panelMain.ResumeLayout(false);
             this.panelMain.PerformLayout();
-            this.gradientPanel1.ResumeLayout(false);
-            this.panelButtonSettings.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1425,10 +1419,7 @@
         private System.Windows.Forms.RadioButton radiobuttonLogAppend;
         private System.Windows.Forms.CheckBox checkboxEnableLog;
         private System.Windows.Forms.RadioButton radiobuttonLogOverwrite;
-        private System.Windows.Forms.Label labelTerminal;
         private System.Windows.Forms.Label labelFactorySettings;
-        private System.Windows.Forms.Button buttonTerminalReceiveClear;
-        private System.Windows.Forms.TextBox textboxRecievedData;
         private System.Windows.Forms.Label labelLog;
         private System.Windows.Forms.Button buttonSerialPortConnect;
         private System.Windows.Forms.ComboBox comboboxPort;
@@ -1447,19 +1438,6 @@
         private System.Windows.Forms.ComboBox comboboxStopbits;
         private System.Windows.Forms.ComboBox comboboxDatabits;
         private System.Windows.Forms.Button buttonTerminalOptions;
-        private System.Windows.Forms.Panel panelTerminalItems;
-        private System.Windows.Forms.TextBox textBoxTransmitData;
-        private System.Windows.Forms.Label labelTerminalTransmit;
-        private System.Windows.Forms.Label labelTerminalReceive;
-        private System.Windows.Forms.Button buttonTerminalTransmitSend;
-        private System.Windows.Forms.RadioButton radioButtonTerminalFile;
-        private System.Windows.Forms.RadioButton radioButtonTerminalKeys;
-        private System.Windows.Forms.RadioButton radioButtonTerminalCommands;
-        private System.Windows.Forms.Label labelTerminalDelay;
-        private System.Windows.Forms.NumericUpDown numericUpDownTerminalDelay;
-        private System.Windows.Forms.Label labelTerminalRepeat;
-        private System.Windows.Forms.NumericUpDown numericUpDownTerminalRepeats;
-        private System.Windows.Forms.RadioButton radioButtonTerminalHex;
         private System.Windows.Forms.Panel panelTerminalOptions;
         private System.Windows.Forms.Label labelTerminalOptions;
         private System.Windows.Forms.Label labelPort;
@@ -1467,10 +1445,6 @@
         private System.Windows.Forms.Panel panelMain;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelConnection;
         private System.Windows.Forms.Timer timerTerminalCommandDelay;
-        private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.RadioButton radioButtonTerminaAscii;
-        private System.Windows.Forms.Button buttonTerminalTransmitClear;
         private System.Windows.Forms.Panel panelFactorySettingsItems;
         private System.Windows.Forms.Label labelFactoryStatus;
         private System.Windows.Forms.TextBox textBoxFactoryStatus;
@@ -1489,6 +1463,26 @@
         private System.Windows.Forms.Label labelVariant;
         private System.Windows.Forms.ComboBox comboBoxCountry;
         private System.Windows.Forms.Label labelCountry;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Label labelTerminal;
+        private System.Windows.Forms.Panel panelTerminalReceive;
+        private System.Windows.Forms.RadioButton radioButtonTerminaAscii;
+        private System.Windows.Forms.TextBox textboxRecievedData;
+        private System.Windows.Forms.Button buttonTerminalReceiveClear;
+        private System.Windows.Forms.RadioButton radioButtonTerminalHex;
+        private System.Windows.Forms.Label labelTerminalReceive;
+        private System.Windows.Forms.Panel panelTerminalTransmit;
+        private System.Windows.Forms.Button buttonTerminalTransmitClear;
+        private System.Windows.Forms.TextBox textBoxTransmitData;
+        private System.Windows.Forms.RadioButton radioButtonTerminalCommands;
+        private System.Windows.Forms.Label labelTerminalTransmit;
+        private System.Windows.Forms.RadioButton radioButtonTerminalKeys;
+        private System.Windows.Forms.Button buttonTerminalTransmitSend;
+        private System.Windows.Forms.RadioButton radioButtonTerminalFile;
+        private System.Windows.Forms.NumericUpDown numericUpDownTerminalRepeats;
+        private System.Windows.Forms.Label labelTerminalRepeat;
+        private System.Windows.Forms.Label labelTerminalDelay;
+        private System.Windows.Forms.NumericUpDown numericUpDownTerminalDelay;
     }
 }
 

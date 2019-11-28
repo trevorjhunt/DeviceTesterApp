@@ -4,6 +4,10 @@ Device Tester App                                                  Release Notes
 (C) 2019 Trevor Hunt, All Rights Reserved
 =======================================================================================
 
+App Version: 1.0.0.11
+    - terminal page now maximizes when the screen is maximized
+	- 
+
 App Version: 1.0.0.10
     - terminal RX bug fix for missing serial port chars on occasion
 	- 

@@ -60,7 +60,6 @@ namespace DeviceTester
             comboboxFlowControl.SelectedIndex = 0;
 
             this.serialPortDut.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(this.serialPortDut_DataReceived);
-            //backgroundWorker1.DoWork += new DoWorkEventHandler(TerminalUpdateReceiveDataTextbox);
 
             timerTerminalCommandDelay.Tick += new EventHandler(TerminalSendData);
 
@@ -367,10 +366,10 @@ namespace DeviceTester
             {
                 byte[] asciiBytes = Encoding.ASCII.GetBytes(strText);
                 string asciiStr = BitConverter.ToString(asciiBytes);
-                textboxRecievedData.Text += asciiStr;
+                textboxRecievedData.AppendText(asciiStr);
             }                
             else
-                textboxRecievedData.Text += strText;           
+                textboxRecievedData.AppendText(strText);           
         }
 
         private void serialPortDut_DataReceived(object sender, System.IO.Ports.SerialDataReceivedEventArgs e)
@@ -475,8 +474,9 @@ namespace DeviceTester
 
                     textboxRecievedData.Clear();
                     textBoxTransmitData.Clear();
-                    panelFactorySettingsItems.Enabled = true;
-                    panelTerminalItems.Enabled = true;
+                    panelTerminalTransmit.Enabled = true;
+                    panelTerminalReceive.Enabled = true;
+                    panelFactorySettingsItems.Enabled = true;                    
                     panelLogOptions.Enabled = false;
                     buttonSerialPortConnect.Text = "Disconnect";
                     toolStripStatusLabelConnection.Text = "Connected port: " + serialPortDut.PortName + " @ " + serialPortDut.BaudRate + " bps";
@@ -488,8 +488,9 @@ namespace DeviceTester
             panelLogOptions.Enabled = true;
             buttonSerialPortConnect.Text = "Connect";
             toolStripStatusLabelConnection.Text = "Not connected: please connect to a port";
-            panelTerminalItems.Enabled = false;
             panelFactorySettingsItems.Enabled = false;
+            panelTerminalTransmit.Enabled = false;
+            panelTerminalReceive.Enabled = false;
         }
 
         /* write data when keydown*/
@@ -536,7 +537,7 @@ namespace DeviceTester
 
         // TODO - terminal BS not handled
         // TODO - Transmit 'send' should not be enabled when 'commands' not
-        private void buttonTerminalSend_Click(object sender, EventArgs e)
+        private void buttonTerminalTransmitSend_Click(object sender, EventArgs e)
         {
             // send 'commmand' option checked
             if (radioButtonTerminalCommands.Checked)
@@ -614,16 +615,6 @@ namespace DeviceTester
                 buttonFactoryConnect.Text = "Connect";
                 textBoxFactoryStatus.Clear();
             }
-        }
-
-        private void labelTerminalTransmit_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBoxTransmitData_TextChanged(object sender, EventArgs e)
-        {
-
         }
     }
 }
