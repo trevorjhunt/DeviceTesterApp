@@ -7,6 +7,7 @@ using System.IO.Ports;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -19,15 +20,13 @@ namespace DeviceTester
         [DllImportAttribute("user32.dll")]
         public static extern bool ReleaseCapture();
 
+
         private bool settingsMenuIsExpanded;
         private bool panelSideBarIsExpanded = true;
         private int terminalSendCommandCounter = 0;
-
-        public string ReceivedData      { get; set; } // TODO - make private
-        public string ReceivedDataInHex { get; set; } // TODO - make private
+        
 
         System.IO.StreamWriter out_file;
-        System.IO.StreamReader in_file;
 
 
         // Main entry point
@@ -60,8 +59,9 @@ namespace DeviceTester
             comboboxFlowControl.SelectedIndex = 0;
 
             this.serialPortDut.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(this.serialPortDut_DataReceived);
-
             timerTerminalCommandDelay.Tick += new EventHandler(TerminalSendData);
+            timerDeviceConnect.Tick += new EventHandler(ConnectToDevice); 
+
 
             textboxRecievedData.Clear();
             textBoxTransmitData.Clear();
@@ -362,22 +362,34 @@ namespace DeviceTester
         /* Append text to rx_textarea*/
         private void TerminalUpdateReceiveDataTextbox(string strText)
         {
+            // if hex display enabled, then convert ascii to hex and display
             if (radioButtonTerminalHex.Checked)
             {
                 byte[] asciiBytes = Encoding.ASCII.GetBytes(strText);
                 string asciiStr = BitConverter.ToString(asciiBytes);
                 textboxRecievedData.AppendText(asciiStr);
-            }                
-            else
-                textboxRecievedData.AppendText(strText);           
+                return;
+            }
+                       
+            // handle backspace, remove a char from the text box if detected
+            if (strText == "\b \b")
+            {
+                if (textboxRecievedData.Text.Length > 0)
+                    textboxRecievedData.Text = textboxRecievedData.Text.Remove(textboxRecievedData.Text.Length - 1);
+                return;
+            }
+
+            // add new char to text box
+            textboxRecievedData.AppendText(strText);            
         }
 
         private void serialPortDut_DataReceived(object sender, System.IO.Ports.SerialDataReceivedEventArgs e)
         {
-            string strErg = serialPortDut.ReadExisting();
+            string stringReceived = serialPortDut.ReadExisting();
+           
             this.BeginInvoke(new EventHandler(delegate
             {
-                TerminalUpdateReceiveDataTextbox(strErg);
+                TerminalUpdateReceiveDataTextbox(stringReceived);
             }));
             Application.DoEvents();
         }
@@ -440,14 +452,6 @@ namespace DeviceTester
                 catch
                 {
                 }
-            }
-
-            try
-            {
-                in_file.Dispose();
-            }
-            catch
-            {
             }
         }
 
@@ -579,6 +583,8 @@ namespace DeviceTester
         private void radioButtonTerminalKeys_CheckedChanged(object sender, EventArgs e)
         {
             textBoxTransmitData.Clear();
+            buttonTerminalTransmitSend.Enabled = false;
+            buttonTerminalTransmitClear.Enabled = false;
             numericUpDownTerminalDelay.Enabled = !radioButtonTerminalKeys.Checked;
             numericUpDownTerminalRepeats.Enabled = !radioButtonTerminalKeys.Checked;
             buttonTerminalTransmitSend.Text = "Send";
@@ -587,6 +593,8 @@ namespace DeviceTester
 
         private void radioButtonTerminalCommands_CheckedChanged(object sender, EventArgs e)
         {
+            buttonTerminalTransmitSend.Enabled = true;
+            buttonTerminalTransmitClear.Enabled = true;
             textBoxTransmitData.Clear();
             numericUpDownTerminalDelay.Enabled = radioButtonTerminalCommands.Checked;
             numericUpDownTerminalRepeats.Enabled = radioButtonTerminalCommands.Checked;
@@ -599,22 +607,293 @@ namespace DeviceTester
             textBoxTransmitData.Clear();
             numericUpDownTerminalDelay.Enabled = !radioButtonTerminalFile.Checked;
             numericUpDownTerminalRepeats.Enabled = !radioButtonTerminalFile.Checked;
+
+            buttonTerminalTransmitClear.Enabled = true;
+            buttonTerminalTransmitSend.Enabled = true;
             buttonTerminalTransmitSend.Text = "Send";
             timerTerminalCommandDelay.Stop();
+        }
+
+        private bool command_send_receive(string command, out string response)
+        {
+            response = "";
+
+            // serial port not open?
+            if (!serialPortDut.IsOpen)
+                return false;
+
+            this.serialPortDut.DataReceived -= new System.IO.Ports.SerialDataReceivedEventHandler(this.serialPortDut_DataReceived);
+
+            // write the command and wait for reply
+            serialPortDut.Write(command);
+            System.Threading.Thread.Sleep(250);
+
+            // ignore echo 
+            byte[] buffer = new byte[command.Length];
+            serialPortDut.ReadTimeout = 100;
+
+            try { serialPortDut.Read(buffer, 0, command.Length); } 
+            catch { };
+            
+            serialPortDut.ReadTimeout = -1;
+
+            // return the response, minus echo in lower case
+            response = serialPortDut.ReadExisting();
+            response = response.ToLower();
+            this.serialPortDut.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(this.serialPortDut_DataReceived);
+
+            if (response.Length == 0)
+                return false;
+            return true;
+        }
+
+        private bool ReadFactorySettings()
+        {
+            bool snIsOk = false, countryIsOk = false, VariantIsOk = false, frequencyIsOk = false, temperatureOffsetIsOk = false; 
+
+            if (!command_send_receive("factory\r\n", out string response))
+                return false;
+              
+            string[] separatingStrings2 = { " = " };
+            string[] separatingStrings = { "\r\n" };
+            string[] lines = response.Split(separatingStrings, System.StringSplitOptions.RemoveEmptyEntries);
+
+            foreach (var line in lines)
+            {
+                if (line.Contains("s/n"))
+                {
+                    string[] tokens = line.Split(separatingStrings2, System.StringSplitOptions.RemoveEmptyEntries);
+                    textBoxSerialNumber.Text = tokens[1];
+                    snIsOk = true;
+                }
+
+                if (line.Contains("country"))
+                {
+                    string[] tokens = line.Split(separatingStrings2, System.StringSplitOptions.RemoveEmptyEntries);
+                    if (tokens[1] == "353")
+                        comboBoxCountry.SelectedIndex = 0;
+                    else if (tokens[1] == "44")
+                        comboBoxCountry.SelectedIndex = 1;
+                    else
+                        comboBoxCountry.SelectedIndex = -1;
+                    countryIsOk = true;
+                }
+
+                if (line.Contains("variant"))
+                {
+                    string[] tokens = line.Split(separatingStrings2, System.StringSplitOptions.RemoveEmptyEntries);
+                    if (tokens[1] == "1")
+                        comboBoxVariant.SelectedIndex = 0;
+                    else if (tokens[1] == "2")
+                        comboBoxVariant.SelectedIndex = 1;
+                    else
+                        comboBoxVariant.SelectedIndex = -1;
+                    VariantIsOk = true;
+                }
+
+                if (line.Contains("rf"))
+                {
+                    string[] tokens = line.Split(separatingStrings2, System.StringSplitOptions.RemoveEmptyEntries);
+                    if (tokens[1] == "868.0 mhz")
+                        comboBoxFrequency.SelectedIndex = 0;
+                    else if (tokens[1] == "868.1 mhz")
+                        comboBoxFrequency.SelectedIndex = 1;
+                    else if (tokens[1] == "868.2 mhz")
+                        comboBoxFrequency.SelectedIndex = 2;
+                    else if (tokens[1] == "868.3 mhz")
+                        comboBoxFrequency.SelectedIndex = 3;
+                    else if (tokens[1] == "868.4 mhz")
+                        comboBoxFrequency.SelectedIndex = 4;
+                    else if (tokens[1] == "868.5 mhz")
+                        comboBoxFrequency.SelectedIndex = 5;
+                    else if (tokens[1] == "868.6 mhz")
+                        comboBoxFrequency.SelectedIndex = 6;
+                    else if (tokens[1] == "868.7 mhz")
+                        comboBoxFrequency.SelectedIndex = 7;
+                    else if (tokens[1] == "868.8 mhz")
+                        comboBoxFrequency.SelectedIndex = 8;
+                    else
+                        comboBoxFrequency.SelectedIndex = -1;
+                    frequencyIsOk = true;
+                }
+
+                if (line.Contains("temp_cal"))
+                {
+                    string[] tokens = line.Split(separatingStrings2, System.StringSplitOptions.RemoveEmptyEntries);
+                    textBoxTempOffset.Text = tokens[1];
+                    temperatureOffsetIsOk = true;
+                }
+            }
+
+            if (snIsOk == countryIsOk == VariantIsOk == frequencyIsOk == temperatureOffsetIsOk == true)
+                return true;
+            return false;
+        }
+
+        private UInt32 GetPassword(UInt32 serial_number, Byte rf_frequency, UInt16 country_code, Byte variant)
+        {
+            UInt32 code = 0;
+            UInt32 val;
+
+            val = serial_number & 0x000000FF;
+            val <<= 8;
+            code |= val;
+
+            val = serial_number & 0x0000FF00;
+            val <<= 16;
+            code |= val;
+
+            val = serial_number & 0x00FF0000;
+            val >>= 16;
+            code |= val;
+
+            val = serial_number & 0xFF000000;
+            val >>= 8;
+            code |= val;
+
+            code ^= rf_frequency;
+
+            val = country_code;
+            val <<= 8;
+            code ^= val;
+
+            val = variant;
+            val <<= 24;
+            code ^= val;
+
+            return code;
+        }
+
+        // TODO - temp offset input should only handle values from -65535 to +655535
+        private bool WriteFactorySettings()
+        {
+            string serialNumber, frequency, country, variant, temperature_offset, command;
+ 
+            serialNumber = textBoxSerialNumber.Text;
+            frequency = comboBoxFrequency.SelectedIndex.ToString();
+
+            country = comboBoxCountry.SelectedItem.ToString();
+            country = (country == "Ireland") ? "353" : "44";
+
+            variant = comboBoxVariant.SelectedItem.ToString();
+            temperature_offset = textBoxTempOffset.Text;
+
+            UInt32 s;
+            Byte f, v;
+            UInt16 c;
+            UInt32 code;
+
+            s = UInt32.Parse(serialNumber);
+            f = Byte.Parse(frequency);
+            c = UInt16.Parse(country);
+            v = Byte.Parse(variant);
+            code = GetPassword(s, f, c, v);
+
+            //command = "Factory " + serialNumber + " " + code.ToString("X") + " " + country_code.ToString() + " " + rf_frequency.ToString() + " " + variant.ToString() + temp_cal.ToString() + "\r\n";
+            command = "factory " + serialNumber + " " + country + " " + frequency + " " + "42 " + variant + " " + temperature_offset + "\r\n";
+            textBoxFactoryStatus.Text = command;
+
+            if (!command_send_receive(command, out string response))
+                return false;
+
+            if (!response.Contains("ok"))
+                return false;
+
+            return true;
+        }
+
+
+        private void ConnectToDevice(object sender, EventArgs e)
+        {
+            // not connecting so shouldn't be here
+            if (buttonFactoryConnect.Text != "Connecting")
+            {
+                timerDeviceConnect.Stop();
+                return;
+            }
+
+            // 
+            if (command_send_receive("version\r\n", out string response))
+            {
+                if (response.Contains("rf ucs"))
+                {
+                    textBoxProduct.Enabled = true;
+                    textBoxProduct.Text = "Micro Contact";
+                    textBoxFactoryStatus.Text = "Connected to " + textBoxProduct.Text;
+                    buttonFactoryConnect.Text = "Connected";
+                    timerDeviceConnect.Stop();
+                }
+                else
+                {
+                    textBoxFactoryStatus.Text = "Device repsonse invalid: " + response;
+                }
+            }
+            else
+            {
+                textBoxProduct.Enabled = false;
+                textBoxProduct.Text = "";
+                textBoxFactoryStatus.Text = "Connecting...\r\nPlease try resetting the device";
+            }
         }
 
         private void buttonFactoryConnect_Click(object sender, EventArgs e)
         {
             if (buttonFactoryConnect.Text == "Connect")
             {
-                textBoxFactoryStatus.Text = "Connecting...\r\nPlease reset reboot device";
-            }
-
-            if (buttonFactoryConnect.Text == "Connected")
+                timerDeviceConnect.Start();
+                buttonFactoryConnect.Text = "Connecting";
+            }            
+            else 
             {
                 buttonFactoryConnect.Text = "Connect";
                 textBoxFactoryStatus.Clear();
+                timerDeviceConnect.Stop();
+                textBoxFactoryStatus.Text = "Disconnected... ";
+                textBoxProduct.Text = "";
+                textBoxSerialNumber.Text = "";
+                comboBoxCountry.SelectedIndex = -1;
+                comboBoxVariant.SelectedIndex = -1;
+                comboBoxFrequency.SelectedIndex = -1;
+                textBoxTempOffset.Text = "";
             }
+        }
+
+        private void buttonFactoryRead_Click(object sender, EventArgs e)
+        {
+            if (buttonFactoryConnect.Text == "Connected")
+            {
+                if (ReadFactorySettings())
+                {
+                    textBoxFactoryStatus.Text = "Factory settings read successfully";
+                }
+                else
+                {
+                    textBoxFactoryStatus.Text = "Factory settings read failed.. try reconnecting";
+                }
+            }
+        }
+
+        private void buttonFactoryWrite_Click(object sender, EventArgs e)
+        {
+            if (buttonFactoryConnect.Text == "Connected")
+            {
+                if (WriteFactorySettings())
+                {
+                    textBoxFactoryStatus.Text = "Factory settings programmed successfully";
+                }
+                else
+                {
+                    textBoxFactoryStatus.Text = "Factory settings programming failed.. try reconnecting";
+                }
+            }
+                
+        }
+
+        private void TextboxSerialNumber_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            string HexLetters = "0123456789abcdefABCDEF\b"; // \b is the BackSpace character
+
+            if (!HexLetters.Contains(e.KeyChar)) e.Handled = true;
         }
     }
 }
