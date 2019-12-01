@@ -4,6 +4,10 @@ Device Tester App                                                  Release Notes
 (C) 2019 Trevor Hunt, All Rights Reserved
 =======================================================================================
 
+App Version: 1.0.0.13
+    - added log
+	- minor bug fixes to factory commands 
+
 App Version: 1.0.0.12
     - factory settings read/write implemented 
 	- terminal recieve text box now handles backspace char
