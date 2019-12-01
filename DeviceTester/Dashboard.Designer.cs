@@ -83,7 +83,7 @@
             this.timerChart = new System.Windows.Forms.Timer(this.components);
             this.panelLog = new System.Windows.Forms.Panel();
             this.panelLogOptions = new System.Windows.Forms.Panel();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textBoxLogFileName = new System.Windows.Forms.TextBox();
             this.checkBoxTimestamp = new System.Windows.Forms.CheckBox();
             this.radiobuttonLogAppend = new System.Windows.Forms.RadioButton();
             this.checkboxEnableLog = new System.Windows.Forms.CheckBox();
@@ -95,8 +95,6 @@
             this.serialPortDut = new System.IO.Ports.SerialPort(this.components);
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.panelPages = new System.Windows.Forms.Panel();
-            this.panelTerminalOptions = new System.Windows.Forms.Panel();
-            this.labelTerminalOptions = new System.Windows.Forms.Label();
             this.panelSerialPort = new System.Windows.Forms.Panel();
             this.labelPort = new System.Windows.Forms.Label();
             this.labelBaudrate = new System.Windows.Forms.Label();
@@ -118,7 +116,6 @@
             this.timerDeviceConnect = new System.Windows.Forms.Timer(this.components);
             this.gradientPanel1 = new DeviceTester.CustomControls.GradientPanel();
             this.panelButtonSettings = new System.Windows.Forms.Panel();
-            this.buttonTerminalOptions = new System.Windows.Forms.Button();
             this.buttonLogSettings = new System.Windows.Forms.Button();
             this.buttonSerialPortSettings = new System.Windows.Forms.Button();
             this.buttonSettings = new System.Windows.Forms.Button();
@@ -142,7 +139,6 @@
             this.panelLog.SuspendLayout();
             this.panelLogOptions.SuspendLayout();
             this.panelPages.SuspendLayout();
-            this.panelTerminalOptions.SuspendLayout();
             this.panelSerialPort.SuspendLayout();
             this.panelSideBar.SuspendLayout();
             this.statusStripConnection.SuspendLayout();
@@ -856,7 +852,7 @@
             // 
             // panelLogOptions
             // 
-            this.panelLogOptions.Controls.Add(this.textBox1);
+            this.panelLogOptions.Controls.Add(this.textBoxLogFileName);
             this.panelLogOptions.Controls.Add(this.checkBoxTimestamp);
             this.panelLogOptions.Controls.Add(this.radiobuttonLogAppend);
             this.panelLogOptions.Controls.Add(this.checkboxEnableLog);
@@ -866,12 +862,13 @@
             this.panelLogOptions.Size = new System.Drawing.Size(389, 126);
             this.panelLogOptions.TabIndex = 28;
             // 
-            // textBox1
+            // textBoxLogFileName
             // 
-            this.textBox1.Location = new System.Drawing.Point(109, 4);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(241, 20);
-            this.textBox1.TabIndex = 30;
+            this.textBoxLogFileName.Location = new System.Drawing.Point(109, 4);
+            this.textBoxLogFileName.Name = "textBoxLogFileName";
+            this.textBoxLogFileName.ReadOnly = true;
+            this.textBoxLogFileName.Size = new System.Drawing.Size(241, 20);
+            this.textBoxLogFileName.TabIndex = 30;
             // 
             // checkBoxTimestamp
             // 
@@ -978,10 +975,9 @@
             // 
             this.panelPages.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
             this.panelPages.Controls.Add(this.panelTerminal);
-            this.panelPages.Controls.Add(this.panelLog);
-            this.panelPages.Controls.Add(this.panelTerminalOptions);
             this.panelPages.Controls.Add(this.panelSerialPort);
             this.panelPages.Controls.Add(this.panelFactory);
+            this.panelPages.Controls.Add(this.panelLog);
             this.panelPages.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelPages.Location = new System.Drawing.Point(0, 0);
             this.panelPages.Margin = new System.Windows.Forms.Padding(0);
@@ -989,29 +985,6 @@
             this.panelPages.Name = "panelPages";
             this.panelPages.Size = new System.Drawing.Size(496, 422);
             this.panelPages.TabIndex = 4;
-            // 
-            // panelTerminalOptions
-            // 
-            this.panelTerminalOptions.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(41)))), ((int)(((byte)(61)))));
-            this.panelTerminalOptions.Controls.Add(this.labelTerminalOptions);
-            this.panelTerminalOptions.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelTerminalOptions.Location = new System.Drawing.Point(0, 0);
-            this.panelTerminalOptions.Margin = new System.Windows.Forms.Padding(0);
-            this.panelTerminalOptions.Name = "panelTerminalOptions";
-            this.panelTerminalOptions.Size = new System.Drawing.Size(496, 422);
-            this.panelTerminalOptions.TabIndex = 75;
-            this.panelTerminalOptions.Visible = false;
-            // 
-            // labelTerminalOptions
-            // 
-            this.labelTerminalOptions.AutoSize = true;
-            this.labelTerminalOptions.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelTerminalOptions.ForeColor = System.Drawing.Color.White;
-            this.labelTerminalOptions.Location = new System.Drawing.Point(8, 13);
-            this.labelTerminalOptions.Name = "labelTerminalOptions";
-            this.labelTerminalOptions.Size = new System.Drawing.Size(124, 20);
-            this.labelTerminalOptions.TabIndex = 61;
-            this.labelTerminalOptions.Text = "Terminal options";
             // 
             // panelSerialPort
             // 
@@ -1225,32 +1198,15 @@
             // panelButtonSettings
             // 
             this.panelButtonSettings.BackColor = System.Drawing.Color.Transparent;
-            this.panelButtonSettings.Controls.Add(this.buttonTerminalOptions);
             this.panelButtonSettings.Controls.Add(this.buttonLogSettings);
             this.panelButtonSettings.Controls.Add(this.buttonSerialPortSettings);
             this.panelButtonSettings.Controls.Add(this.buttonSettings);
             this.panelButtonSettings.Location = new System.Drawing.Point(13, 76);
-            this.panelButtonSettings.MaximumSize = new System.Drawing.Size(130, 124);
+            this.panelButtonSettings.MaximumSize = new System.Drawing.Size(130, 93);
             this.panelButtonSettings.MinimumSize = new System.Drawing.Size(130, 31);
             this.panelButtonSettings.Name = "panelButtonSettings";
             this.panelButtonSettings.Size = new System.Drawing.Size(130, 31);
             this.panelButtonSettings.TabIndex = 4;
-            // 
-            // buttonTerminalOptions
-            // 
-            this.buttonTerminalOptions.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(162)))), ((int)(((byte)(21)))), ((int)(((byte)(79)))));
-            this.buttonTerminalOptions.Dock = System.Windows.Forms.DockStyle.Top;
-            this.buttonTerminalOptions.FlatAppearance.BorderSize = 0;
-            this.buttonTerminalOptions.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonTerminalOptions.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonTerminalOptions.ForeColor = System.Drawing.Color.White;
-            this.buttonTerminalOptions.Location = new System.Drawing.Point(0, 93);
-            this.buttonTerminalOptions.Name = "buttonTerminalOptions";
-            this.buttonTerminalOptions.Size = new System.Drawing.Size(130, 31);
-            this.buttonTerminalOptions.TabIndex = 5;
-            this.buttonTerminalOptions.Text = "Terminal";
-            this.buttonTerminalOptions.UseVisualStyleBackColor = false;
-            this.buttonTerminalOptions.Click += new System.EventHandler(this.buttonTerminalOptions_Click);
             // 
             // buttonLogSettings
             // 
@@ -1390,8 +1346,6 @@
             this.panelLogOptions.ResumeLayout(false);
             this.panelLogOptions.PerformLayout();
             this.panelPages.ResumeLayout(false);
-            this.panelTerminalOptions.ResumeLayout(false);
-            this.panelTerminalOptions.PerformLayout();
             this.panelSerialPort.ResumeLayout(false);
             this.panelSerialPort.PerformLayout();
             this.panelSideBar.ResumeLayout(false);
@@ -1431,7 +1385,7 @@
         private System.Windows.Forms.Button buttonSettings;
         private System.Windows.Forms.Panel panelLog;
         private System.Windows.Forms.Panel panelLogOptions;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox textBoxLogFileName;
         private System.Windows.Forms.CheckBox checkBoxTimestamp;
         private System.Windows.Forms.RadioButton radiobuttonLogAppend;
         private System.Windows.Forms.CheckBox checkboxEnableLog;
@@ -1454,9 +1408,6 @@
         private System.Windows.Forms.ComboBox comboboxParity;
         private System.Windows.Forms.ComboBox comboboxStopbits;
         private System.Windows.Forms.ComboBox comboboxDatabits;
-        private System.Windows.Forms.Button buttonTerminalOptions;
-        private System.Windows.Forms.Panel panelTerminalOptions;
-        private System.Windows.Forms.Label labelTerminalOptions;
         private System.Windows.Forms.Label labelPort;
         private System.Windows.Forms.StatusStrip statusStripConnection;
         private System.Windows.Forms.Panel panelMain;

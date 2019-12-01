@@ -24,9 +24,12 @@ namespace DeviceTester
         private bool settingsMenuIsExpanded;
         private bool panelSideBarIsExpanded = true;
         private int terminalSendCommandCounter = 0;
+        string commandResponse;
+        bool commandActive;
         
 
         System.IO.StreamWriter out_file;
+
 
 
         // Main entry point
@@ -187,7 +190,6 @@ namespace DeviceTester
             panelFactory.Visible = false;
             panelSerialPort.Visible = false;
             panelLog.Visible = false;
-            panelTerminalOptions.Visible = false;
 
             panel.Visible = true;
         }
@@ -323,12 +325,11 @@ namespace DeviceTester
 
         private void checkboxEnableLog_CheckedChanged(object sender, EventArgs e)
         {
-
             if (checkboxEnableLog.Checked)
             {
                 if (openFileDialog1.ShowDialog() == DialogResult.OK)
                 {
-                    checkboxEnableLog.Text = openFileDialog1.FileName;
+                    textBoxLogFileName.Text = openFileDialog1.FileName;
                     radiobuttonLogAppend.Enabled = true;
                     radiobuttonLogOverwrite.Enabled = true;
                 }
@@ -347,18 +348,6 @@ namespace DeviceTester
             }
         }
 
-
-        // 
-        //  handle 'terminal options' click
-        //
-
-        private void buttonTerminalOptions_Click(object sender, EventArgs e)
-        {
-            panelActiveButtonIndicator.Height = buttonTerminalOptions.Height;
-            panelActiveButtonIndicator.Top = panelButtonSettings.Top + buttonTerminalOptions.Top;
-            show_panel(ref panelTerminalOptions);
-        }
-
         /* Append text to rx_textarea*/
         private void TerminalUpdateReceiveDataTextbox(string strText)
         {
@@ -370,12 +359,28 @@ namespace DeviceTester
                 textboxRecievedData.AppendText(asciiStr);
                 return;
             }
-                       
-            // handle backspace, remove a char from the text box if detected
-            if (strText == "\b \b")
+
+            if (checkboxEnableLog.Checked)
             {
+                try
+                {
+                    if (!strText.Contains("\b"))
+                        out_file.Write(strText);
+                }
+                catch
+                {
+                    /*alert("Can't write to " + textboxLogFileName.Text + " file it might be not exist or it is opennd in another program");*/
+                }
+            }
+
+            // handle backspace, remove a char from the text box if detected
+            if (strText.Contains("\b"))
+            {                
                 if (textboxRecievedData.Text.Length > 0)
-                    textboxRecievedData.Text = textboxRecievedData.Text.Remove(textboxRecievedData.Text.Length - 1);
+                {
+                    textboxRecievedData.Text = textboxRecievedData.Text.Substring(0, textboxRecievedData.Text.Length - 1);
+                    textboxRecievedData.SelectionStart = textboxRecievedData.Text.Length;
+                }
                 return;
             }
 
@@ -386,7 +391,12 @@ namespace DeviceTester
         private void serialPortDut_DataReceived(object sender, System.IO.Ports.SerialDataReceivedEventArgs e)
         {
             string stringReceived = serialPortDut.ReadExisting();
-           
+
+            if (commandActive)
+            {
+                commandResponse += stringReceived;
+            }
+
             this.BeginInvoke(new EventHandler(delegate
             {
                 TerminalUpdateReceiveDataTextbox(stringReceived);
@@ -411,7 +421,6 @@ namespace DeviceTester
 
         private bool OpenSerialPort()
         {
-            bool success = false;
             try   
             { 
                 serialPortDut.PortName = comboboxPort.Text;
@@ -421,14 +430,13 @@ namespace DeviceTester
                 serialPortDut.DataBits = (Int32.Parse(comboboxDatabits.Text));
                 serialPortDut.Handshake = (Handshake)Enum.Parse(typeof(Handshake), comboboxFlowControl.SelectedIndex.ToString(), true);
                 serialPortDut.Open();
-                success = true;
             }
             catch 
             {
                 // TODO alert("Can't open " + mySerial.PortName + " port, it might be used in another program");
-                success = false;
+                return false;
             }
-            return success;
+            return true;
         }
 
         private void CloseSerialPort()
@@ -439,20 +447,7 @@ namespace DeviceTester
                 serialPortDut.DiscardInBuffer();
                 serialPortDut.DiscardOutBuffer();
             }
-            catch
-            {
-            }
-
-            if (checkboxEnableLog.Checked)
-            {
-                try
-                {
-                    out_file.Dispose();
-                }
-                catch
-                {
-                }
-            }
+            catch { }
         }
 
         private void buttonSerialPortConnect_Click(object sender, EventArgs e)
@@ -466,7 +461,7 @@ namespace DeviceTester
                     {
                         try
                         {
-                            out_file = new System.IO.StreamWriter(checkboxEnableLog.Text, radiobuttonLogAppend.Checked);
+                            out_file = new System.IO.StreamWriter(textBoxLogFileName.Text, radiobuttonLogAppend.Checked);
                         }
                         catch
                         {
@@ -495,6 +490,13 @@ namespace DeviceTester
             panelFactorySettingsItems.Enabled = false;
             panelTerminalTransmit.Enabled = false;
             panelTerminalReceive.Enabled = false;
+
+
+            if (checkboxEnableLog.Checked)
+            {
+                try { out_file.Dispose(); }
+                catch { }
+            }
         }
 
         /* write data when keydown*/
@@ -618,29 +620,21 @@ namespace DeviceTester
         {
             response = "";
 
-            // serial port not open?
             if (!serialPortDut.IsOpen)
                 return false;
 
-            this.serialPortDut.DataReceived -= new System.IO.Ports.SerialDataReceivedEventHandler(this.serialPortDut_DataReceived);
-
-            // write the command and wait for reply
+            commandResponse = "";
+            commandActive = true;
             serialPortDut.Write(command);
             System.Threading.Thread.Sleep(250);
+            commandActive = false;
 
-            // ignore echo 
-            byte[] buffer = new byte[command.Length];
-            serialPortDut.ReadTimeout = 100;
-
-            try { serialPortDut.Read(buffer, 0, command.Length); } 
-            catch { };
-            
-            serialPortDut.ReadTimeout = -1;
-
-            // return the response, minus echo in lower case
-            response = serialPortDut.ReadExisting();
-            response = response.ToLower();
-            this.serialPortDut.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(this.serialPortDut_DataReceived);
+            if (commandResponse.Contains(command))
+            {
+                int index = commandResponse.IndexOf(command);
+                response = commandResponse.Remove(index, command.Length);
+                response = response.ToLower();
+            }
 
             if (response.Length == 0)
                 return false;
@@ -783,7 +777,7 @@ namespace DeviceTester
             UInt16 c;
             UInt32 code;
 
-            s = UInt32.Parse(serialNumber);
+            s = UInt32.Parse(serialNumber); // TODO - hex values wont work
             f = Byte.Parse(frequency);
             c = UInt16.Parse(country);
             v = Byte.Parse(variant);
