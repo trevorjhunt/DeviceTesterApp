@@ -42,6 +42,7 @@
             this.panelFactory = new System.Windows.Forms.Panel();
             this.labelFactorySettings = new System.Windows.Forms.Label();
             this.panelFactorySettingsItems = new System.Windows.Forms.Panel();
+            this.checkBoxAutoSerialNumberEnable = new System.Windows.Forms.CheckBox();
             this.comboBoxVariant = new System.Windows.Forms.ComboBox();
             this.labelProduct = new System.Windows.Forms.Label();
             this.textBoxProduct = new System.Windows.Forms.TextBox();
@@ -109,12 +110,6 @@
             this.comboboxStopbits = new System.Windows.Forms.ComboBox();
             this.comboboxDatabits = new System.Windows.Forms.ComboBox();
             this.panelSideBar = new System.Windows.Forms.Panel();
-            this.statusStripConnection = new System.Windows.Forms.StatusStrip();
-            this.toolStripStatusLabelConnection = new System.Windows.Forms.ToolStripStatusLabel();
-            this.panelMain = new System.Windows.Forms.Panel();
-            this.timerTerminalCommandDelay = new System.Windows.Forms.Timer(this.components);
-            this.timerDeviceConnect = new System.Windows.Forms.Timer(this.components);
-            this.checkBoxAutoSerialNumberEnable = new System.Windows.Forms.CheckBox();
             this.gradientPanel1 = new DeviceTester.CustomControls.GradientPanel();
             this.panelButtonSettings = new System.Windows.Forms.Panel();
             this.buttonLogSettings = new System.Windows.Forms.Button();
@@ -123,6 +118,11 @@
             this.buttonTerminal = new System.Windows.Forms.Button();
             this.buttonFactory = new System.Windows.Forms.Button();
             this.panelActiveButtonIndicator = new System.Windows.Forms.Panel();
+            this.statusStripConnection = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabelConnection = new System.Windows.Forms.ToolStripStatusLabel();
+            this.panelMain = new System.Windows.Forms.Panel();
+            this.timerTerminalCommandDelay = new System.Windows.Forms.Timer(this.components);
+            this.timerDeviceConnect = new System.Windows.Forms.Timer(this.components);
             this.panelTop.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picBoxRestore)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picBoxMinimize)).BeginInit();
@@ -142,10 +142,10 @@
             this.panelPages.SuspendLayout();
             this.panelSerialPort.SuspendLayout();
             this.panelSideBar.SuspendLayout();
-            this.statusStripConnection.SuspendLayout();
-            this.panelMain.SuspendLayout();
             this.gradientPanel1.SuspendLayout();
             this.panelButtonSettings.SuspendLayout();
+            this.statusStripConnection.SuspendLayout();
+            this.panelMain.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelTop
@@ -314,6 +314,17 @@
             this.panelFactorySettingsItems.Name = "panelFactorySettingsItems";
             this.panelFactorySettingsItems.Size = new System.Drawing.Size(423, 341);
             this.panelFactorySettingsItems.TabIndex = 66;
+            // 
+            // checkBoxAutoSerialNumberEnable
+            // 
+            this.checkBoxAutoSerialNumberEnable.AutoSize = true;
+            this.checkBoxAutoSerialNumberEnable.ForeColor = System.Drawing.Color.White;
+            this.checkBoxAutoSerialNumberEnable.Location = new System.Drawing.Point(233, 55);
+            this.checkBoxAutoSerialNumberEnable.Name = "checkBoxAutoSerialNumberEnable";
+            this.checkBoxAutoSerialNumberEnable.Size = new System.Drawing.Size(48, 17);
+            this.checkBoxAutoSerialNumberEnable.TabIndex = 86;
+            this.checkBoxAutoSerialNumberEnable.Text = "Auto";
+            this.checkBoxAutoSerialNumberEnable.UseVisualStyleBackColor = true;
             // 
             // comboBoxVariant
             // 
@@ -1144,55 +1155,6 @@
             this.panelSideBar.Size = new System.Drawing.Size(150, 441);
             this.panelSideBar.TabIndex = 3;
             // 
-            // statusStripConnection
-            // 
-            this.statusStripConnection.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(41)))), ((int)(((byte)(61)))));
-            this.statusStripConnection.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabelConnection});
-            this.statusStripConnection.Location = new System.Drawing.Point(0, 419);
-            this.statusStripConnection.Name = "statusStripConnection";
-            this.statusStripConnection.Size = new System.Drawing.Size(496, 22);
-            this.statusStripConnection.TabIndex = 5;
-            this.statusStripConnection.Text = "statusStrip1";
-            // 
-            // toolStripStatusLabelConnection
-            // 
-            this.toolStripStatusLabelConnection.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.toolStripStatusLabelConnection.ForeColor = System.Drawing.Color.White;
-            this.toolStripStatusLabelConnection.Margin = new System.Windows.Forms.Padding(10, 3, 0, 2);
-            this.toolStripStatusLabelConnection.Name = "toolStripStatusLabelConnection";
-            this.toolStripStatusLabelConnection.Size = new System.Drawing.Size(199, 17);
-            this.toolStripStatusLabelConnection.Text = "Not connected: please connect to a port";
-            // 
-            // panelMain
-            // 
-            this.panelMain.Controls.Add(this.panelPages);
-            this.panelMain.Controls.Add(this.statusStripConnection);
-            this.panelMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelMain.Location = new System.Drawing.Point(152, 37);
-            this.panelMain.Name = "panelMain";
-            this.panelMain.Size = new System.Drawing.Size(496, 441);
-            this.panelMain.TabIndex = 6;
-            // 
-            // timerTerminalCommandDelay
-            // 
-            this.timerTerminalCommandDelay.Interval = 1;
-            // 
-            // timerDeviceConnect
-            // 
-            this.timerDeviceConnect.Interval = 500;
-            // 
-            // checkBoxAutoSerialNumberEnable
-            // 
-            this.checkBoxAutoSerialNumberEnable.AutoSize = true;
-            this.checkBoxAutoSerialNumberEnable.ForeColor = System.Drawing.Color.White;
-            this.checkBoxAutoSerialNumberEnable.Location = new System.Drawing.Point(233, 55);
-            this.checkBoxAutoSerialNumberEnable.Name = "checkBoxAutoSerialNumberEnable";
-            this.checkBoxAutoSerialNumberEnable.Size = new System.Drawing.Size(48, 17);
-            this.checkBoxAutoSerialNumberEnable.TabIndex = 86;
-            this.checkBoxAutoSerialNumberEnable.Text = "Auto";
-            this.checkBoxAutoSerialNumberEnable.UseVisualStyleBackColor = true;
-            // 
             // gradientPanel1
             // 
             this.gradientPanel1.ColorBottom = System.Drawing.Color.FromArgb(((int)(((byte)(165)))), ((int)(((byte)(21)))), ((int)(((byte)(80)))));
@@ -1318,6 +1280,44 @@
             this.panelActiveButtonIndicator.Size = new System.Drawing.Size(7, 31);
             this.panelActiveButtonIndicator.TabIndex = 5;
             // 
+            // statusStripConnection
+            // 
+            this.statusStripConnection.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(41)))), ((int)(((byte)(61)))));
+            this.statusStripConnection.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabelConnection});
+            this.statusStripConnection.Location = new System.Drawing.Point(0, 419);
+            this.statusStripConnection.Name = "statusStripConnection";
+            this.statusStripConnection.Size = new System.Drawing.Size(496, 22);
+            this.statusStripConnection.TabIndex = 5;
+            this.statusStripConnection.Text = "statusStrip1";
+            // 
+            // toolStripStatusLabelConnection
+            // 
+            this.toolStripStatusLabelConnection.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.toolStripStatusLabelConnection.ForeColor = System.Drawing.Color.White;
+            this.toolStripStatusLabelConnection.Margin = new System.Windows.Forms.Padding(10, 3, 0, 2);
+            this.toolStripStatusLabelConnection.Name = "toolStripStatusLabelConnection";
+            this.toolStripStatusLabelConnection.Size = new System.Drawing.Size(199, 17);
+            this.toolStripStatusLabelConnection.Text = "Not connected: please connect to a port";
+            // 
+            // panelMain
+            // 
+            this.panelMain.Controls.Add(this.panelPages);
+            this.panelMain.Controls.Add(this.statusStripConnection);
+            this.panelMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelMain.Location = new System.Drawing.Point(152, 37);
+            this.panelMain.Name = "panelMain";
+            this.panelMain.Size = new System.Drawing.Size(496, 441);
+            this.panelMain.TabIndex = 6;
+            // 
+            // timerTerminalCommandDelay
+            // 
+            this.timerTerminalCommandDelay.Interval = 1;
+            // 
+            // timerDeviceConnect
+            // 
+            this.timerDeviceConnect.Interval = 500;
+            // 
             // Dashboard
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -1362,12 +1362,12 @@
             this.panelSerialPort.ResumeLayout(false);
             this.panelSerialPort.PerformLayout();
             this.panelSideBar.ResumeLayout(false);
+            this.gradientPanel1.ResumeLayout(false);
+            this.panelButtonSettings.ResumeLayout(false);
             this.statusStripConnection.ResumeLayout(false);
             this.statusStripConnection.PerformLayout();
             this.panelMain.ResumeLayout(false);
             this.panelMain.PerformLayout();
-            this.gradientPanel1.ResumeLayout(false);
-            this.panelButtonSettings.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

@@ -20,7 +20,6 @@ namespace DeviceTester
         [DllImportAttribute("user32.dll")]
         public static extern bool ReleaseCapture();
 
-
         private bool settingsMenuIsExpanded;
         private bool panelSideBarIsExpanded = true;
         private int terminalSendCommandCounter = 0;
@@ -29,8 +28,7 @@ namespace DeviceTester
         string device_version;
 
         System.IO.StreamWriter out_file;
-
-
+        FactoryClass f = new FactoryClass();
 
         // Main entry point
         public Dashboard()
