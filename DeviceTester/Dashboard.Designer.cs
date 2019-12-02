@@ -114,6 +114,7 @@
             this.panelMain = new System.Windows.Forms.Panel();
             this.timerTerminalCommandDelay = new System.Windows.Forms.Timer(this.components);
             this.timerDeviceConnect = new System.Windows.Forms.Timer(this.components);
+            this.checkBoxAutoSerialNumberEnable = new System.Windows.Forms.CheckBox();
             this.gradientPanel1 = new DeviceTester.CustomControls.GradientPanel();
             this.panelButtonSettings = new System.Windows.Forms.Panel();
             this.buttonLogSettings = new System.Windows.Forms.Button();
@@ -290,6 +291,7 @@
             // panelFactorySettingsItems
             // 
             this.panelFactorySettingsItems.BackColor = System.Drawing.Color.Transparent;
+            this.panelFactorySettingsItems.Controls.Add(this.checkBoxAutoSerialNumberEnable);
             this.panelFactorySettingsItems.Controls.Add(this.comboBoxVariant);
             this.panelFactorySettingsItems.Controls.Add(this.labelProduct);
             this.panelFactorySettingsItems.Controls.Add(this.textBoxProduct);
@@ -308,7 +310,7 @@
             this.panelFactorySettingsItems.Controls.Add(this.comboBoxCountry);
             this.panelFactorySettingsItems.Controls.Add(this.labelCountry);
             this.panelFactorySettingsItems.Enabled = false;
-            this.panelFactorySettingsItems.Location = new System.Drawing.Point(42, 44);
+            this.panelFactorySettingsItems.Location = new System.Drawing.Point(42, 46);
             this.panelFactorySettingsItems.Name = "panelFactorySettingsItems";
             this.panelFactorySettingsItems.Size = new System.Drawing.Size(423, 341);
             this.panelFactorySettingsItems.TabIndex = 66;
@@ -320,7 +322,7 @@
             this.comboBoxVariant.Items.AddRange(new object[] {
             "1",
             "2"});
-            this.comboBoxVariant.Location = new System.Drawing.Point(111, 106);
+            this.comboBoxVariant.Location = new System.Drawing.Point(111, 105);
             this.comboBoxVariant.Name = "comboBoxVariant";
             this.comboBoxVariant.Size = new System.Drawing.Size(115, 21);
             this.comboBoxVariant.TabIndex = 85;
@@ -349,7 +351,7 @@
             this.labelFactoryStatus.AutoSize = true;
             this.labelFactoryStatus.BackColor = System.Drawing.Color.Transparent;
             this.labelFactoryStatus.ForeColor = System.Drawing.Color.White;
-            this.labelFactoryStatus.Location = new System.Drawing.Point(107, 194);
+            this.labelFactoryStatus.Location = new System.Drawing.Point(109, 206);
             this.labelFactoryStatus.Name = "labelFactoryStatus";
             this.labelFactoryStatus.Size = new System.Drawing.Size(37, 13);
             this.labelFactoryStatus.TabIndex = 82;
@@ -358,11 +360,11 @@
             // textBoxFactoryStatus
             // 
             this.textBoxFactoryStatus.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(216)))), ((int)(((byte)(216)))));
-            this.textBoxFactoryStatus.Location = new System.Drawing.Point(111, 211);
+            this.textBoxFactoryStatus.Location = new System.Drawing.Point(110, 222);
             this.textBoxFactoryStatus.Multiline = true;
             this.textBoxFactoryStatus.Name = "textBoxFactoryStatus";
             this.textBoxFactoryStatus.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBoxFactoryStatus.Size = new System.Drawing.Size(265, 88);
+            this.textBoxFactoryStatus.Size = new System.Drawing.Size(280, 101);
             this.textBoxFactoryStatus.TabIndex = 81;
             // 
             // buttonFactoryConnect
@@ -374,7 +376,7 @@
             this.buttonFactoryConnect.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.buttonFactoryConnect.ForeColor = System.Drawing.Color.White;
             this.buttonFactoryConnect.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonFactoryConnect.Location = new System.Drawing.Point(295, 26);
+            this.buttonFactoryConnect.Location = new System.Drawing.Point(314, 21);
             this.buttonFactoryConnect.Name = "buttonFactoryConnect";
             this.buttonFactoryConnect.Size = new System.Drawing.Size(76, 27);
             this.buttonFactoryConnect.TabIndex = 80;
@@ -391,7 +393,7 @@
             this.buttonFactoryWrite.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.buttonFactoryWrite.ForeColor = System.Drawing.Color.White;
             this.buttonFactoryWrite.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonFactoryWrite.Location = new System.Drawing.Point(295, 98);
+            this.buttonFactoryWrite.Location = new System.Drawing.Point(314, 93);
             this.buttonFactoryWrite.Name = "buttonFactoryWrite";
             this.buttonFactoryWrite.Size = new System.Drawing.Size(76, 27);
             this.buttonFactoryWrite.TabIndex = 79;
@@ -408,7 +410,7 @@
             this.buttonFactoryRead.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.buttonFactoryRead.ForeColor = System.Drawing.Color.White;
             this.buttonFactoryRead.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonFactoryRead.Location = new System.Drawing.Point(295, 62);
+            this.buttonFactoryRead.Location = new System.Drawing.Point(314, 57);
             this.buttonFactoryRead.Name = "buttonFactoryRead";
             this.buttonFactoryRead.Size = new System.Drawing.Size(76, 27);
             this.buttonFactoryRead.TabIndex = 78;
@@ -432,7 +434,7 @@
             this.labelTempOffset.AutoSize = true;
             this.labelTempOffset.BackColor = System.Drawing.Color.Transparent;
             this.labelTempOffset.ForeColor = System.Drawing.Color.White;
-            this.labelTempOffset.Location = new System.Drawing.Point(36, 162);
+            this.labelTempOffset.Location = new System.Drawing.Point(36, 161);
             this.labelTempOffset.Name = "labelTempOffset";
             this.labelTempOffset.Size = new System.Drawing.Size(65, 13);
             this.labelTempOffset.TabIndex = 76;
@@ -448,7 +450,7 @@
             // 
             // textBoxTempOffset
             // 
-            this.textBoxTempOffset.Location = new System.Drawing.Point(111, 160);
+            this.textBoxTempOffset.Location = new System.Drawing.Point(111, 159);
             this.textBoxTempOffset.Name = "textBoxTempOffset";
             this.textBoxTempOffset.Size = new System.Drawing.Size(115, 20);
             this.textBoxTempOffset.TabIndex = 74;
@@ -458,7 +460,7 @@
             this.labelFrequency.AutoSize = true;
             this.labelFrequency.BackColor = System.Drawing.Color.Transparent;
             this.labelFrequency.ForeColor = System.Drawing.Color.White;
-            this.labelFrequency.Location = new System.Drawing.Point(45, 135);
+            this.labelFrequency.Location = new System.Drawing.Point(45, 134);
             this.labelFrequency.Name = "labelFrequency";
             this.labelFrequency.Size = new System.Drawing.Size(57, 13);
             this.labelFrequency.TabIndex = 70;
@@ -478,7 +480,7 @@
             "868.6Mhz",
             "868.7Mhz",
             "868.8Mhz"});
-            this.comboBoxFrequency.Location = new System.Drawing.Point(111, 133);
+            this.comboBoxFrequency.Location = new System.Drawing.Point(111, 132);
             this.comboBoxFrequency.Name = "comboBoxFrequency";
             this.comboBoxFrequency.Size = new System.Drawing.Size(115, 21);
             this.comboBoxFrequency.TabIndex = 66;
@@ -488,7 +490,7 @@
             this.labelVariant.AutoSize = true;
             this.labelVariant.BackColor = System.Drawing.Color.Transparent;
             this.labelVariant.ForeColor = System.Drawing.Color.White;
-            this.labelVariant.Location = new System.Drawing.Point(62, 109);
+            this.labelVariant.Location = new System.Drawing.Point(62, 108);
             this.labelVariant.Name = "labelVariant";
             this.labelVariant.Size = new System.Drawing.Size(40, 13);
             this.labelVariant.TabIndex = 73;
@@ -501,7 +503,7 @@
             this.comboBoxCountry.Items.AddRange(new object[] {
             "Ireland",
             "UnitedKingdom"});
-            this.comboBoxCountry.Location = new System.Drawing.Point(111, 79);
+            this.comboBoxCountry.Location = new System.Drawing.Point(111, 78);
             this.comboBoxCountry.Name = "comboBoxCountry";
             this.comboBoxCountry.Size = new System.Drawing.Size(115, 21);
             this.comboBoxCountry.TabIndex = 68;
@@ -511,7 +513,7 @@
             this.labelCountry.AutoSize = true;
             this.labelCountry.BackColor = System.Drawing.Color.Transparent;
             this.labelCountry.ForeColor = System.Drawing.Color.White;
-            this.labelCountry.Location = new System.Drawing.Point(58, 83);
+            this.labelCountry.Location = new System.Drawing.Point(58, 82);
             this.labelCountry.Name = "labelCountry";
             this.labelCountry.Size = new System.Drawing.Size(43, 13);
             this.labelCountry.TabIndex = 72;
@@ -975,9 +977,9 @@
             // 
             this.panelPages.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
             this.panelPages.Controls.Add(this.panelTerminal);
+            this.panelPages.Controls.Add(this.panelLog);
             this.panelPages.Controls.Add(this.panelSerialPort);
             this.panelPages.Controls.Add(this.panelFactory);
-            this.panelPages.Controls.Add(this.panelLog);
             this.panelPages.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelPages.Location = new System.Drawing.Point(0, 0);
             this.panelPages.Margin = new System.Windows.Forms.Padding(0);
@@ -1179,6 +1181,17 @@
             // timerDeviceConnect
             // 
             this.timerDeviceConnect.Interval = 500;
+            // 
+            // checkBoxAutoSerialNumberEnable
+            // 
+            this.checkBoxAutoSerialNumberEnable.AutoSize = true;
+            this.checkBoxAutoSerialNumberEnable.ForeColor = System.Drawing.Color.White;
+            this.checkBoxAutoSerialNumberEnable.Location = new System.Drawing.Point(233, 55);
+            this.checkBoxAutoSerialNumberEnable.Name = "checkBoxAutoSerialNumberEnable";
+            this.checkBoxAutoSerialNumberEnable.Size = new System.Drawing.Size(48, 17);
+            this.checkBoxAutoSerialNumberEnable.TabIndex = 86;
+            this.checkBoxAutoSerialNumberEnable.Text = "Auto";
+            this.checkBoxAutoSerialNumberEnable.UseVisualStyleBackColor = true;
             // 
             // gradientPanel1
             // 
@@ -1452,6 +1465,7 @@
         private System.Windows.Forms.TextBox textBoxProduct;
         private System.Windows.Forms.ComboBox comboBoxVariant;
         private System.Windows.Forms.Timer timerDeviceConnect;
+        private System.Windows.Forms.CheckBox checkBoxAutoSerialNumberEnable;
     }
 }
 

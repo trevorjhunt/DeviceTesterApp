@@ -26,7 +26,7 @@ namespace DeviceTester
         private int terminalSendCommandCounter = 0;
         string commandResponse;
         bool commandActive;
-        
+        string device_version;
 
         System.IO.StreamWriter out_file;
 
@@ -643,9 +643,16 @@ namespace DeviceTester
 
         private bool ReadFactorySettings()
         {
-            bool snIsOk = false, countryIsOk = false, VariantIsOk = false, frequencyIsOk = false, temperatureOffsetIsOk = false; 
+            bool snIsOk = false, countryIsOk = false, VariantIsOk = false, frequencyIsOk = false, temperatureOffsetIsOk = false;
+            string response;
 
-            if (!command_send_receive("factory\r\n", out string response))
+            if (command_send_receive("version\r\n", out response))
+            {
+                if (!response.Contains(device_version))
+                    return false;
+            }
+
+            if (!command_send_receive("factory\r\n", out response))
                 return false;
               
             string[] separatingStrings2 = { " = " };
@@ -777,17 +784,25 @@ namespace DeviceTester
             UInt16 c;
             UInt32 code;
 
-            s = UInt32.Parse(serialNumber); // TODO - hex values wont work
+           
+            s = UInt32.Parse(serialNumber, System.Globalization.NumberStyles.AllowHexSpecifier); // TODO - hex values wont work
             f = Byte.Parse(frequency);
             c = UInt16.Parse(country);
             v = Byte.Parse(variant);
             code = GetPassword(s, f, c, v);
 
-            //command = "Factory " + serialNumber + " " + code.ToString("X") + " " + country_code.ToString() + " " + rf_frequency.ToString() + " " + variant.ToString() + temp_cal.ToString() + "\r\n";
-            command = "factory " + serialNumber + " " + country + " " + frequency + " " + "42 " + variant + " " + temperature_offset + "\r\n";
-            textBoxFactoryStatus.Text = command;
+            //command = "factory " + serialNumber + " " + code.ToString("X") + " " + country + " " + frequency + " " + "42 " + variant + " " + temperature_offset + "\r\n";
+            command = "factory " + serialNumber + " " + code.ToString("X") + " " + country + " " + frequency + " " + variant + " " + temperature_offset + "\r\n";
+            //textBoxFactoryStatus.Text = command;
 
-            if (!command_send_receive(command, out string response))
+            string response;
+            if (command_send_receive("version\r\n", out response))
+            {
+                if (!response.Contains(device_version))
+                    return false;
+            }
+
+            if (!command_send_receive(command, out response))
                 return false;
 
             if (!response.Contains("ok"))
@@ -799,35 +814,27 @@ namespace DeviceTester
 
         private void ConnectToDevice(object sender, EventArgs e)
         {
-            // not connecting so shouldn't be here
-            if (buttonFactoryConnect.Text != "Connecting")
-            {
-                timerDeviceConnect.Stop();
-                return;
-            }
-
-            // 
+            // sent 'version' command to the device to get the version
             if (command_send_receive("version\r\n", out string response))
             {
-                if (response.Contains("rf ucs"))
+                if (response.Contains("rf ucs boot"))
                 {
+                    device_version = "rf ucs boot";
                     textBoxProduct.Enabled = true;
                     textBoxProduct.Text = "Micro Contact";
                     textBoxFactoryStatus.Text = "Connected to " + textBoxProduct.Text;
                     buttonFactoryConnect.Text = "Connected";
+
+                    ReadFactorySettings();
                     timerDeviceConnect.Stop();
-                }
-                else
-                {
-                    textBoxFactoryStatus.Text = "Device repsonse invalid: " + response;
+                    return;
                 }
             }
-            else
-            {
-                textBoxProduct.Enabled = false;
-                textBoxProduct.Text = "";
-                textBoxFactoryStatus.Text = "Connecting...\r\nPlease try resetting the device";
-            }
+            
+            textBoxProduct.Enabled = false;
+            textBoxProduct.Text = "";
+            textBoxFactoryStatus.Text = "Connecting...\r\nPlease try resetting the device";
+            return;
         }
 
         private void buttonFactoryConnect_Click(object sender, EventArgs e)
