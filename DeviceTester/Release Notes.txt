@@ -4,6 +4,9 @@ Device Tester App                                                  Release Notes
 (C) 2019 Trevor Hunt, All Rights Reserved
 =======================================================================================
 
+App Version: 1.0.0.16
+    - added DB insert functionality when writing factory settings to the product
+
 App Version: 1.0.0.15
     - added factory DB model class
 

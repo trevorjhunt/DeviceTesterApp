@@ -1,10 +1,10 @@
-﻿CREATE TABLE [dbo_table_factory].[Table]
+﻿CREATE TABLE [dbo].[Table]
 (
-	[FactoryID] INT NOT NULL PRIMARY KEY IDENTITY DEFAULT 1, 
+	[FactoryId] INT NOT NULL PRIMARY KEY IDENTITY, 
+    [SerialNumber] VARCHAR(50) NOT NULL, 
     [Product] VARCHAR(50) NOT NULL, 
-    [SerialNumber] INT NOT NULL, 
     [Country] VARCHAR(50) NOT NULL, 
-    [Frequency] INT NOT NULL, 
-    [Variant] INT NOT NULL,
-    [TemperatureOffset] INT NOT NULL
+    [Frequency] VARCHAR(50) NOT NULL, 
+    [Variant] VARCHAR(50) NOT NULL, 
+    [TemperatureOffset] VARCHAR(50) NOT NULL, 
 )

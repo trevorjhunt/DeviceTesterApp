@@ -25,7 +25,7 @@ namespace DeviceTester
         private int terminalSendCommandCounter = 0;
         string commandResponse;
         bool commandActive;
-        string device_version;
+        string connectedDeviceVersion;
 
         System.IO.StreamWriter out_file;
         FactoryClass f = new FactoryClass();
@@ -34,7 +34,7 @@ namespace DeviceTester
         public Dashboard()
         {
             InitializeComponent();
-            SetDefaults();            
+            SetDefaults();
         }
 
         // 
@@ -56,12 +56,12 @@ namespace DeviceTester
             comboboxStopbits.DataSource = new[] { "1", "2", "1.5" };
             comboboxStopbits.SelectedIndex = 0;
 
-            comboboxFlowControl.DataSource = new[] { "None", "RTS", "RTS/X", "Xon/Xoff" };           
+            comboboxFlowControl.DataSource = new[] { "None", "RTS", "RTS/X", "Xon/Xoff" };
             comboboxFlowControl.SelectedIndex = 0;
 
             this.serialPortDut.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(this.serialPortDut_DataReceived);
             timerTerminalCommandDelay.Tick += new EventHandler(TerminalSendData);
-            timerDeviceConnect.Tick += new EventHandler(ConnectToDevice); 
+            timerDeviceConnect.Tick += new EventHandler(ConnectToDevice);
 
 
             textboxRecievedData.Clear();
@@ -222,8 +222,8 @@ namespace DeviceTester
         {
             if (panelSideBarIsExpanded)
                 this.MinimumSize = new Size(496, 480);
-   
-            timerDashboard.Start();            
+
+            timerDashboard.Start();
         }
 
         //
@@ -253,10 +253,10 @@ namespace DeviceTester
                 {
                     panelSideBar.Width = panelSideBar.MinimumSize.Width;
                     panelSideBarIsExpanded = false;
-                    timerDashboard.Stop();                    
+                    timerDashboard.Stop();
                 }
             }
-    
+
         }
 
         // TODO - make all the methods start with a uppercase letter
@@ -373,7 +373,7 @@ namespace DeviceTester
 
             // handle backspace, remove a char from the text box if detected
             if (strText.Contains("\b"))
-            {                
+            {
                 if (textboxRecievedData.Text.Length > 0)
                 {
                     textboxRecievedData.Text = textboxRecievedData.Text.Substring(0, textboxRecievedData.Text.Length - 1);
@@ -383,7 +383,7 @@ namespace DeviceTester
             }
 
             // add new char to text box
-            textboxRecievedData.AppendText(strText);            
+            textboxRecievedData.AppendText(strText);
         }
 
         private void serialPortDut_DataReceived(object sender, System.IO.Ports.SerialDataReceivedEventArgs e)
@@ -419,8 +419,8 @@ namespace DeviceTester
 
         private bool OpenSerialPort()
         {
-            try   
-            { 
+            try
+            {
                 serialPortDut.PortName = comboboxPort.Text;
                 serialPortDut.BaudRate = (Int32.Parse(comboboxBaudrate.Text));
                 serialPortDut.StopBits = (StopBits)Enum.Parse(typeof(StopBits), (comboboxStopbits.SelectedIndex + 1).ToString(), true);
@@ -429,7 +429,7 @@ namespace DeviceTester
                 serialPortDut.Handshake = (Handshake)Enum.Parse(typeof(Handshake), comboboxFlowControl.SelectedIndex.ToString(), true);
                 serialPortDut.Open();
             }
-            catch 
+            catch
             {
                 // TODO alert("Can't open " + mySerial.PortName + " port, it might be used in another program");
                 return false;
@@ -473,7 +473,7 @@ namespace DeviceTester
                     textBoxTransmitData.Clear();
                     panelTerminalTransmit.Enabled = true;
                     panelTerminalReceive.Enabled = true;
-                    panelFactorySettingsItems.Enabled = true;                    
+                    panelFactorySettingsItems.Enabled = true;
                     panelLogOptions.Enabled = false;
                     buttonSerialPortConnect.Text = "Disconnect";
                     toolStripStatusLabelConnection.Text = "Connected port: " + serialPortDut.PortName + " @ " + serialPortDut.BaudRate + " bps";
@@ -502,7 +502,7 @@ namespace DeviceTester
         {
             if (radioButtonTerminalKeys.Checked && serialPortDut.IsOpen)
             {
-                serialPortDut.Write(e.KeyChar.ToString());              
+                serialPortDut.Write(e.KeyChar.ToString());
             }
         }
 
@@ -547,11 +547,11 @@ namespace DeviceTester
             if (radioButtonTerminalCommands.Checked)
             {
                 if (buttonTerminalTransmitSend.Text == "Send")
-                {   
+                {
                     terminalSendCommandCounter = (int)numericUpDownTerminalRepeats.Value;
                     timerTerminalCommandDelay.Interval = (int)numericUpDownTerminalDelay.Value;
                     timerTerminalCommandDelay.Start();
-                    buttonTerminalTransmitSend.Text = "Stop";   
+                    buttonTerminalTransmitSend.Text = "Stop";
                 }
                 else
                 {
@@ -646,13 +646,19 @@ namespace DeviceTester
 
             if (command_send_receive("version\r\n", out response))
             {
-                if (!response.Contains(device_version))
+                if (!response.Contains(connectedDeviceVersion))
+                {
+                    textBoxFactoryStatus.Text = "no comms to device.. try reconnecting";
                     return false;
+                }                    
             }
 
             if (!command_send_receive("factory\r\n", out response))
+            {
+                textBoxFactoryStatus.Text = "no comms to device.. try reconnecting";
                 return false;
-              
+            }
+                
             string[] separatingStrings2 = { " = " };
             string[] separatingStrings = { "\r\n" };
             string[] lines = response.Split(separatingStrings, System.StringSplitOptions.RemoveEmptyEntries);
@@ -725,87 +731,67 @@ namespace DeviceTester
             }
 
             if (snIsOk == countryIsOk == VariantIsOk == frequencyIsOk == temperatureOffsetIsOk == true)
+            {
+                textBoxFactoryStatus.Text = "settings read successfully";
                 return true;
+            }
+
+            textBoxFactoryStatus.Text = "settings not read.. try reconnecting";
             return false;
         }
 
-        private UInt32 GetPassword(UInt32 serial_number, Byte rf_frequency, UInt16 country_code, Byte variant)
-        {
-            UInt32 code = 0;
-            UInt32 val;
-
-            val = serial_number & 0x000000FF;
-            val <<= 8;
-            code |= val;
-
-            val = serial_number & 0x0000FF00;
-            val <<= 16;
-            code |= val;
-
-            val = serial_number & 0x00FF0000;
-            val >>= 16;
-            code |= val;
-
-            val = serial_number & 0xFF000000;
-            val >>= 8;
-            code |= val;
-
-            code ^= rf_frequency;
-
-            val = country_code;
-            val <<= 8;
-            code ^= val;
-
-            val = variant;
-            val <<= 24;
-            code ^= val;
-
-            return code;
-        }
 
         // TODO - temp offset input should only handle values from -65535 to +655535
         private bool WriteFactorySettings()
         {
-            string serialNumber, frequency, country, variant, temperature_offset, command;
- 
+            string response, serialNumber, frequency, country, variant, temperature_offset, command;
+
             serialNumber = textBoxSerialNumber.Text;
             frequency = comboBoxFrequency.SelectedIndex.ToString();
-
             country = comboBoxCountry.SelectedItem.ToString();
-            country = (country == "Ireland") ? "353" : "44";
-
             variant = comboBoxVariant.SelectedItem.ToString();
             temperature_offset = textBoxTempOffset.Text;
 
-            UInt32 s;
-            Byte f, v;
-            UInt16 c;
-            UInt32 code;
-
-           
-            s = UInt32.Parse(serialNumber, System.Globalization.NumberStyles.AllowHexSpecifier); // TODO - hex values wont work
-            f = Byte.Parse(frequency);
-            c = UInt16.Parse(country);
-            v = Byte.Parse(variant);
-            code = GetPassword(s, f, c, v);
-
-            //command = "factory " + serialNumber + " " + code.ToString("X") + " " + country + " " + frequency + " " + "42 " + variant + " " + temperature_offset + "\r\n";
-            command = "factory " + serialNumber + " " + code.ToString("X") + " " + country + " " + frequency + " " + variant + " " + temperature_offset + "\r\n";
-            //textBoxFactoryStatus.Text = command;
-
-            string response;
             if (command_send_receive("version\r\n", out response))
             {
-                if (!response.Contains(device_version))
+                if (!response.Contains(connectedDeviceVersion))
+                {
+                    textBoxFactoryStatus.Text = "no comms to device.. try reconnecting";
                     return false;
+                }                    
             }
 
+            string country_code = (country == "Ireland") ? "353" : "44";
+            command = "factory " + serialNumber + " " + country_code + " " + frequency + " " + "42 " + variant + " " + temperature_offset + "\r\n";
             if (!command_send_receive(command, out response))
+            {
+                textBoxFactoryStatus.Text = "no comms to device.. try reconnecting";
                 return false;
+            }
 
             if (!response.Contains("ok"))
+            {
+                textBoxFactoryStatus.Text = "no response from device.. try reconnecting";
                 return false;
+            }
 
+            // prepare DB data entry
+            f.Product = textBoxProduct.Text;
+            f.SerialNumber = serialNumber;
+            f.Frequency = frequency;
+            f.Country = country;
+            f.Variant = variant;
+            f.TemperatureOffset = temperature_offset;
+
+            // inserting into the DB using the add method
+            bool success = f.Insert(f);
+            if (!success)
+            {
+                textBoxFactoryStatus.Text = "settings not written to database.. try again";
+                return false;
+            }
+
+            textBoxFactoryStatus.Text = "settings written successfully";
             return true;
         }
 
@@ -815,9 +801,9 @@ namespace DeviceTester
             // sent 'version' command to the device to get the version
             if (command_send_receive("version\r\n", out string response))
             {
-                if (response.Contains("rf ucs boot"))
+                if (response.Contains("rf ucs test"))
                 {
-                    device_version = "rf ucs boot";
+                    connectedDeviceVersion = "rf ucs test";
                     textBoxProduct.Enabled = true;
                     textBoxProduct.Text = "Micro Contact";
                     textBoxFactoryStatus.Text = "Connected to " + textBoxProduct.Text;
@@ -854,6 +840,7 @@ namespace DeviceTester
                 comboBoxVariant.SelectedIndex = -1;
                 comboBoxFrequency.SelectedIndex = -1;
                 textBoxTempOffset.Text = "";
+                connectedDeviceVersion = "";
             }
         }
 
@@ -861,14 +848,7 @@ namespace DeviceTester
         {
             if (buttonFactoryConnect.Text == "Connected")
             {
-                if (ReadFactorySettings())
-                {
-                    textBoxFactoryStatus.Text = "Factory settings read successfully";
-                }
-                else
-                {
-                    textBoxFactoryStatus.Text = "Factory settings read failed.. try reconnecting";
-                }
+                ReadFactorySettings();
             }
         }
 
@@ -876,16 +856,8 @@ namespace DeviceTester
         {
             if (buttonFactoryConnect.Text == "Connected")
             {
-                if (WriteFactorySettings())
-                {
-                    textBoxFactoryStatus.Text = "Factory settings programmed successfully";
-                }
-                else
-                {
-                    textBoxFactoryStatus.Text = "Factory settings programming failed.. try reconnecting";
-                }
-            }
-                
+                WriteFactorySettings();
+            }              
         }
 
         private void TextboxSerialNumber_KeyPress(object sender, KeyPressEventArgs e)
@@ -893,6 +865,10 @@ namespace DeviceTester
             string HexLetters = "0123456789abcdefABCDEF\b"; // \b is the BackSpace character
 
             if (!HexLetters.Contains(e.KeyChar)) e.Handled = true;
+        }
+
+        private void DeviceTester_Load(object sender, EventArgs e)
+        {       
         }
     }
 }

@@ -13,13 +13,13 @@ namespace DeviceTester
     {
         // getter and setter properties
         // acts as data carrier in our application
-        public int FactoryID { get; set; }
+        public int FactoryId { get; set; }
         public string Product { get; set; }
-        public int SerialNumber { get; set; }
+        public string SerialNumber { get; set; }
         public string Country { get; set; }
-        public int Frequency { get; set; }
-        public int Variant { get; set; }
-        public int Temperature_offset { get; set; }
+        public string Frequency { get; set; }
+        public string Variant { get; set; }
+        public string TemperatureOffset { get; set; }
 
         readonly static string myconnstrng = ConfigurationManager.ConnectionStrings["connstrng"].ConnectionString; // TODO - update 
 
@@ -42,7 +42,7 @@ namespace DeviceTester
                 conn.Open();
                 adapter.Fill(dt);
             }
-            catch 
+            catch
             {
 
             }
@@ -67,8 +67,8 @@ namespace DeviceTester
             try
             {
                 // Step2: Create a SQL query to insert data
-                string sql = "INSERT INTO table_factory (Product, SerialNumber, Country, Frequency, Variant, Temperature_offset) VALUES(@Product, @SerialNumberID, @Country, @Frequency, @Variant,  @Temperature_offset)";
-                
+                string sql = "INSERT INTO table_factory (Product, SerialNumber, Country, Frequency, Variant, TemperatureOffset) VALUES(@Product, @SerialNumber, @Country, @Frequency, @Variant,  @TemperatureOffset)";
+
                 // creating the command using sql and conn
                 SqlCommand cmd = new SqlCommand(sql, conn);
 
@@ -78,7 +78,7 @@ namespace DeviceTester
                 cmd.Parameters.AddWithValue("@Country", f.Country);
                 cmd.Parameters.AddWithValue("@Frequency", f.Frequency);
                 cmd.Parameters.AddWithValue("@Variant", f.Variant);
-                cmd.Parameters.AddWithValue("@Temperature_offset", f.Temperature_offset);
+                cmd.Parameters.AddWithValue("@TemperatureOffset", f.TemperatureOffset);
 
                 //Connection open here
                 conn.Open();
@@ -87,7 +87,7 @@ namespace DeviceTester
                 if (rows > 0)
                     isSuccess = true;
             }
-            catch 
+            catch (Exception ex)
             {
 
             }
@@ -112,7 +112,7 @@ namespace DeviceTester
             try
             {
                 // Step2: Create a SQL query to update data in DB
-                string sql = "UPDATE table_factory SET Product=@Product, SerialNumber=@SerialNumber, Country=@Country, Frequency=@Frequency, Variant=@Variant, Temperature_offset=@Temperature_offset WHERE FactoryID=@FactoryID";
+                string sql = "UPDATE table_factory SET Product=@Product, SerialNumber=@SerialNumber, Country=@Country, Frequency=@Frequency, Variant=@Variant, TemperatureOffset=@TemperatureOffset WHERE FactoryId=@FactoryId";
 
                 // creating the command using sql and conn
                 SqlCommand cmd = new SqlCommand(sql, conn);
@@ -123,8 +123,8 @@ namespace DeviceTester
                 cmd.Parameters.AddWithValue("@Country", f.Country);
                 cmd.Parameters.AddWithValue("@Frequency", f.Frequency);
                 cmd.Parameters.AddWithValue("@Variant", f.Variant);
-                cmd.Parameters.AddWithValue("@Temperature_offset", f.Temperature_offset);
-                cmd.Parameters.AddWithValue("@FactoryID", f.FactoryID);
+                cmd.Parameters.AddWithValue("@TemperatureOffset", f.TemperatureOffset);
+                cmd.Parameters.AddWithValue("@FactoryId", f.FactoryId);
 
                 //Connection open here
                 conn.Open();
@@ -135,7 +135,7 @@ namespace DeviceTester
                 if (rows > 0)
                     isSuccess = true;
             }
-            catch 
+            catch
             {
 
             }
@@ -159,13 +159,13 @@ namespace DeviceTester
             try
             {
                 // Step2: Create a SQL query to update data in DB
-                string sql = "DELETE FROM table_factory WHERE FactoryID=@FactoryID";
+                string sql = "DELETE FROM table_factory WHERE FactoryId=@FactoryId";
 
                 // creating the command using sql and conn
                 SqlCommand cmd = new SqlCommand(sql, conn);
 
                 //create parameters to add data
-                cmd.Parameters.AddWithValue("@FactoryID", f.FactoryID);
+                cmd.Parameters.AddWithValue("@FactoryId", f.FactoryId);
 
                 //Connection open here
                 conn.Open();
@@ -174,7 +174,7 @@ namespace DeviceTester
                 if (rows > 0)
                     isSuccess = true;
             }
-            catch 
+            catch
             {
 
             }

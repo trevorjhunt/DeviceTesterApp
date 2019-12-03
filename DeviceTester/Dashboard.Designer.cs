@@ -1334,6 +1334,7 @@
             this.Padding = new System.Windows.Forms.Padding(2);
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "DeviceTester";
+            this.Load += new System.EventHandler(this.DeviceTester_Load);
             this.panelTop.ResumeLayout(false);
             this.panelTop.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picBoxRestore)).EndInit();

@@ -82,11 +82,6 @@
       <DependentUpon>Dashboard.cs</DependentUpon>
     </Compile>
     <Compile Include="FactoryClass.cs" />
-    <Compile Include="FactoryDBDataSet.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>FactoryDBDataSet.xsd</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Dashboard.resx">
@@ -102,17 +97,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <None Include="FactoryDBDataSet.xsc">
-      <DependentUpon>FactoryDBDataSet.xsd</DependentUpon>
-    </None>
-    <None Include="FactoryDBDataSet.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>FactoryDBDataSet.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="FactoryDBDataSet.xss">
-      <DependentUpon>FactoryDBDataSet.xsd</DependentUpon>
-    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -136,13 +120,6 @@
     <None Include="Icons\Expand Arrow_20px.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="FactoryDB.mdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="FactoryDB_log.ldf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <DependentUpon>FactoryDB.mdf</DependentUpon>
-    </Content>
     <Content Include="Release Notes.txt" />
   </ItemGroup>
   <ItemGroup>
