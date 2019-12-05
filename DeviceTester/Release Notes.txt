@@ -4,6 +4,9 @@ Device Tester App                                                  Release Notes
 (C) 2019 Trevor Hunt, All Rights Reserved
 =======================================================================================
 
+App Version: 1.0.0.18
+	- added connection to azure DB
+
 App Version: 1.0.0.17
     - fixed factory settings write formatting bug
     - increased sidebar open/close rate, when side menu button clicked
