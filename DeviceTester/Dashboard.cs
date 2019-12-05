@@ -644,21 +644,24 @@ namespace DeviceTester
             bool snIsOk = false, countryIsOk = false, VariantIsOk = false, frequencyIsOk = false, temperatureOffsetIsOk = false;
             string response;
 
+            // ensure comms to device ok
             if (command_send_receive("version\r\n", out response))
             {
                 if (!response.Contains(connectedDeviceVersion))
                 {
-                    textBoxFactoryStatus.Text = "no comms to device.. try reconnecting";
+                    textBoxFactoryStatus.Text = "No comms to device.. please try reconnecting";
                     return false;
                 }                    
             }
 
+            // get the factory settings
             if (!command_send_receive("factory\r\n", out response))
             {
-                textBoxFactoryStatus.Text = "no comms to device.. try reconnecting";
+                textBoxFactoryStatus.Text = "No comms to device.. please try reconnecting";
                 return false;
             }
                 
+            // parse the factory setting response
             string[] separatingStrings2 = { " = " };
             string[] separatingStrings = { "\r\n" };
             string[] lines = response.Split(separatingStrings, System.StringSplitOptions.RemoveEmptyEntries);
@@ -730,13 +733,14 @@ namespace DeviceTester
                 }
             }
 
+            // all settings accounted for?
             if (snIsOk == countryIsOk == VariantIsOk == frequencyIsOk == temperatureOffsetIsOk == true)
             {
-                textBoxFactoryStatus.Text = "settings read successfully";
+                textBoxFactoryStatus.Text = "Settings read successfully";
                 return true;
             }
 
-            textBoxFactoryStatus.Text = "settings not read.. try reconnecting";
+            textBoxFactoryStatus.Text = "Settings are invalid, please write new settings";
             return false;
         }
 
@@ -746,34 +750,31 @@ namespace DeviceTester
         {
             string response, serialNumber, frequency, country, variant, temperature_offset, command;
 
-            serialNumber = textBoxSerialNumber.Text;
+
+            if ((comboBoxFrequency.SelectedItem == null) ||
+                (comboBoxCountry.SelectedItem == null) ||
+                (comboBoxVariant.SelectedItem == null) ||
+                (textBoxTempOffset.Text == ""))
+            {
+                textBoxFactoryStatus.Text = "Factory settings can't be null.. please choose settings";
+                return false;
+            }
+
             frequency = comboBoxFrequency.SelectedIndex.ToString();
             country = comboBoxCountry.SelectedItem.ToString();
             variant = comboBoxVariant.SelectedItem.ToString();
             temperature_offset = textBoxTempOffset.Text;
 
-            if (command_send_receive("version\r\n", out response))
+            FactoryClass lastrecord = f.GetLastRecord();
+            if (lastrecord.SerialNumber == null)
             {
-                if (!response.Contains(connectedDeviceVersion))
-                {
-                    textBoxFactoryStatus.Text = "no comms to device.. try reconnecting";
-                    return false;
-                }                    
-            }
-
-            string country_code = (country == "Ireland") ? "353" : "44";
-            command = "factory " + serialNumber + " " + country_code + " " + frequency + " " + "42 " + variant + " " + temperature_offset + "\r\n";
-            if (!command_send_receive(command, out response))
-            {
-                textBoxFactoryStatus.Text = "no comms to device.. try reconnecting";
+                textBoxFactoryStatus.Text = "Database connection failed.. please try again";
                 return false;
             }
 
-            if (!response.Contains("ok"))
-            {
-                textBoxFactoryStatus.Text = "no response from device.. try reconnecting";
-                return false;
-            }
+            UInt32 last_sn = UInt32.Parse(lastrecord.SerialNumber, System.Globalization.NumberStyles.HexNumber);
+            UInt32 new_sn = last_sn + 1;
+            serialNumber = new_sn.ToString("X8");
 
             // prepare DB data entry
             f.Product = textBoxProduct.Text;
@@ -782,16 +783,44 @@ namespace DeviceTester
             f.Country = country;
             f.Variant = variant;
             f.TemperatureOffset = temperature_offset;
-
-            // inserting into the DB using the add method
+            
+            // inserting into the DB using the insert method
             bool success = f.Insert(f);
             if (!success)
             {
-                textBoxFactoryStatus.Text = "settings not written to database.. try again";
+                textBoxFactoryStatus.Text = "Database connection failed.. try again";
                 return false;
             }
 
-            textBoxFactoryStatus.Text = "settings written successfully";
+            // Ensure comms to the device
+            if (command_send_receive("version\r\n", out response))
+            {
+                if (!response.Contains(connectedDeviceVersion))
+                {
+                    textBoxFactoryStatus.Text = "No comms to device.. please try reconnecting";
+                    return false;
+                }                    
+            }
+
+            // Send the settings to new
+            string country_code = (country == "Ireland") ? "353" : "44";
+            command = "factory " + serialNumber + " " + country_code + " " + frequency + " " + "42 " + variant + " " + temperature_offset + "\r\n";
+            if (!command_send_receive(command, out response))
+            {
+                textBoxFactoryStatus.Text = "No comms to device.. please try reconnecting";
+                return false;
+            }
+
+            // Check for a response
+            if (!response.Contains("ok"))
+            {
+                textBoxFactoryStatus.Text = "No response from device.. please try reconnecting";
+                return false;
+            }
+
+            // Settings written ok.. 
+            textBoxSerialNumber.Text = f.SerialNumber.ToLower();
+            textBoxFactoryStatus.Text = "Settings written successfully";
             return true;
         }
 

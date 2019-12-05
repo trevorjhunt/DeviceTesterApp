@@ -54,6 +54,76 @@ namespace DeviceTester
             return dt;
         }
 
+        public FactoryClass GetRecordBySerialNumber(string serialNumber)
+        {
+            FactoryClass f = new FactoryClass();
+            SqlConnection conn = new SqlConnection(myconnstrng);
+
+            try
+            {
+                string sql = "SELECT * FROM table_factory WHERE SerialNumber=@serialNumber";
+
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@serialNumber", serialNumber);
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    f.Product = reader["Product"].ToString();
+                    f.SerialNumber = reader["SerialNumber"].ToString();
+                    f.Frequency = reader["Frequency"].ToString();
+                    f.Country = reader["Country"].ToString();
+                    f.Variant = reader["Variant"].ToString();
+                    f.TemperatureOffset = reader["TemperatureOffset"].ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return f;
+        }
+
+        public FactoryClass GetLastRecord()
+        {
+            FactoryClass f = new FactoryClass();
+            SqlConnection conn = new SqlConnection(myconnstrng);
+
+            try
+            {
+                string sql = "SELECT * FROM table_factory WHERE FactoryId = (SELECT MAX(FactoryId) FROM table_factory)";
+
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                //cmd.Parameters.AddWithValue("@serialNumber", serialNumber);
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    f.Product = reader["Product"].ToString();
+                    f.SerialNumber = reader["SerialNumber"].ToString();
+                    f.Frequency = reader["Frequency"].ToString();
+                    f.Country = reader["Country"].ToString();
+                    f.Variant = reader["Variant"].ToString();
+                    f.TemperatureOffset = reader["TemperatureOffset"].ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return f;
+        }
+
 
         //insert data into DB
         public bool Insert(FactoryClass f)
