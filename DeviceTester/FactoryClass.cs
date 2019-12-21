@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DeviceTester
 {
-    class FactoryClass
+    public class FactoryClass
     {
         // getter and setter properties
         // acts as data carrier in our application
@@ -44,7 +44,7 @@ namespace DeviceTester
             }
             catch
             {
-
+                dt = null;
             }
             finally
             {
@@ -78,9 +78,9 @@ namespace DeviceTester
                     f.TemperatureOffset = reader["TemperatureOffset"].ToString();
                 }
             }
-            catch (Exception ex)
+            catch 
             {
-
+                f = null;
             }
             finally
             {
@@ -105,6 +105,7 @@ namespace DeviceTester
 
                 while (reader.Read())
                 {
+                    f.FactoryId = Int32.Parse(reader["FactoryId"].ToString());
                     f.Product = reader["Product"].ToString();
                     f.SerialNumber = reader["SerialNumber"].ToString();
                     f.Frequency = reader["Frequency"].ToString();
@@ -113,9 +114,9 @@ namespace DeviceTester
                     f.TemperatureOffset = reader["TemperatureOffset"].ToString();
                 }
             }
-            catch (Exception ex)
+            catch 
             {
-
+                f = null;
             }
             finally
             {
@@ -157,7 +158,7 @@ namespace DeviceTester
                 if (rows > 0)
                     isSuccess = true;
             }
-            catch (Exception ex)
+            catch 
             {
 
             }
